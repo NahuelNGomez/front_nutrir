@@ -1,4 +1,3 @@
-import "../styles/global.scss";
 import Head from "next/head";
 import { AppProps } from "next/app";
 import { CacheProvider, EmotionCache } from "@emotion/react";

@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+  Grid,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAppCtx } from "../../src/contexts/store";
-import SwitchMode from "../ui/special/switchMode";
 import DrawerMenu from "./DrawerMenu";
+import { styles } from "../../styles/components/navigation";
+import Notification from "../ui/special/notification";
 
 const Header = () => {
   const [stateDrawer, setStateDrawer] = useState(false);
@@ -13,23 +20,30 @@ const Header = () => {
 
   return (
     <React.Fragment>
-      <AppBar position="fixed">
+      <AppBar position="static" sx={styles.appBar}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={() => setStateDrawer(!stateDrawer)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div">
-            Sistema Integral de Comedores y Merenderos
-          </Typography>
-          <DrawerMenu open={stateDrawer} onClose={handleCloseDrawer} />
-          <SwitchMode />
+          <Grid container direction="row">
+            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} justifyContent={"flex-start"}>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setStateDrawer(!stateDrawer)}
+                sx={styles.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Avatar src="/logo-nutrir.png" sx={{marginTop:"3px"}} />
+              <Typography sx={{marginTop:"5px"}} variant="h6" component="div">
+                Nutrir App
+              </Typography>
+              <DrawerMenu open={stateDrawer} onClose={handleCloseDrawer} />
+            </Grid>
+            <Grid container xs={4} item sx={{marginTop:"10px"}} justifyContent={"flex-end"}>
+              <Notification />
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </React.Fragment>

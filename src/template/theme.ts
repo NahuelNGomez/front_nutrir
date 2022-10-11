@@ -1,51 +1,43 @@
 import { createTheme } from '@mui/material/styles';
 
-const themeComponents = (theme:any) => (
-  {MuiDrawer:{
+const components = {
+  MuiMenu:{
     styleOverrides:{
-      paperAnchorLeft:{          
-        width:"20%",
-        [theme.breakpoints.between('xs','sm')]:{
-          width:"50%",
-        },
-        [theme.breakpoints.between('md','lg')]:{
-          width:"30%",
-        }
+      list: {
+        paddingTop:"0px",
+        paddingBottom:"0px"
       }
     }
-  }}
-);
+  }
+}
 
 let lightTheme = createTheme({
   palette: {
     primary: {
-      main: '#3f51b5',
+      main: '#003892',
     },
     warning: {
       main: '#FDECEA',
     }
   },
+  components : {...components}
 });
-
-lightTheme = createTheme(lightTheme,{
-  components: {
-    ...themeComponents(lightTheme)
-  }
-})
 
 let darkTheme = createTheme({
   palette: {
     mode:'dark'
+  },
+  components:{
+    MuiAppBar:{
+      styleOverrides:{
+        root:{
+          backgroundColor:lightTheme.palette.primary.main
+        }
+      }
+    },
+   ...components
   }
 });
-
-darkTheme = createTheme(darkTheme,{
-  components: {
-    ...themeComponents(darkTheme)
-  }
-})
-
-console.log(darkTheme.components);
 
 
 export {lightTheme,darkTheme};
