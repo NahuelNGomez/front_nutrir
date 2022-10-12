@@ -54,7 +54,7 @@ const Login: NextPage = () => {
       }).then((res) => res.json());
 
       if (response.success) {
-        router.push("/#logged");
+        location.href = "/";
       } else {
         setValidate(false);
       }
