@@ -115,6 +115,7 @@ const Login: NextPage = () => {
                   />
 
                   <TextField
+                    type={"password"}
                     error={formErrors.password}
                     fullWidth
                     id="input-with-sx"
@@ -141,8 +142,8 @@ const Login: NextPage = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Button type="submit" variant="contained" size="medium">
-                  Entrar {loading && <CircularProgress color="inherit" />}
+                <Button disabled={loading}  type="submit" variant="contained" size="medium" color={loading ? "inherit" : "primary"}>
+                  Entrar {loading && <CircularProgress size={20} sx={{marginLeft:"5px"}} color="inherit" />}
                 </Button>
               </CardActions>
               <CardActions

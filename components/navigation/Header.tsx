@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <React.Fragment>
       {user?.logged && 
-      <AppBar position="static" sx={styles.appBar}>
+      <AppBar position="sticky" sx={styles.appBar}>
         <Toolbar>
           <Grid container direction="row">
             <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} alignItems={"center"} justifyContent={"flex-start"}>
