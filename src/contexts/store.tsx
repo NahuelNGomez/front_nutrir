@@ -17,45 +17,37 @@ const themes = {
 };
 
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
-  const [currentTheme, setCurrentTheme] = useState(darkTheme);
-  const [modeTheme, setModeTheme] = useState("dark");
-  const [user, setUser] = useState(userLog);
+  const [currentTheme, setCurrentTheme] = useState(lightTheme);
+  const [modeTheme, setModeTheme] = useState("light");
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
     setModeTheme(mode);
   };
 
-  const login = (userLogged: userType): void => {
-    setUser(userLogged);
-  };
-
-  const logout = () => {
-    setUser({ logged: false });
-  };
-
-  return { currentTheme, updateTheme, modeTheme, login, logout, user };
+  return { currentTheme, updateTheme, modeTheme, user: userLog };
 };
 
 export const AppCtx = createContext<ReturnType<typeof useStoreController>>({
   currentTheme: lightTheme,
   updateTheme: () => {},
   modeTheme: "light",
-  login: () => {},
-  logout: () => {},
   user: { logged: false },
 });
 
-export const getServerSideProps:GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const ironSession: IronSessionData = await getIronSession(
+    ctx.req,
+    ctx.res,
+    sessionOptions
+  );
 
-    const ironSession: IronSessionData = await getIronSession(ctx.req, ctx.res, sessionOptions);
-    
-    return {
-        props: {
-            user: ironSession.user ?? { logged: false }
-        }
-    }
-}
+  return {
+    props: {
+      user: ironSession.user ?? { logged: false },
+    },
+  };
+};
 
 export const AppCtxProvider = ({
   user,
@@ -64,7 +56,7 @@ export const AppCtxProvider = ({
   user: userType;
   children: React.ReactNode;
 }) => {
-
+  
   return (
     <AppCtx.Provider value={useStoreController({ userLog: user })}>
       {children}

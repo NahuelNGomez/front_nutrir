@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { useRouter } from "next/router";
 import { MenuList } from "../../src/contents/menuList";
 import { useAppCtx } from "../../src/contexts/store";
 import { styles } from "../../styles/components/navigation";
@@ -18,6 +19,7 @@ import SwitchMode from "../ui/special/switchMode";
 
 const MenuItems = () => {
   const { modeTheme,currentTheme } = useAppCtx();
+  const router = useRouter();
 
   return (
     <List>
@@ -35,9 +37,9 @@ const MenuItems = () => {
           <Typography variant={"subtitle1"} sx={styles.avatarReggard}>Hola, Isaias Diaz</Typography>
         </Grid>
       </ListItem>
-      {MenuList.map(({ key, text, icon }) => (
+      {MenuList.map(({ key, text, icon,action }) => (
         <ListItem key={key} disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => action(router)}>
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItemButton>

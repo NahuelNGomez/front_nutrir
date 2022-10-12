@@ -27,7 +27,7 @@ const Header = () => {
       <AppBar position="static" sx={styles.appBar}>
         <Toolbar>
           <Grid container direction="row">
-            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} justifyContent={"flex-start"}>
+            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} alignItems={"center"} justifyContent={"flex-start"}>
               <IconButton
                 size="large"
                 edge="start"
@@ -38,13 +38,13 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <Avatar src="/logo-nutrir.png" sx={{marginTop:"3px"}} />
-              <Typography sx={{marginTop:"5px"}} variant="h6" component="div">
+              <Avatar src="/logo-nutrir.png"  />
+              <Typography  variant="h6" component="div">
                 Nutrir App
               </Typography>
               <DrawerMenu open={stateDrawer} onClose={handleCloseDrawer} />
             </Grid>
-            <Grid container xs={4} item sx={{marginTop:"10px"}} justifyContent={"flex-end"}>
+            <Grid container xs={4} item justifyContent={"flex-end"} alignContent="center">
               <Notification />
             </Grid>
           </Grid>
@@ -55,9 +55,9 @@ const Header = () => {
       <AppBar position="static" sx={styles.unauthorizedAppBar}>
           <Toolbar>
           <Grid container direction="row">
-            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} justifyContent={"flex-start"}>
+            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} alignItems={"center"} justifyContent={"flex-start"}>
               <Avatar src="/logo-nutrir.png" />
-              <Typography sx={{marginTop:"5px"}} variant="h6" component="div">
+              <Typography  variant="h6" component="div">
                 Nutrir App
               </Typography>
             </Grid>
@@ -67,7 +67,6 @@ const Header = () => {
           </Grid>
         </Toolbar>
       </AppBar>
-      
       }
     </React.Fragment>
   );

@@ -8,19 +8,20 @@ import {  AppCtxProvider, userType } from "../src/contexts/store";
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
-  user:userType
   emotionCache?: EmotionCache;
+  pageProps:{
+    user:userType
+  }
 }
 
 function MyApp({
   Component,
-  pageProps,
-  user,
+  pageProps, 
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
  
   return (
-    <AppCtxProvider user={user}>
+    <AppCtxProvider user={pageProps.user}>
       <CacheProvider value={emotionCache}>
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
