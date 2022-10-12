@@ -3,22 +3,24 @@ import { AppProps } from "next/app";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/template/createEmotionCache";
 import Layout from "./_layout";
-import { AppCtx, useStoreController } from "../src/contexts/store";
+import {  AppCtxProvider, userType } from "../src/contexts/store";
 
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
+  user:userType
   emotionCache?: EmotionCache;
 }
 
 function MyApp({
   Component,
   pageProps,
+  user,
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
  
   return (
-    <AppCtx.Provider value={useStoreController()}>
+    <AppCtxProvider user={user}>
       <CacheProvider value={emotionCache}>
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -27,7 +29,7 @@ function MyApp({
           <Component {...pageProps} />
         </Layout>
       </CacheProvider>
-    </AppCtx.Provider>
+    </AppCtxProvider>
   );
 }
 

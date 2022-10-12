@@ -2,13 +2,13 @@ import * as React from "react";
 import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Menu, MenuItem, Typography } from "@mui/material";
+import { Menu } from "@mui/material";
 import Notifications from "../contents/notifications";
-import { lightTheme } from "../../../src/template/theme";
 
 export default function Notification() {
   const [open, setOpen] = React.useState(false);
   const [anchor, setAnchor] = React.useState(null);
+  
   const handleClose = () => {
     setOpen(false);
     setAnchor(null);

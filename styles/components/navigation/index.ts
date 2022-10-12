@@ -5,6 +5,9 @@ export const styles = {
     width: { sm: `calc(100% - 240px)` },
     ml: { sm: `240px` },
   },
+  unauthorizedAppBar : {
+    width:"100%",
+  },
   menuButton: {
     display: { lg: "none", xl: "none", xxl: "none" },
   },

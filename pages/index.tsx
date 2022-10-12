@@ -4,7 +4,10 @@ import Header from "../components/navigation/Header";
 import Poll from "../components/utils/poll";
 import { styles } from "../styles/pages/index";
 
+export {getServerSideProps} from "../src/contexts/store";
+
 const Home: NextPage = () => {
+
   return (
     <div>
       <Header />
@@ -25,6 +28,7 @@ const Home: NextPage = () => {
       </Grid>
     </div>
   );
+
 };
 
 export default Home;
