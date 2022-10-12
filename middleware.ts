@@ -19,7 +19,8 @@ export async function middleware(request: NextRequest) {
   );
 
   if (!ironSession.user?.logged) {
-    return NextResponse.rewrite(new URL("/login", request.url));
+    response.headers
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return response;

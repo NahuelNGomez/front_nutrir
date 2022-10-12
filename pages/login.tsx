@@ -9,6 +9,8 @@ import {
   Button,
   Alert,
   AlertTitle,
+  LinearProgress,
+  CircularProgress,
 } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -35,11 +37,12 @@ const Login: NextPage = () => {
     email: false,
     password: false,
   });
-  const [validate, setValidate] = useState(true);
+  const [validate, setValidate] = useState(true); 
+  const [loading,setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
-
     setFormErrors((data) => ({ ...data, email: !formData.email }));
     setFormErrors((data) => ({ ...data, password: !formData.password }));
 
@@ -51,11 +54,12 @@ const Login: NextPage = () => {
       }).then((res) => res.json());
 
       if (response.success) {
-        router.push("/");
+        router.push("/#logged");
       } else {
         setValidate(false);
       }
     }
+    setLoading(false);
     return;
   };
 
@@ -66,11 +70,12 @@ const Login: NextPage = () => {
         container
         justifyContent={"center"}
         alignItems={"center"}
-        alignContent={"center"}
-        sx={{ backgroundcolor: "blue", height: "100vh" }}
+        alignContent={"flex-start"}
+        sx={{ height: "100%",paddingTop:"25px" }}
       >
         <Grid item xs={11} sm={8} lg={4} xl={3}>
           <Card>
+            {loading && <LinearProgress color="primary" />}
             <form onSubmit={handleSubmit}>
               <CardContent
                 sx={{
@@ -137,7 +142,7 @@ const Login: NextPage = () => {
                 }}
               >
                 <Button type="submit" variant="contained" size="medium">
-                  Entrar
+                  Entrar {loading && <CircularProgress color="inherit" />}
                 </Button>
               </CardActions>
               <CardActions

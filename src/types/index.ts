@@ -1,4 +1,3 @@
-import { SvgIconComponent } from "@mui/icons-material";
 import { NextRouter } from "next/router";
 
 export type MenuItem = {

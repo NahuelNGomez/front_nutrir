@@ -5,13 +5,12 @@ import {
   Box,
   Card,
   CardContent,
-  CardMedia,
-  Grid,
-  Stack,
+  Slide,
   Typography,
   Button,
   CardActions,
   Skeleton,
+  Stack,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
@@ -26,6 +25,7 @@ export default function Poll() {
   return (
     <div style={{width:"100%",marginTop: "20px"}}>
       {ready ? 
+      <Slide direction="up" in={ready} mountOnEnter unmountOnExit>
         <Card
           sx={{
             width: "100%",
@@ -53,6 +53,7 @@ export default function Poll() {
             <Button size="small">Iniciar Encuesta</Button>
           </CardActions>
         </Card>
+        </Slide>
        : 
         <Box sx={{width:"100%",height:214,padding:"15px"}}>
             <Skeleton variant={"text"} animation={"wave"} sx={{fontSize:"16px",width:"40%"}}/>

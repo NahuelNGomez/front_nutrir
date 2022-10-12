@@ -8,6 +8,7 @@ export {getServerSideProps} from "../src/contexts/store";
 
 const Home: NextPage = () => {
 
+  
   return (
     <div>
       <Header />

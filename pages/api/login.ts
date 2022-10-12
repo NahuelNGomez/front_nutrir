@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSessionRoute } from '../../src/utils/withIronSession';
 
-type Data = {
-  name: string
-}
-
 const handler = async(req:NextApiRequest,res:NextApiResponse) =>  {
 
   const body = JSON.parse(req.body);
@@ -18,9 +14,10 @@ const handler = async(req:NextApiRequest,res:NextApiResponse) =>  {
       await req.session.save();
 
       res.status(200).json({success:true});
+  } else {
+    res.status(401).json({ success: false })
   }
-
-  res.status(401).json({ success: false })
+  
 }
 
 export default withSessionRoute(handler);
