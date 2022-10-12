@@ -8,11 +8,11 @@ import {
   Grid,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import DrawerMenu from "./DrawerMenu";
-import { styles } from "../../styles/components/navigation";
-import Notification from "../ui/special/notification";
+import DrawerMenu from "@components/navigation/DrawerMenu";
+import { styles } from "@styles/components/navigation";
+import Notification from "@components/ui/special/notification";
+import SwitchMode from "@components/ui/special/switchMode";
 import { useAppCtx } from "../../src/contexts/store";
-import SwitchMode from "../ui/special/switchMode";
 
 const Header = () => {
   const {user} = useAppCtx();
@@ -27,7 +27,7 @@ const Header = () => {
       <AppBar position="sticky" sx={styles.appBar}>
         <Toolbar>
           <Grid container direction="row">
-            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} alignItems={"center"} justifyContent={"flex-start"}>
+            <Grid xs={8} item  sx={styles.toolBarComponents} alignItems={"center"} justifyContent={"flex-start"}>
               <IconButton
                 size="large"
                 edge="start"
@@ -55,7 +55,7 @@ const Header = () => {
       <AppBar position="static" sx={styles.unauthorizedAppBar}>
           <Toolbar>
           <Grid container direction="row">
-            <Grid xs={8} item  sx={{display:"flex",flexDirection:"row"}} alignItems={"center"} justifyContent={"flex-start"}>
+            <Grid xs={8} item  sx={styles.toolBarComponents} alignItems={"center"} justifyContent={"flex-start"}>
               <Avatar src="/logo-nutrir.png" />
               <Typography  variant="h6" component="div">
                 Nutrir App

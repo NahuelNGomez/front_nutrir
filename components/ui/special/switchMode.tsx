@@ -4,7 +4,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { useAppCtx } from "../../../src/contexts/store";
-import { styles } from "../../../styles/components/ui";
+import { styles } from "@styles/components/ui";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ( styles(theme).switchMode));
 

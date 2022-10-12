@@ -1,8 +1,8 @@
-import { Avatar, Breadcrumbs, Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import type { NextPage } from "next";
-import Header from "../components/navigation/Header";
-import Poll from "../components/utils/poll";
-import { styles } from "../styles/pages/index";
+import Header from "@components/navigation/Header";
+import Poll from "@components/utils/poll";
+import { styles } from "@styles/pages/index";
 
 export { getServerSideProps } from "../src/contexts/store";
 

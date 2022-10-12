@@ -1,6 +1,6 @@
 import { getIronSession, IronSessionData } from "iron-session";
 import { GetServerSideProps } from "next";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../template/theme";
 import { sessionOptions } from "../utils/withIronSession";
 
@@ -23,7 +23,14 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
     setModeTheme(mode);
+    localStorage.setItem('theme-mode',mode);
   };
+
+  useEffect(() => {
+    const savedMode:keyof typeof themes = localStorage.getItem('theme-mode') as keyof typeof themes ?? 'light';
+    setModeTheme(savedMode);
+    setCurrentTheme(themes[savedMode]);
+  },[]);
 
   return { currentTheme, updateTheme, modeTheme, user: userLog };
 };

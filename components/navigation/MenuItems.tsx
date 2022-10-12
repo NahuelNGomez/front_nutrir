@@ -1,7 +1,5 @@
-import { AccountCircle } from "@mui/icons-material";
 import {
   Avatar,
-  Box,
   Divider,
   Grid,
   ListItemButton,
@@ -12,13 +10,13 @@ import {
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { useRouter } from "next/router";
+import { styles } from "@styles/components/navigation";
+import SwitchMode from "@components/ui/special/switchMode";
 import { MenuList } from "../../src/contents/menuList";
 import { useAppCtx } from "../../src/contexts/store";
-import { styles } from "../../styles/components/navigation";
-import SwitchMode from "../ui/special/switchMode";
 
 const MenuItems = () => {
-  const { modeTheme,currentTheme } = useAppCtx();
+  const { modeTheme } = useAppCtx();
   const router = useRouter();
 
   return (

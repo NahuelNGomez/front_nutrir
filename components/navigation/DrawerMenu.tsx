@@ -1,7 +1,7 @@
 import { Drawer } from "@mui/material";
 import { FC } from "react";
-import { styles } from "../../styles/components/navigation";
-import MenuItems from "./MenuItems";
+import { styles } from "@styles/components/navigation";
+import MenuItems from "@components/navigation/MenuItems";
 
 type props = {
   open: boolean;

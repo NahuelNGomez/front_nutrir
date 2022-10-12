@@ -1,7 +1,5 @@
-import { DinnerDining } from "@mui/icons-material";
 import {
   Alert,
-  AlertTitle,
   Box,
   Card,
   CardContent,
@@ -12,6 +10,7 @@ import {
   Skeleton,
   Stack,
 } from "@mui/material";
+import { styles } from "@styles/components/utils";
 import React, { useEffect, useState } from "react";
 
 export default function Poll() {
@@ -23,15 +22,13 @@ export default function Poll() {
   }, []);
 
   return (
-    <div style={{width:"100%",marginTop: "20px"}}>
+    <div style={styles.poll.container}>
       {ready ? 
       <Slide direction="up" in={ready} mountOnEnter unmountOnExit>
         <Card
-          sx={{
-            width: "100%",
-          }}
+          sx={styles.fullWidth}
         >
-          <CardContent sx={{ flex: "1 0 auto", width: "100%" }}>
+          <CardContent sx={styles.poll.content}>
             <Typography component="div" variant="h5">
               Nombre del comedor
             </Typography>
@@ -42,9 +39,8 @@ export default function Poll() {
             >
               test 123, Ciudad Autónoma de Buenos Aires
             </Typography>
-            <Stack sx={{ width: "100%" }} spacing={2}>
+            <Stack sx={styles.fullWidth} spacing={2}>
               <Alert severity="error">
-                <AlertTitle>Aviso</AlertTitle>
                 Falta responder: <strong>Almuerzo!</strong>
               </Alert>
             </Stack>
@@ -55,7 +51,7 @@ export default function Poll() {
         </Card>
         </Slide>
        : 
-        <Box sx={{width:"100%",height:214,padding:"15px"}}>
+        <Box sx={styles.poll.skeleton}>
             <Skeleton variant={"text"} animation={"wave"} sx={{fontSize:"16px",width:"40%"}}/>
             <Skeleton variant={"text"} animation={"wave"} sx={{fontSize:"12px",width:"30%"}}/>
             <Skeleton variant={"rectangular"} animation={"wave"} height="40%" width="95%"/>

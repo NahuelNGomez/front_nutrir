@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
 
-export const styles = (theme:Theme) => ({
+export const styles = (theme: Theme) => ({
   switchMode: {
     width: 62,
     height: 34,
@@ -49,3 +49,7 @@ export const styles = (theme:Theme) => ({
     },
   },
 });
+
+export const components = {
+  notification: { width: "100%", maxWidth: 360, bgcolor: "background.paper" },
+}

@@ -14,7 +14,8 @@ import {
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import Header from "../components/navigation/Header";
+import Header from "@components/navigation/Header";
+import { styles } from "@styles/pages/login";
 
 type formDataType = {
   email: string;
@@ -70,29 +71,23 @@ const Login: NextPage = () => {
         justifyContent={"center"}
         alignItems={"center"}
         alignContent={"flex-start"}
-        sx={{ height: "100%",paddingTop:"25px" }}
+        sx={styles.container}
       >
         <Grid item xs={11} sm={8} lg={4} xl={3}>
           <Card>
             {loading && <LinearProgress color="primary" />}
             <form onSubmit={handleSubmit}>
               <CardContent
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                }}
+                sx={styles.content}
               >
                 <Avatar
                   src="/logo-nutrir.png"
-                  sx={{ width: 155, height: 155 }}
+                  sx={styles.icon}
                 />
                 <Typography gutterBottom variant="h5" component="div">
                   Iniciar Session
                 </Typography>
-                <div style={{ width: "90%" }}>
+                <div style={styles.semiFullWidth}>
                   <TextField
                     error={formErrors.email}
                     fullWidth
@@ -135,28 +130,20 @@ const Login: NextPage = () => {
                 </div>
               </CardContent>
               <CardActions
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                }}
+                sx={styles.actions.container}
               >
                 <Button disabled={loading}  type="submit" variant="contained" size="medium" color={loading ? "inherit" : "primary"}>
-                  Entrar {loading && <CircularProgress size={20} sx={{marginLeft:"5px"}} color="inherit" />}
+                  Entrar {loading && <CircularProgress size={20} sx={styles.circularProgress} color="inherit" />}
                 </Button>
               </CardActions>
               <CardActions
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
+                sx={styles.actions.second_container}
               >
                 <Button size="small">Olvide mi contraseña</Button>
                 <Button size="small">Registrarse</Button>
               </CardActions>
               {!validate && (
-                <div style={{padding:"15px"}}>
+                <div style={styles.error_message}>
                   <Alert severity="error">
                     Usuario o Contraseña son incorrectas
                   </Alert>

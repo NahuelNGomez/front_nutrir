@@ -1,15 +1,14 @@
 import React from "react";
 import {
-  Divider,
   List,
   ListItem,
   ListItemText,
-  Typography,
 } from "@mui/material";
+import { components } from "@styles/components/ui";
 
 export default function Notifications() {
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <List sx={components.notification}>
       <ListItem alignItems="flex-start">
         <ListItemText
           primary="Aun No completas Tu encuesta!"
