@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { styles } from "@styles/components/utils";
 import React, { useEffect, useState } from "react";
+import SkeletonPoll from "../skeletons/skeletonPoll";
 
 export default function Poll() {
   const [ready, setReady] = useState(false);
@@ -49,6 +50,7 @@ export default function Poll() {
             <Button size="small">Iniciar Encuesta</Button>
           </CardActions>
         </Card>
+        
         </Slide>
        : 
         <Box sx={styles.poll.skeleton}>
@@ -58,6 +60,7 @@ export default function Poll() {
             <Skeleton variant={"text"} animation={"wave"} sx={{fontSize:"12px",width:"20%"}}/>
         </Box>
       }
+      <SkeletonPoll/>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Ballot, ExitToApp, ManageAccounts, Restaurant, SoupKitchen } from "@mui/icons-material";
-import { MenuItem } from "../types";
+import { MenuItem } from "../types/navigation";
 
 export const MenuList:Array<MenuItem> = [
   {

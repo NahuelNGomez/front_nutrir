@@ -1,8 +1,6 @@
 import {
   Avatar,
-  Grid,
   Typography,
-  Card,
   CardContent,
   TextField,
   CardActions,
@@ -12,147 +10,96 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import Header from "@components/navigation/Header";
+import React from "react";
 import { styles } from "@styles/pages/login";
-
-type formDataType = {
-  email: string;
-  password: string;
-};
-
-type formErrorsType = {
-  email: boolean;
-  password: boolean;
-};
+import useForm from "../src/hooks/useForm";
+import AuthCart from "@components/utils/authCart";
+import { FormLoginData } from "../src/types/forms";
+import { loginReducer } from "../src/reducers/login";
+import { initialLoginFormState } from "../src/constants/states";
+import { useRouter } from "next/router";
 
 const Login: NextPage = () => {
-  const router = useRouter();
-  const [formData, setFormData] = useState<formDataType>({
-    email: "",
-    password: "",
-  });
-  const [formErrors, setFormErrors] = useState<formErrorsType>({
-    email: false,
-    password: false,
-  });
-  const [validate, setValidate] = useState(true); 
-  const [loading,setLoading] = useState(false);
+  const { fields, errors, process, updateField, submit } =
+    useForm<FormLoginData>(loginReducer, initialLoginFormState);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    setLoading(true);
-    e.preventDefault();
-    setFormErrors((data) => ({ ...data, email: !formData.email }));
-    setFormErrors((data) => ({ ...data, password: !formData.password }));
-
-    if (formData.email && formData.password) {
-      setFormErrors({ email: false, password: false });
-      const response = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify(formData),
-      }).then((res) => res.json());
-
-      if (response.success) {
-        router.push("/");
-      } else {
-        setValidate(false);
-      }
-    }
-    setLoading(false);
-    return;
-  };
+    const router = useRouter();
 
   return (
     <>
-      <Header />
-      <Grid
-        container
-        justifyContent={"center"}
-        alignItems={"center"}
-        alignContent={"flex-start"}
-        sx={styles.container}
-      >
-        <Grid item xs={11} sm={8} lg={4} xl={3}>
-          <Card>
-            {loading && <LinearProgress color="primary" />}
-            <form onSubmit={handleSubmit}>
-              <CardContent
-                sx={styles.content}
-              >
-                <Avatar
-                  src="/logo-nutrir.png"
-                  sx={styles.icon}
-                />
-                <Typography gutterBottom variant="h5" component="div">
-                  Iniciar Session
-                </Typography>
-                <div style={styles.semiFullWidth}>
-                  <TextField
-                    error={formErrors.email}
-                    fullWidth
-                    id="input-with-sx"
-                    label="Usuario"
-                    variant="standard"
-                    type="email"
-                    margin="normal"
-                    value={formData.email}
-                    helperText={
-                      formErrors.email ? "Debes ingresar tu usuario/correo" : ""
-                    }
-                    onChange={(e) =>
-                      setFormData((data) => ({
-                        ...data,
-                        email: e.target.value,
-                      }))
-                    }
-                  />
+      <AuthCart>
+        {process.loading && <LinearProgress color="primary" />}
+        <form onSubmit={(e) => submit(e, "/api/login")}>
+          <CardContent sx={styles.content}>
+            <Avatar src="/logo-nutrir.png" sx={styles.icon} />
+            <Typography gutterBottom variant="h5" component="div">
+              Iniciar Session
+            </Typography>
+            <div style={styles.semiFullWidth}>
+              <TextField
+                error={errors.email}
+                fullWidth
+                id="input-with-sx"
+                label="Usuario"
+                variant="standard"
+                type="email"
+                name="email"
+                margin="normal"
+                value={fields.email}
+                helperText={
+                  errors.email ? "Debes ingresar tu usuario/correo" : ""
+                }
+                onChange={updateField}
+              />
 
-                  <TextField
-                    type={"password"}
-                    error={formErrors.password}
-                    fullWidth
-                    id="input-with-sx"
-                    label="Contraseña"
-                    variant="standard"
-                    margin="normal"
-                    value={formData.password}
-                    helperText={
-                      formErrors.password ? "Debes ingresar tu contraseña" : ""
-                    }
-                    onChange={(e) =>
-                      setFormData((data) => ({
-                        ...data,
-                        password: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
-              </CardContent>
-              <CardActions
-                sx={styles.actions.container}
-              >
-                <Button disabled={loading}  type="submit" variant="contained" size="medium" color={loading ? "inherit" : "primary"}>
-                  Entrar {loading && <CircularProgress size={20} sx={styles.circularProgress} color="inherit" />}
-                </Button>
-              </CardActions>
-              <CardActions
-                sx={styles.actions.second_container}
-              >
-                <Button size="small">Olvide mi contraseña</Button>
-                <Button size="small">Registrarse</Button>
-              </CardActions>
-              {!validate && (
-                <div style={styles.error_message}>
-                  <Alert severity="error">
-                    Usuario o Contraseña son incorrectas
-                  </Alert>
-                </div>
+              <TextField
+                type={"password"}
+                error={errors.password}
+                fullWidth
+                id="input-with-sx"
+                label="Contraseña"
+                variant="standard"
+                margin="normal"
+                name="password"
+                value={fields.password}
+                helperText={
+                  errors.password ? "Debes ingresar tu contraseña" : ""
+                }
+                onChange={updateField}
+              />
+            </div>
+          </CardContent>
+          <CardActions sx={styles.actions.container}>
+            <Button
+              disabled={process.loading}
+              type="submit"
+              variant="contained"
+              size="medium"
+              color={process.loading ? "inherit" : "primary"}
+            >
+              Entrar{" "}
+              {process.loading && (
+                <CircularProgress
+                  size={20}
+                  sx={styles.circularProgress}
+                  color="inherit"
+                />
               )}
-            </form>
-          </Card>
-        </Grid>
-      </Grid>
+            </Button>
+          </CardActions>
+          <CardActions sx={styles.actions.second_container}>
+            <Button size="small" onClick={() => router.push('recovery_account')}>Olvide mi contraseña</Button>
+            <Button size="small">Registrarse</Button>
+          </CardActions>
+          {!process.validate && (
+            <div style={styles.error_message}>
+              <Alert severity="error">
+                Usuario o Contraseña son incorrectas
+              </Alert>
+            </div>
+          )}
+        </form>
+      </AuthCart>
     </>
   );
 };

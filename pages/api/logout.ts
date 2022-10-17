@@ -5,7 +5,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     req.session.destroy();
 
-    res.redirect("/#logout");
+    res.redirect("/");
   } catch (e) {
     res.json(e);
   }

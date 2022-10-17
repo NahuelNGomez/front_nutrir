@@ -18,7 +18,7 @@
       "@components/navigation/*" : ["./components/navigation/*"],
       "@components/ui/*" : ["./components/ui/*"],
       "@components/utils/*" : ["./components/utils/*"],
-      "@styles/*" : ["./styles/*"]
+      "@styles/*" : ["./styles/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/components/utils"],

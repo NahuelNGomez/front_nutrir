@@ -19,7 +19,6 @@ function MyApp({
   pageProps, 
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
- 
   return (
     <AppCtxProvider user={pageProps.user}>
       <CacheProvider value={emotionCache}>
