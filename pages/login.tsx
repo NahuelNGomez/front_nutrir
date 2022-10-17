@@ -15,21 +15,28 @@ import { styles } from "@styles/pages/login";
 import useForm from "../src/hooks/useForm";
 import AuthCart from "@components/utils/authCart";
 import { FormLoginData } from "../src/types/forms";
-import { loginReducer } from "../src/reducers/login";
 import { initialLoginFormState } from "../src/constants/states";
 import { useRouter } from "next/router";
+import buildReducer from "../src/reducers";
+import Header from "@components/navigation/Header";
 
 const Login: NextPage = () => {
   const { fields, errors, process, updateField, submit } =
-    useForm<FormLoginData>(loginReducer, initialLoginFormState);
+    useForm<FormLoginData>(
+      buildReducer<FormLoginData>(initialLoginFormState),
+      initialLoginFormState
+    );
 
-    const router = useRouter();
+  const router = useRouter();
 
   return (
     <>
+      <Header />
       <AuthCart>
         {process.loading && <LinearProgress color="primary" />}
-        <form onSubmit={(e) => submit(e, "/api/login")}>
+        <form
+          onSubmit={(e) => submit(e, "/api/login").then(() => router.push("/"))}
+        >
           <CardContent sx={styles.content}>
             <Avatar src="/logo-nutrir.png" sx={styles.icon} />
             <Typography gutterBottom variant="h5" component="div">
@@ -88,7 +95,12 @@ const Login: NextPage = () => {
             </Button>
           </CardActions>
           <CardActions sx={styles.actions.second_container}>
-            <Button size="small" onClick={() => router.push('recovery_account')}>Olvide mi contraseña</Button>
+            <Button
+              size="small"
+              onClick={() => router.push("recovery_account")}
+            >
+              Olvide mi contraseña
+            </Button>
             <Button size="small">Registrarse</Button>
           </CardActions>
           {!process.validate && (

@@ -13,9 +13,11 @@ import { styles } from "@styles/components/navigation";
 import Notification from "@components/ui/special/notification";
 import SwitchMode from "@components/ui/special/switchMode";
 import { useAppCtx } from "../../src/contexts/store";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const {user} = useAppCtx();
+  const router = useRouter();
   const [stateDrawer, setStateDrawer] = useState(false);
   const handleCloseDrawer = () => {
     setStateDrawer(false);
@@ -38,7 +40,7 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <Avatar src="/logo-nutrir.png"  />
+              <Avatar src="/logo-nutrir.png" onClick={()=> router.push("/")} />
               <Typography  variant="h6" component="div">
                 Nutrir App
               </Typography>

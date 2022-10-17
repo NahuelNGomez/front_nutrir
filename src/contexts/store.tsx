@@ -7,6 +7,7 @@ import { sessionOptions } from "../utils/withIronSession";
 export type userType = {
   username?: string;
   name?: string;
+  email?:string;
   comedor?: string;
   logged: boolean;
 };

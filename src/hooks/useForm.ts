@@ -7,7 +7,6 @@ export default function useForm<T>(
   initialState: T
 ) {
   const [Form, dispatch] = useReducer(reducer, initialState);
-  const router = useRouter();
 
   const updateField = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -44,22 +43,27 @@ export default function useForm<T>(
 
   const submit = async (e: React.FormEvent, action: string) => {
     e.preventDefault();
-    setProcess({ validate: true, loading: true });
 
-    if (validateFields()) {
-      const response = await fetch(action, {
-        method: "POST",
-        body: JSON.stringify(Form.fields),
-      }).then((res) => res.json());
+    return new Promise(async (resolve, reject) => {
+      setProcess({ validate: true, loading: true });
 
-      if (response.success) {
-        router.push("/");
+      if (validateFields()) {
+        const response = await fetch(action, {
+          method: "POST",
+          body: JSON.stringify(Form.fields),
+        }).then((res) => res.json());
+
+        if (response.success) {
+          resolve(response);
+        } else {
+          setProcess({ validate: false, loading: false });
+          reject(false);
+        }
       } else {
-        setProcess({ validate: false, loading: false });
+        setProcess({ validate: true, loading: false });
+        reject(false);
       }
-    } else {
-      setProcess({ validate: true, loading: false });
-    }
+    });
   };
 
   return { ...Form, submit, updateField };

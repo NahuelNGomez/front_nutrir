@@ -1,5 +1,5 @@
 export const styles = {
-  container: { height: "100%", paddingTop: "25px" },
+  container: { height: "auto",marginTop:"25px" },
   content: {
     display: "flex",
     flexDirection: "column",

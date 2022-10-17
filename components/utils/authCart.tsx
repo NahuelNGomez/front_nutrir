@@ -10,12 +10,12 @@ type props = {
 const AuthCart: FC<props> = ({ children }) => {
   return (
     <>
-      <Header />
+      
       <Grid
         container
         justifyContent={"center"}
         alignItems={"center"}
-        alignContent={"flex-start"}
+        alignContent={"center"}
         sx={styles.container}
       >
         <Grid item xs={11} sm={8} lg={4} xl={3}>

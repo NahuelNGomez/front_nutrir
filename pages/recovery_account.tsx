@@ -1,85 +1,69 @@
-import AuthCart from "@components/utils/authCart";
-import {
-  Alert,
-  Button,
-  CardActions,
-  CardContent,
-  CircularProgress,
-  LinearProgress,
-  TextField,
-  Typography,
-} from "@mui/material";
+import Header from "@components/navigation/Header";
+import { Grid, Slide, Step, StepLabel, Stepper } from "@mui/material";
 import { NextPage } from "next";
-import { styles } from "@styles/pages/login";
-import useForm from "../src/hooks/useForm";
-import { FormResetEmailData } from "../src/types/forms";
-import { resetEmailReducer } from "../src/reducers/resetEmail";
-import { initialResetFormState } from "../src/constants/states";
+import { useState } from "react";
+import EmailCart from "../components/recovery/emailCart";
+import { styles } from "@styles/pages/recoveryAccount";
 
 const ResetPassword: NextPage = () => {
-  const { fields, errors, process, updateField, submit } =
-    useForm<FormResetEmailData>(resetEmailReducer, initialResetFormState);
+  const [step, setStep] = useState(0);
+  const [email, setEmail] = useState("");
+  const [stepOne, setStepOne] = useState({
+    label: "Correo Electronico",
+    completed: false,
+  });
+  const [stepTwo, setStepTwo] = useState({
+    label: "Codigo de Seguridad",
+    completed: false,
+  });
+  const [stepThree, setStepThree] = useState({
+    label: "Cambia tu contraseña",
+    completed: false,
+  });
 
   return (
     <>
-      <AuthCart>
-        {process.loading && <LinearProgress color="primary" />}
-        <form onSubmit={(e) => submit(e, "/api/reset/email")}>
-          <CardContent sx={styles.content}>
-            <Typography gutterBottom variant="h5" component="div">
-              Restablecer Contraseña
-            </Typography>
-            <div style={styles.semiFullWidth}>
-              <TextField
-                error={errors.email}
-                fullWidth
-                id="input-with-sx"
-                label="Email"
-                variant="standard"
-                type="email"
-                name="email"
-                margin="normal"
-                value={fields.email}
-                helperText={
-                  errors.email ? "Debes ingresar tu usuario/correo" : ""
-                }
-                onChange={updateField}
-              />
-            </div>
-          </CardContent>
-          <CardActions sx={styles.actions.container}>
-            <Button
-              disabled={process.loading}
-              type="submit"
-              variant="contained"
-              size="medium"
-              color={process.loading ? "inherit" : "primary"}
-            >
-              Enviar{" "}
-              {process.loading && (
-                <CircularProgress
-                  size={20}
-                  sx={styles.circularProgress}
-                  color="inherit"
-                />
-              )}
-            </Button>
-          </CardActions>
-        </form>
-        {!process.validate && (
-          <div style={styles.error_message}>
-            <Alert severity="error">
-              No encontramos un registro con el correo electronico ingresado.
-            </Alert>
+      <Header />
+      <Grid
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+        alignContent={"center"}
+        sx={styles.container}
+      >
+        <Grid item xs={12} sm={12} lg={8} xl={5}>
+          <Stepper activeStep={step} alternativeLabel>
+            <Step key={1} completed={stepOne.completed}>
+              <StepLabel>{stepOne.label}</StepLabel>
+            </Step>
+            <Step key={2} completed={stepTwo.completed}>
+              <StepLabel>{stepTwo.label}</StepLabel>
+            </Step>
+            <Step key={3} completed={stepThree.completed}>
+              <StepLabel>{stepThree.label}</StepLabel>
+            </Step>
+          </Stepper>
+        </Grid>
+      </Grid>
+
+      {step === 0 && (
+        <Slide direction="left" in={step == 0} mountOnEnter unmountOnExit>
+          <div>
+            <EmailCart
+              changeEmail={(email) => setEmail(email)}
+              changeSteper={(step) => setStep(step)}
+            />
           </div>
-        )}
-        <div style={styles.error_message}>
-          <small>
-            *Te enviaremos un correo electronico con un codigo unico para que
-            puedas restablecer tu contraseña.
-          </small>
-        </div>
-      </AuthCart>
+        </Slide>
+      )}
+
+      {step === 1 && (
+        <Slide direction="left" in={step == 1} mountOnEnter unmountOnExit>
+          <div>
+           <h1>Paso codigo</h1>
+          </div>
+        </Slide>
+      )}
     </>
   );
 };
