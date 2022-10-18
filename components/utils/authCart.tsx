@@ -18,7 +18,7 @@ const AuthCart: FC<props> = ({ children }) => {
         alignContent={"center"}
         sx={styles.container}
       >
-        <Grid item xs={12} sm={5} lg={4} xl={3}>
+        <Grid item xs={11} sm={5} lg={4} xl={3}>
           <Card>{children}</Card>
         </Grid>
       </Grid>
