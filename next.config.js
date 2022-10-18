@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
-const path = require('path')
+const path = require('path');
+const withPWA = require('next-pwa')({
+  dest: 'public'
+  // disable: process.env.NODE_ENV === 'development',
+  // register: true,
+  // scope: '/app',
+  // sw: 'service-worker.js',
+  //...
+})
 
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  }
-}
-
-module.exports = nextConfig
+module.exports = withPWA({
+  // next.js config
+})
