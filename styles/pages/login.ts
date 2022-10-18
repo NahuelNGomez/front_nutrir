@@ -1,3 +1,5 @@
+import { lightTheme } from "../../src/template/theme";
+
 export const styles = {
   container: { height: "auto",marginTop:"25px" },
   content: {
@@ -8,7 +10,7 @@ export const styles = {
     width: "100%",
   },
   icon: { width: 155, height: 155 },
-  semiFullWidth: { width: "90%" },
+  semiFullWidth: { width: "98%" },
   actions: {
     container: {
       display: "flex",
@@ -18,9 +20,35 @@ export const styles = {
     second_container: {
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "center",
+      marginTop:"10px"
     },
   },
   circularProgress: { marginLeft: "5px" },
   error_message: { padding: "15px" },
+  title_text : {
+    fontWeight:"bold"
+  },
+  input_text : {
+    marginTop:"15px"
+  },
+  submit_button : {
+    width:"100%",
+    borderRadius:"18px",
+    textTransform:"none",
+    padding:"10px",
+    fontSize:"14px"
+  },
+  link_text : {
+    textAlign:"right",
+    color:lightTheme.palette.primary.main,
+    fontWeight:"500",
+    fontSize:"13px",
+    textTransform:"none",
+    backgroundColor:"transparent",
+    cursor:"pointer"
+  },
+  floating_text : {
+    fontSize:"13px"
+  }
 };

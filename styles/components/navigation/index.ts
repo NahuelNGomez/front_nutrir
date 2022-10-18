@@ -32,7 +32,11 @@ export const styles = {
   avatarReggard: {
     color: "white",
   },
-  toolBarComponents: { 
-    display: "flex", 
-    flexDirection: "row" },
+  toolBarComponents: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  logo:{
+    marginRight:"8px"
+  }
 };

@@ -40,7 +40,7 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <Avatar src="/logo-nutrir.png" onClick={()=> router.push("/")} />
+              <Avatar sx={styles.logo} src="/logo-nutrir.png" onClick={()=> router.push("/")} />
               <Typography  variant="h6" component="div">
                 Nutrir App
               </Typography>
@@ -58,7 +58,7 @@ const Header = () => {
           <Toolbar>
           <Grid container direction="row">
             <Grid xs={8} item  sx={styles.toolBarComponents} alignItems={"center"} justifyContent={"flex-start"}>
-              <Avatar src="/logo-nutrir.png" />
+              <Avatar  sx={styles.logo} src="/logo-nutrir.png" />
               <Typography  variant="h6" component="div">
                 Nutrir App
               </Typography>

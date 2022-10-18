@@ -8,6 +8,8 @@ import {
   Alert,
   LinearProgress,
   CircularProgress,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
@@ -19,15 +21,14 @@ import { initialLoginFormState } from "../src/constants/states";
 import { useRouter } from "next/router";
 import buildReducer from "../src/reducers";
 import Header from "@components/navigation/Header";
+import { Visibility } from "@mui/icons-material";
 
 const Login: NextPage = () => {
-  const { fields, errors, process, updateField, submit } =
-    useForm<FormLoginData>(
-      buildReducer<FormLoginData>(initialLoginFormState),
-      initialLoginFormState
-    );
-
+  const reducer = buildReducer<FormLoginData>(initialLoginFormState);
   const router = useRouter();
+
+  const { fields, errors, process, updateField, submit } =
+    useForm<FormLoginData>(reducer, initialLoginFormState);
 
   return (
     <>
@@ -39,8 +40,13 @@ const Login: NextPage = () => {
         >
           <CardContent sx={styles.content}>
             <Avatar src="/logo-nutrir.png" sx={styles.icon} />
-            <Typography gutterBottom variant="h5" component="div">
-              Iniciar Session
+            <Typography
+              sx={styles.title_text}
+              gutterBottom
+              variant="h5"
+              component="div"
+            >
+              Iniciar sesión
             </Typography>
             <div style={styles.semiFullWidth}>
               <TextField
@@ -48,11 +54,12 @@ const Login: NextPage = () => {
                 fullWidth
                 id="input-with-sx"
                 label="Usuario"
-                variant="standard"
+                variant="filled"
                 type="email"
                 name="email"
                 margin="normal"
                 value={fields.email}
+                sx={styles.input_text}
                 helperText={
                   errors.email ? "Debes ingresar tu usuario/correo" : ""
                 }
@@ -65,47 +72,56 @@ const Login: NextPage = () => {
                 fullWidth
                 id="input-with-sx"
                 label="Contraseña"
-                variant="standard"
+                variant="filled"
                 margin="normal"
                 name="password"
+                sx={styles.input_text}
                 value={fields.password}
                 helperText={
                   errors.password ? "Debes ingresar tu contraseña" : ""
                 }
                 onChange={updateField}
               />
+              <Typography
+                sx={styles.link_text}
+                onClick={() => router.push("recovery_account")}
+              >
+                {" "}
+                ¿Olvidaste tu contraseña?
+              </Typography>
             </div>
           </CardContent>
           <CardActions sx={styles.actions.container}>
-            <Button
-              disabled={process.loading}
-              type="submit"
-              variant="contained"
-              size="medium"
-              color={process.loading ? "inherit" : "primary"}
-            >
-              Entrar{" "}
-              {process.loading && (
-                <CircularProgress
-                  size={20}
-                  sx={styles.circularProgress}
-                  color="inherit"
-                />
-              )}
-            </Button>
+            <div style={styles.semiFullWidth}>
+              <Button
+                disabled={process.loading}
+                type="submit"
+                variant="contained"
+                sx={styles.submit_button}
+                color={process.loading ? "inherit" : "primary"}
+              >
+                Ingresar{" "}
+                {process.loading && (
+                  <CircularProgress
+                    size={20}
+                    sx={styles.circularProgress}
+                    color="inherit"
+                  />
+                )}
+              </Button>
+            </div>
           </CardActions>
           <CardActions sx={styles.actions.second_container}>
-            <Button
-              size="small"
-              onClick={() => router.push("recovery_account")}
-            >
-              Olvide mi contraseña
-            </Button>
-            <Button size="small">Registrarse</Button>
+            <Typography sx={styles.floating_text}>
+              ¿No tienes una cuenta?{" "}
+              <Button size="small" sx={styles.link_text}>
+                Registrate
+              </Button>
+            </Typography>
           </CardActions>
           {!process.validate && (
             <div style={styles.error_message}>
-              <Alert severity="error">
+              <Alert severity="error" sx={{ justifyContent: "center" }}>
                 Usuario o Contraseña son incorrectas
               </Alert>
             </div>
