@@ -23,6 +23,11 @@ export const styles = {
       justifyContent: "center",
       marginTop:"10px"
     },
+    code_container : {
+      display:"flex",
+      flexDirection:"row",
+      justifyContent:"space-between",
+    }
   },
   circularProgress: { marginLeft: "5px" },
   error_message: { padding: "15px" },
@@ -50,5 +55,8 @@ export const styles = {
   },
   floating_text : {
     fontSize:"13px"
+  },
+  seconds_timer:{
+    padding:10,
   }
 };

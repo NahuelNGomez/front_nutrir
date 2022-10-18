@@ -22,11 +22,9 @@ type props = {
 };
 
 const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
+  const reducer = buildReducer<FormResetEmailData>(initialResetFormState);
   const { fields, errors, process, updateField, submit } =
-    useForm<FormResetEmailData>(
-      buildReducer<FormResetEmailData>(initialResetFormState),
-      initialResetFormState
-    );
+    useForm<FormResetEmailData>(reducer, initialResetFormState);
 
   const handleSubmit = (e: React.FormEvent) => {
     submit(e, "/api/reset/email").then(() => {
@@ -49,11 +47,12 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
               fullWidth
               id="input-with-sx"
               label="Email"
-              variant="standard"
+              variant="filled"
               type="email"
               name="email"
               margin="normal"
               value={fields.email}
+              sx={styles.input_text}
               helperText={
                 errors.email ? "Debes ingresar tu usuario/correo" : ""
               }

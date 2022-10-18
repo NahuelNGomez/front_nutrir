@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
 import React, { Reducer, useReducer } from "react";
-import { ActionsForm } from "../types/forms";
+import { ActionsForm, SubmitForm } from "../types/forms";
 
 export default function useForm<T>(
   reducer: Reducer<any, any>,
@@ -41,7 +40,7 @@ export default function useForm<T>(
     });
   };
 
-  const submit = async (e: React.FormEvent, action: string) => {
+  const submit = async (e: React.FormEvent, action: string):Promise<SubmitForm | boolean> => {
     e.preventDefault();
 
     return new Promise(async (resolve, reject) => {
@@ -58,6 +57,12 @@ export default function useForm<T>(
         } else {
           setProcess({ validate: false, loading: false });
           reject(false);
+          if(response.errors){
+            dispatch({
+              type: ActionsForm.FETCH_ERRORS,
+              payload: response.errors,
+            });
+          }
         }
       } else {
         setProcess({ validate: true, loading: false });
