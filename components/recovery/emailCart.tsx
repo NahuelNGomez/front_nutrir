@@ -11,10 +11,8 @@ import {
 } from "@mui/material";
 import { styles } from "@styles/pages/login";
 import useForm from "../../src/hooks/useForm";
-import { FormResetEmailData } from "../../src/types/forms";
-import { initialResetFormState } from "../../src/constants/states";
+import { emailResetFields } from "../../src/types/forms";
 import { FC } from "react";
-import buildReducer from "../../src/reducers";
 
 type props = {
   changeSteper(step: number): void;
@@ -22,9 +20,8 @@ type props = {
 };
 
 const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
-  const reducer = buildReducer<FormResetEmailData>(initialResetFormState);
   const { fields, errors, process, updateField, submit } =
-    useForm<FormResetEmailData>(reducer, initialResetFormState);
+    useForm<emailResetFields>("email_reset");
 
   const handleSubmit = (e: React.FormEvent) => {
     submit(e, "/api/reset/email").then(() => {

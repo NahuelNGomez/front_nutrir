@@ -1,9 +1,9 @@
 import AuthCart from "@components/utils/authCart";
-import { FC } from "react";
-import { initialResetPasswordState } from "../../src/constants/states";
+import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
-import buildReducer from "../../src/reducers";
-import { FormResetPasswordData } from "../../src/types/forms";
+import {
+  passwordResetFields,
+} from "../../src/types/forms";
 import { styles } from "@styles/pages/login";
 import {
   Alert,
@@ -24,15 +24,10 @@ type props = {
 
 const PasswordCart: FC<props> = ({ changeSteper, token }) => {
   const router = useRouter();
+  const { fields, errors, process, updateField, submit, updateFieldProps } =
+    useForm<passwordResetFields>("password_reset");
 
-  const initialStateForm = {
-    ...initialResetPasswordState,
-    fields: { ...initialResetPasswordState.fields, token },
-  };
-
-  const reducer = buildReducer<FormResetPasswordData>(initialStateForm);
-  const { fields, errors, process, updateField, submit } =
-    useForm<FormResetPasswordData>(reducer, initialStateForm);
+  useEffect(() => updateFieldProps("token", token), []);
 
   const handleSubmit = (e: React.FormEvent) => {
     submit(e, "/api/reset/password").then(() => {
@@ -61,10 +56,12 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
                 margin="normal"
                 value={fields.password}
                 sx={styles.input_text}
-                helperText={errors.password ? "Debes ingresar una contraseña" : ""}
+                helperText={
+                  errors.password ? "Debes ingresar una contraseña" : ""
+                }
                 onChange={updateField}
               />
-                <TextField
+              <TextField
                 error={errors.confirm_password}
                 fullWidth
                 id="input-with-sx"
@@ -75,14 +72,15 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
                 margin="normal"
                 value={fields.confirm_password}
                 sx={styles.input_text}
-                helperText={errors.confirm_password ? "Debes confirmar tu contraseña" : ""}
+                helperText={
+                  errors.confirm_password ? "Debes confirmar tu contraseña" : ""
+                }
                 onChange={updateField}
               />
             </div>
           </CardContent>
           <div style={styles.semiFullWidth}>
             <CardActions sx={styles.actions.container}>
-             
               <Button
                 disabled={process.loading}
                 type="submit"
@@ -104,9 +102,7 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
         </form>
         {!process.validate && (
           <div style={styles.error_message}>
-            <Alert severity="error">
-              Hubo un error.
-            </Alert>
+            <Alert severity="error">Hubo un error.</Alert>
           </div>
         )}
       </AuthCart>

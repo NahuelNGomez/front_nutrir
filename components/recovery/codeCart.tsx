@@ -1,9 +1,7 @@
 import AuthCart from "@components/utils/authCart";
-import { FC } from "react";
-import { initialResetCodeState } from "../../src/constants/states";
+import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
-import buildReducer from "../../src/reducers";
-import { FormResetCodeData, SubmitForm } from "../../src/types/forms";
+import { codeResetFields, SubmitForm } from "../../src/types/forms";
 import { styles } from "@styles/pages/login";
 import {
   Alert,
@@ -20,26 +18,25 @@ import useTimer from "../../src/hooks/useTimer";
 
 type props = {
   changeSteper(step: number): void;
-  changeToken(token:string):void;
+  changeToken(token: string): void;
   email: string;
 };
 
-const CodeCart: FC<props> = ({ changeSteper,changeToken, email }) => {
+const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
   const router = useRouter();
   const { seconds } = useTimer(60);
 
-  const initialStateForm = {
-    ...initialResetCodeState,
-    fields: { ...initialResetCodeState.fields, email },
-  };
-  const reducer = buildReducer<FormResetCodeData>(initialStateForm);
-  const { fields, errors, process, updateField, submit } =
-    useForm<FormResetCodeData>(reducer, initialStateForm);
+  const { fields, errors, process, updateField, submit, updateFieldProps } =
+    useForm<codeResetFields>("code_reset");
+
+  useEffect(() => {
+    updateFieldProps("email", email);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
-    submit(e, "/api/reset/code").then((response:SubmitForm) => {
+    submit(e, "/api/reset/code").then((response: SubmitForm) => {
       changeSteper(2);
-      changeToken(response.token);  
+      changeToken(response.token);
     });
   };
   return (

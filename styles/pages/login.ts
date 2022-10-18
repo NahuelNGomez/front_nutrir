@@ -58,5 +58,11 @@ export const styles = {
   },
   seconds_timer:{
     padding:10,
+  },
+  register:{
+    title:{
+      textAlign:"center",
+      fontWeight:"400"
+    }
   }
 };

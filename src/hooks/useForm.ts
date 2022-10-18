@@ -1,11 +1,24 @@
 import React, { Reducer, useReducer } from "react";
-import { ActionsForm, SubmitForm } from "../types/forms";
+import { statesForms } from "../constants/states";
+import buildReducer from "../reducers";
+import {
+  ActionsForm,
+  formBase,
+  SubmitForm,
+} from "../types/forms";
 
-export default function useForm<T>(
-  reducer: Reducer<any, any>,
-  initialState: T
-) {
+export default function useForm<T>(form: keyof formBase) {
+  const initialState = statesForms[form];
+  const reducer = buildReducer<T>(initialState);
   const [Form, dispatch] = useReducer(reducer, initialState);
+
+  const updateFieldProps = (field:string,value:any) =>
+  {
+    dispatch({
+      type: ActionsForm.FETCH_FIELDS,
+      payload: { ...Form.fields, [field]: value },
+    });
+  }
 
   const updateField = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -40,7 +53,10 @@ export default function useForm<T>(
     });
   };
 
-  const submit = async (e: React.FormEvent, action: string):Promise<SubmitForm | boolean> => {
+  const submit = async (
+    e: React.FormEvent,
+    action: string
+  ): Promise<SubmitForm> => {
     e.preventDefault();
 
     return new Promise(async (resolve, reject) => {
@@ -56,20 +72,23 @@ export default function useForm<T>(
           resolve(response);
         } else {
           setProcess({ validate: false, loading: false });
-          reject(false);
-          if(response.errors){
+
+          if (response.errors) {
             dispatch({
               type: ActionsForm.FETCH_ERRORS,
               payload: response.errors,
             });
+            reject({ errors: response.errors });
+          } else {
+            reject({ errors: {} });
           }
         }
       } else {
         setProcess({ validate: true, loading: false });
-        reject(false);
+        reject({ errors: {} });
       }
     });
   };
 
-  return { ...Form, submit, updateField };
+  return { ...Form, submit, updateField,updateFieldProps };
 }

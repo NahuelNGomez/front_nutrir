@@ -8,27 +8,20 @@ import {
   Alert,
   LinearProgress,
   CircularProgress,
-  InputAdornment,
-  IconButton,
 } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
 import { styles } from "@styles/pages/login";
 import useForm from "../src/hooks/useForm";
 import AuthCart from "@components/utils/authCart";
-import { FormLoginData } from "../src/types/forms";
-import { initialLoginFormState } from "../src/constants/states";
 import { useRouter } from "next/router";
-import buildReducer from "../src/reducers";
 import Header from "@components/navigation/Header";
-import { Visibility } from "@mui/icons-material";
+import { loginFields } from "../src/types/forms";
 
 const Login: NextPage = () => {
-  const reducer = buildReducer<FormLoginData>(initialLoginFormState);
   const router = useRouter();
 
-  const { fields, errors, process, updateField, submit } =
-    useForm<FormLoginData>(reducer, initialLoginFormState);
+  const { fields, errors, process, updateField, submit } = useForm<loginFields>("login");
 
   return (
     <>
@@ -112,9 +105,9 @@ const Login: NextPage = () => {
             </div>
           </CardActions>
           <CardActions sx={styles.actions.second_container}>
-            <Typography sx={styles.floating_text}>
+            <Typography sx={styles.floating_text} >
               ¿No tienes una cuenta?{" "}
-              <Button size="small" sx={styles.link_text}>
+              <Button size="small" sx={styles.link_text} onClick={() => router.push('register')}>
                 Registrate
               </Button>
             </Typography>

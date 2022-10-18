@@ -1,61 +1,20 @@
-import { FormLoginData,FormResetEmailData,FormResetCodeData, FormResetPasswordData } from "../types/forms";
+import { codeResetFields, emailResetFields, loginFields, passwordResetFields, registerFields, stateFormBase } from "../types/forms";
 
-export const initialLoginFormState:FormLoginData = {
-  fields: {
-    email: "",
-    password: "",
-  },
-  errors: {
-    email: false,
-    password: false,
-  },
-  process: {
-    validate: true,
-    loading: false,
-  },
+export function initialFormState<T>(Fields:T):stateFormBase<T> {
+  
+ return {
+    fields: Fields,
+    errors: Fields,
+    process: { validate: true, loading: false },
+  };
+ 
+}
+
+export const statesForms = {
+  register: initialFormState<typeof registerFields>(registerFields),
+  login: initialFormState<typeof loginFields>(loginFields),
+  email_reset: initialFormState<typeof emailResetFields>(emailResetFields),
+  code_reset: initialFormState<typeof codeResetFields>(codeResetFields),
+  password_reset: initialFormState<typeof passwordResetFields>(passwordResetFields)
 };
 
-export const initialResetFormState:FormResetEmailData = {
-  fields: {
-    email: "",
-  },
-  errors: {
-    email: false,
-  },
-  process: {
-    validate: true,
-    loading: false,
-  },
-};
-
-export const initialResetCodeState:FormResetCodeData = {
-  fields: {
-    code: "",
-    email:""
-  },
-  errors: {
-    code: false,
-    email:false
-  },
-  process: {
-    validate: true,
-    loading: false,
-  },
-};
-
-export const initialResetPasswordState:FormResetPasswordData = {
-  fields: {
-    password: "",
-    confirm_password:"",
-    token:""
-  },
-  errors: {
-    password: false,
-    confirm_password:false,
-    token:false
-  },
-  process: {
-    validate: true,
-    loading: false,
-  },
-};
