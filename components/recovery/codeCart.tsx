@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import useTimer from "../../src/hooks/useTimer";
+import { statesForms } from "../../src/constants/states";
 
 type props = {
   changeSteper(step: number): void;
@@ -27,7 +28,7 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
   const { seconds } = useTimer(60);
 
   const { fields, errors, process, updateField, submit, updateFieldProps } =
-    useForm<codeResetFields>("code_reset");
+    useForm<codeResetFields>(statesForms.code_reset);
 
   useEffect(() => {
     updateFieldProps("email", email);

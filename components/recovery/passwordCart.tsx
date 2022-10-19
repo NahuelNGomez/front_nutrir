@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import { statesForms } from "../../src/constants/states";
 
 type props = {
   changeSteper(step: number): void;
@@ -25,7 +26,7 @@ type props = {
 const PasswordCart: FC<props> = ({ changeSteper, token }) => {
   const router = useRouter();
   const { fields, errors, process, updateField, submit, updateFieldProps } =
-    useForm<passwordResetFields>("password_reset");
+    useForm<passwordResetFields>(statesForms.password_reset);
 
   useEffect(() => updateFieldProps("token", token), []);
 

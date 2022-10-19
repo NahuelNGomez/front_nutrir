@@ -13,6 +13,7 @@ import { styles } from "@styles/pages/login";
 import useForm from "../../src/hooks/useForm";
 import { emailResetFields } from "../../src/types/forms";
 import { FC } from "react";
+import { statesForms } from "../../src/constants/states";
 
 type props = {
   changeSteper(step: number): void;
@@ -21,7 +22,7 @@ type props = {
 
 const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
   const { fields, errors, process, updateField, submit } =
-    useForm<emailResetFields>("email_reset");
+    useForm<emailResetFields>(statesForms.email_reset);
 
   const handleSubmit = (e: React.FormEvent) => {
     submit(e, "/api/reset/email").then(() => {

@@ -17,11 +17,12 @@ import AuthCart from "@components/utils/authCart";
 import { useRouter } from "next/router";
 import Header from "@components/navigation/Header";
 import { loginFields } from "../src/types/forms";
+import { statesForms } from "../src/constants/states";
 
 const Login: NextPage = () => {
   const router = useRouter();
 
-  const { fields, errors, process, updateField, submit } = useForm<loginFields>("login");
+  const { fields, errors, process, updateField, submit } = useForm<loginFields>(statesForms.login);
 
   return (
     <>

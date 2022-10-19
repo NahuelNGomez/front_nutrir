@@ -63,6 +63,9 @@ export const styles = {
     title:{
       textAlign:"center",
       fontWeight:"400"
+    },
+    fields:{
+      padding:"5px"
     }
   }
 };
