@@ -30,7 +30,7 @@ const Login: NextPage = () => {
 
   return (
     <div
-      style={styles.bacground_login[modeTheme]}
+      style={modeTheme === 'dark' ? styles.bacground_login.dark : styles.bacground_login.light }
     >
       <Header />
       <AuthCart>
