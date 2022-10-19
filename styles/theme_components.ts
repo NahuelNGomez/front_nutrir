@@ -60,7 +60,7 @@ const components = (theme: string) => ({
         "&.Mui-focused": {
           color: colors(theme).primary,
         },
-        fontSize:"15px"
+        fontSize:"13px"
       },
     },
   },
