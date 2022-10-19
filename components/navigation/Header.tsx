@@ -14,6 +14,7 @@ import Notification from "@components/ui/special/notification";
 import SwitchMode from "@components/ui/special/switchMode";
 import { useAppCtx } from "../../src/contexts/store";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Header = () => {
   const {user} = useAppCtx();
@@ -40,10 +41,7 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <Avatar sx={styles.logo} src="/logo-nutrir.png" onClick={()=> router.push("/")} />
-              <Typography  variant="h6" component="div">
-                Nutrir App
-              </Typography>
+              <Image src={"/dark-logo.png"} width={80} height={50} />
               <DrawerMenu open={stateDrawer} onClose={handleCloseDrawer} />
             </Grid>
             <Grid container xs={4} item justifyContent={"flex-end"} alignContent="center">
@@ -58,10 +56,7 @@ const Header = () => {
           <Toolbar>
           <Grid container direction="row">
             <Grid xs={8} item  sx={styles.toolBarComponents} alignItems={"center"} justifyContent={"flex-start"}>
-              <Avatar  sx={styles.logo} src="/logo-nutrir.png" />
-              <Typography  variant="h6" component="div">
-                Nutrir App
-              </Typography>
+            <Image src={"/dark-logo.png"} width={80} height={50} />
             </Grid>
             <Grid container xs={4} item  justifyContent={"flex-end"}>
               <SwitchMode />

@@ -18,14 +18,20 @@ import { useRouter } from "next/router";
 import Header from "@components/navigation/Header";
 import { loginFields } from "../src/types/forms";
 import { statesForms } from "../src/constants/states";
+import Image from "next/image";
+import { useAppCtx } from "../src/contexts/store";
 
 const Login: NextPage = () => {
   const router = useRouter();
-
-  const { fields, errors, process, updateField, submit } = useForm<loginFields>(statesForms.login);
+  const { modeTheme } = useAppCtx();
+  const { fields, errors, process, updateField, submit } = useForm<loginFields>(
+    statesForms.login
+  );
 
   return (
-    <>
+    <div
+      style={styles.bacground_login[modeTheme]}
+    >
       <Header />
       <AuthCart>
         {process.loading && <LinearProgress color="primary" />}
@@ -33,15 +39,12 @@ const Login: NextPage = () => {
           onSubmit={(e) => submit(e, "/api/login").then(() => router.push("/"))}
         >
           <CardContent sx={styles.content}>
-            <Avatar src="/logo-nutrir.png" sx={styles.icon} />
-            <Typography
-              sx={styles.title_text}
-              gutterBottom
-              variant="h5"
-              component="div"
-            >
-              Iniciar sesión
-            </Typography>
+            <Image
+              src={modeTheme == "dark" ? "/dark-logo.png" : "/light-logo.png"}
+              width={280}
+              height={150}
+            />
+
             <div style={styles.semiFullWidth}>
               <TextField
                 error={errors.email}
@@ -106,9 +109,13 @@ const Login: NextPage = () => {
             </div>
           </CardActions>
           <CardActions sx={styles.actions.second_container}>
-            <Typography sx={styles.floating_text} >
+            <Typography sx={styles.floating_text}>
               ¿No tienes una cuenta?{" "}
-              <Button size="small" sx={styles.link_text} onClick={() => router.push('register')}>
+              <Button
+                size="small"
+                sx={styles.link_text}
+                onClick={() => router.push("register")}
+              >
                 Registrate
               </Button>
             </Typography>
@@ -122,7 +129,7 @@ const Login: NextPage = () => {
           )}
         </form>
       </AuthCart>
-    </>
+    </div>
   );
 };
 

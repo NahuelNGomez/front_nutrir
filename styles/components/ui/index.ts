@@ -1,4 +1,5 @@
 import { Theme } from "@mui/material";
+import { lightTheme } from "../../../src/template/theme";
 
 export const styles = (theme: Theme) => ({
   switchMode: {
@@ -25,7 +26,7 @@ export const styles = (theme: Theme) => ({
       },
     },
     "& .MuiSwitch-thumb": {
-      backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
+      backgroundColor: lightTheme.palette.secondary.main,
       width: 32,
       height: 32,
       "&:before": {

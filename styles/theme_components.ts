@@ -13,7 +13,7 @@ const components = (theme: string) => ({
     styleOverrides: {
       root: {
         ":after": {
-          borderBottom: `2px solid ${colors(theme).secondary}`,
+          borderBottom: `2px solid ${colors(theme).primary}`,
         },
         "&.Mui-focused": {
             backgroundColor: colors(theme).light_secondary,
@@ -42,7 +42,7 @@ const components = (theme: string) => ({
   MuiAppBar: {
     styleOverrides: {
       root: {
-        backgroundColor: colors(theme).primary,
+        backgroundColor: theme ==="dark"? "transparent" : colors(theme).primary  ,
       },
     },
   },
@@ -50,7 +50,7 @@ const components = (theme: string) => ({
     styleOverrides: {
       root: {
         backgroundColor: colors(theme).primary,
-        color: "white",
+        color: "#121212",
       },
     },
   },
@@ -58,7 +58,7 @@ const components = (theme: string) => ({
     styleOverrides: {
       root: {
         "&.Mui-focused": {
-          color: colors(theme).secondary,
+          color: colors(theme).primary,
         },
         fontSize:"15px"
       },

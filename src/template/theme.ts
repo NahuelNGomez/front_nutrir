@@ -8,6 +8,9 @@ let lightTheme = createTheme({
     primary: {
       main: colors("light").primary,
     },
+    secondary:{
+      main: colors("light").secondary,
+    },
     warning: {
       main: "#FDECEA",
     },

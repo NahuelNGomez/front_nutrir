@@ -67,5 +67,21 @@ export const styles = {
     fields:{
       padding:"5px"
     }
+  },
+  bacground_login:{
+    light: {
+        backgroundColor: "#013A6B",
+        backgroundImage:
+          "-webkit-linear-gradient(25deg, #ffffff 50%, #f1f3fa 50%)",
+         height:"100vh"
+    },
+    dark:{
+      backgroundColor: "#121212",
+        backgroundImage:
+          "-webkit-linear-gradient(25deg, #121212 50%, rgba(255, 255, 255, 0.09) 50%)",
+         height:"100vh"
+    }
   }
 };
+
+
