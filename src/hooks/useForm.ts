@@ -2,7 +2,6 @@ import React, { useReducer } from "react";
 import buildReducer from "../reducers";
 import {
   ActionsForm,
-  formBase,
   stateFormBase,
   SubmitForm,
 } from "../types/forms";

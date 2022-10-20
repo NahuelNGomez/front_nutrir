@@ -1,5 +1,5 @@
 import { Card, Grid } from "@mui/material";
-import { styles } from "@styles/pages/login";
+import { styles } from "@styles/pages/auth";
 import React, { FC, ReactNode } from "react";
 
 type props = {

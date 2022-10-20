@@ -20,6 +20,7 @@ const themes = {
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [currentTheme, setCurrentTheme] = useState(lightTheme);
   const [modeTheme, setModeTheme] = useState("light");
+  const [menuOpen,setMenuOpen] = useState(false);
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -33,7 +34,7 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     setCurrentTheme(themes[savedMode]);
   },[]);
 
-  return { currentTheme, updateTheme, modeTheme, user: userLog };
+  return { currentTheme, updateTheme, modeTheme, user: userLog,menuOpen,setMenuOpen };
 };
 
 export const AppCtx = createContext<ReturnType<typeof useStoreController>>({
@@ -41,6 +42,8 @@ export const AppCtx = createContext<ReturnType<typeof useStoreController>>({
   updateTheme: () => {},
   modeTheme: "light",
   user: { logged: false },
+  menuOpen:false,
+  setMenuOpen:() => {}
 });
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

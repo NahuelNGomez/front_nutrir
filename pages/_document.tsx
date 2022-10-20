@@ -14,11 +14,8 @@ export default class MyDocument extends Document {
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <meta name="theme-color" content={lightTheme.palette.primary.main} />
           <link rel="shortcut icon" href="/icon.png" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
           <meta name="emotion-insertion-point" content="" />
+          <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
           <link
             rel="apple-touch-startup-image"
             media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"

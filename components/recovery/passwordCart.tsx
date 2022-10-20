@@ -1,10 +1,8 @@
 import AuthCart from "@components/utils/authCart";
 import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
-import {
-  passwordResetFields,
-} from "../../src/types/forms";
-import { styles } from "@styles/pages/login";
+import { passwordResetFields } from "../../src/types/forms";
+import { styles } from "@styles/pages/auth";
 import {
   Alert,
   Button,
@@ -17,6 +15,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { statesForms } from "../../src/constants/states";
+import { useAppCtx } from "../../src/contexts/store";
 
 type props = {
   changeSteper(step: number): void;
@@ -25,6 +24,8 @@ type props = {
 
 const PasswordCart: FC<props> = ({ changeSteper, token }) => {
   const router = useRouter();
+  const { modeTheme } = useAppCtx();
+
   const { fields, errors, process, updateField, submit, updateFieldProps } =
     useForm<passwordResetFields>(statesForms.password_reset);
 
@@ -36,27 +37,28 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
       router.push("login");
     });
   };
+  const style = styles(modeTheme);
   return (
     <>
       <AuthCart>
         {process.loading && <LinearProgress color="primary" />}
         <form onSubmit={handleSubmit}>
-          <CardContent sx={styles.content}>
+          <CardContent sx={style.content.cardContent}>
             <Typography gutterBottom variant="h5" component="div">
               Restablecer contraseña.
             </Typography>
-            <div style={styles.semiFullWidth}>
+            <div style={style.utils.container}>
               <TextField
                 error={errors.password}
                 fullWidth
                 id="input-with-sx"
                 label="Nueva Contraseña"
-                variant="filled"
+                variant="outlined"
                 type="password"
                 name="password"
                 margin="normal"
                 value={fields.password}
-                sx={styles.input_text}
+                sx={style.utils.textInput}
                 helperText={
                   errors.password ? "Debes ingresar una contraseña" : ""
                 }
@@ -67,12 +69,12 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
                 fullWidth
                 id="input-with-sx"
                 label="Confirmar Contraseña"
-                variant="filled"
+                variant="outlined"
                 type="password"
                 name="confirm_password"
                 margin="normal"
                 value={fields.confirm_password}
-                sx={styles.input_text}
+                sx={style.utils.textInput}
                 helperText={
                   errors.confirm_password ? "Debes confirmar tu contraseña" : ""
                 }
@@ -80,8 +82,8 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
               />
             </div>
           </CardContent>
-          <div style={styles.semiFullWidth}>
-            <CardActions sx={styles.actions.container}>
+          <div style={style.utils.container}>
+            <CardActions sx={style.content.actions.container}>
               <Button
                 disabled={process.loading}
                 type="submit"
@@ -93,7 +95,7 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
                 {process.loading && (
                   <CircularProgress
                     size={20}
-                    sx={styles.circularProgress}
+                    sx={style.utils.circularProgress}
                     color="inherit"
                   />
                 )}
@@ -102,7 +104,7 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
           </div>
         </form>
         {!process.validate && (
-          <div style={styles.error_message}>
+          <div style={style.utils.errorMessage}>
             <Alert severity="error">Hubo un error.</Alert>
           </div>
         )}

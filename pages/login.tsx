@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Typography,
   CardContent,
   TextField,
@@ -11,7 +10,7 @@ import {
 } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
-import { styles } from "@styles/pages/login";
+import { styles } from "@styles/pages/auth";
 import useForm from "../src/hooks/useForm";
 import AuthCart from "@components/utils/authCart";
 import { useRouter } from "next/router";
@@ -27,35 +26,12 @@ const Login: NextPage = () => {
   const { fields, errors, process, updateField, submit } = useForm<loginFields>(
     statesForms.login
   );
+  const style = styles(modeTheme);
 
   return (
-    <div
-      style={{
-        backgroundColor: modeTheme == "light" ? "#013A6B" : "#121212",
-        backgroundImage:
-          modeTheme == "light"
-            ? "-webkit-linear-gradient(25deg, #ffffff 50%, #f1f3fa 50%)"
-            : "-webkit-linear-gradient(25deg, #121212 50%, rgba(255, 255, 255, 0.09) 50%)",
-        height: process.validate ? "100vh" : "max-content",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          alignItems: "center",
-          height:"100vh"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            width: "100%",
-          }}
-        >
+    <div style={style.page}>
+      <div style={style.content.container}>
+        <div style={style.content.header}>
           <SwitchMode />
         </div>
         <AuthCart>
@@ -65,26 +41,26 @@ const Login: NextPage = () => {
               submit(e, "/api/login").then(() => router.push("/"))
             }
           >
-            <CardContent sx={styles.content}>
+            <CardContent sx={style.content.cardContent}>
               <Image
                 src={modeTheme == "dark" ? "/dark-logo.png" : "/light-logo.png"}
                 width={220}
                 height={110}
-                style={{marginBottom:"7px"}}
+                style={{ marginBottom: "7px" }}
               />
 
-              <div style={styles.semiFullWidth}>
+              <div style={style.utils.container}>
                 <TextField
                   error={errors.email}
                   fullWidth
                   id="input-with-sx"
                   label="Usuario"
-                  variant="filled"
+                  variant="outlined"
                   type="email"
                   name="email"
                   margin="normal"
                   value={fields.email}
-                  sx={styles.input_text}
+                  sx={style.utils.textInput}
                   helperText={
                     errors.email ? "Debes ingresar tu usuario/correo" : ""
                   }
@@ -97,10 +73,10 @@ const Login: NextPage = () => {
                   fullWidth
                   id="input-with-sx"
                   label="Contraseña"
-                  variant="filled"
+                  variant="outlined"
                   margin="normal"
                   name="password"
-                  sx={styles.input_text}
+                  sx={style.utils.textInput}
                   value={fields.password}
                   helperText={
                     errors.password ? "Debes ingresar tu contraseña" : ""
@@ -108,7 +84,7 @@ const Login: NextPage = () => {
                   onChange={updateField}
                 />
                 <Typography
-                  sx={styles.link_text}
+                  sx={style.utils.linkText}
                   onClick={() => router.push("recovery_account")}
                 >
                   {" "}
@@ -116,32 +92,32 @@ const Login: NextPage = () => {
                 </Typography>
               </div>
             </CardContent>
-            <CardActions sx={styles.actions.container}>
-              <div style={styles.semiFullWidth}>
+            <CardActions sx={style.content.actions.container}>
+              <div style={style.utils.container}>
                 <Button
                   disabled={process.loading}
                   type="submit"
                   variant="contained"
-                  sx={styles.submit_button}
+                  sx={style.utils.submitButton}
                   color={process.loading ? "inherit" : "primary"}
                 >
                   Ingresar{" "}
                   {process.loading && (
                     <CircularProgress
                       size={20}
-                      sx={styles.circularProgress}
+                      sx={style.utils.circularProgress}
                       color="inherit"
                     />
                   )}
                 </Button>
               </div>
             </CardActions>
-            <CardActions sx={styles.actions.second_container}>
-              <Typography sx={styles.floating_text}>
+            <CardActions sx={style.content.actions.helperText}>
+              <Typography sx={style.content.actions.floatingText}>
                 ¿No tienes una cuenta?{" "}
                 <Button
                   size="small"
-                  sx={styles.link_text}
+                  sx={style.utils.linkText}
                   onClick={() => router.push("register")}
                 >
                   Registrate
@@ -149,7 +125,7 @@ const Login: NextPage = () => {
               </Typography>
             </CardActions>
             {!process.validate && (
-              <div style={styles.error_message}>
+              <div style={style.utils.errorMessage}>
                 <Alert severity="error" sx={{ justifyContent: "center" }}>
                   Usuario o Contraseña son incorrectas
                 </Alert>

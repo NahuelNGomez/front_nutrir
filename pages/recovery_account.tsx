@@ -1,4 +1,4 @@
-import Header from "@components/navigation/Header";
+import Header from "../components/LayoutAuth";
 import { Grid, Slide, Step, StepLabel, Stepper } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import Header from "@components/navigation/Header";
+import Header from "../components/LayoutAuth";
 import {
   Button,
   Card,
@@ -16,17 +16,19 @@ import {
   Typography,
 } from "@mui/material";
 import { NextPage } from "next";
-import { styles } from "@styles/pages/login";
+import { styles } from "@styles/pages/auth";
 import { useRouter } from "next/router";
 import useForm from "../src/hooks/useForm";
 import { registerFields } from "../src/types/forms";
 import { statesForms } from "../src/constants/states";
+import { useAppCtx } from "../src/contexts/store";
 
 const Register: NextPage = () => {
   const router = useRouter();
-
+  const { modeTheme } = useAppCtx();
   const { fields, errors, process, updateField, updateFieldProps, submit } =
     useForm<registerFields>(statesForms.register);
+  const style = styles(modeTheme);
 
   return (
     <>
@@ -36,7 +38,7 @@ const Register: NextPage = () => {
         justifyContent={"center"}
         alignItems={"center"}
         alignContent={"center"}
-        sx={styles.container}
+        sx={style.content.container}
       >
         <Grid item xs={12} sm={8} lg={7} xl={7}>
           <Card>
@@ -48,7 +50,7 @@ const Register: NextPage = () => {
             >
               <CardContent>
                 <Typography
-                  sx={styles.register.title}
+                  sx={style.register.title}
                   gutterBottom
                   variant="h5"
                   component="div"
@@ -66,19 +68,19 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <TextField
                       error={errors.user}
                       fullWidth
                       id="input-with-sx"
                       label="Usuario"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                       name="user"
                       margin="normal"
                       value={fields.user}
-                      sx={styles.input_text}
+                      sx={style.utils.textInput}
                       helperText={
                         errors.user ? "Debes ingresar tu usuario" : ""
                       }
@@ -91,19 +93,19 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <TextField
                       error={errors.name}
                       fullWidth
                       id="input-with-sx"
                       label="Nombre y Apellido"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                       name="name"
                       margin="normal"
                       value={fields.name}
-                      sx={styles.input_text}
+                      sx={style.utils.textInput}
                       helperText={
                         errors.name
                           ? "Debes ingresar tu nombre y appellido"
@@ -124,19 +126,19 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <TextField
                       error={errors.phone}
                       fullWidth
                       id="input-with-sx"
                       label="Telefono"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                       name="phone"
                       margin="normal"
                       value={fields.phone}
-                      sx={styles.input_text}
+                      sx={style.utils.textInput}
                       helperText={
                         errors.phone ? "Debes ingresar tu telefono" : ""
                       }
@@ -149,19 +151,19 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <TextField
                       error={errors.email}
                       fullWidth
                       id="input-with-sx"
                       label="Correo Electronico"
-                      variant="filled"
+                      variant="outlined"
                       type="email"
                       name="email"
                       margin="normal"
                       value={fields.email}
-                      sx={styles.input_text}
+                      sx={style.utils.textInput}
                       helperText={
                         errors.email ? "Debes ingresar tu correo" : ""
                       }
@@ -180,19 +182,19 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <TextField
                       error={errors.password}
                       fullWidth
                       id="input-with-sx"
                       label="Elegi una contraseña"
-                      variant="filled"
+                      variant="outlined"
                       type="password"
                       name="password"
                       margin="normal"
                       value={fields.password}
-                      sx={styles.input_text}
+                      sx={style.utils.textInput}
                       helperText={
                         errors.password ? "Debes ingresar tu telefono" : ""
                       }
@@ -205,7 +207,7 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <FormControl
                       variant="filled"
@@ -242,7 +244,7 @@ const Register: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={styles.register.fields}
+                    sx={style.register.fields}
                   >
                     <FormControl
                       variant="filled"
@@ -270,20 +272,20 @@ const Register: NextPage = () => {
                   </Grid>
                 </Grid>
               </CardContent>
-              <CardActions sx={styles.actions.container}>
-                <div style={styles.semiFullWidth}>
+              <CardActions sx={style.content.actions.container}>
+                <div style={style.utils.container}>
                   <Button
                     disabled={process.loading}
                     type="submit"
                     variant="contained"
-                    sx={styles.submit_button}
+                    sx={style.utils.submitButton}
                     color={process.loading ? "inherit" : "primary"}
                   >
                     Registrarse{" "}
                     {process.loading && (
                       <CircularProgress
                         size={20}
-                        sx={styles.circularProgress}
+                        sx={style.utils.circularProgress}
                         color="inherit"
                       />
                     )}

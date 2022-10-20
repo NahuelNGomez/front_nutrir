@@ -1,6 +1,13 @@
 import colors from "./colors";
 
 const components = (theme: string) => ({
+  MuiCssBaseline: {
+    styleOverrides: `
+      @font-face {
+        font-family: '"Montserrat", sans-serif';
+      }
+    `,
+  },
   MuiMenu: {
     styleOverrides: {
       list: {
@@ -15,18 +22,16 @@ const components = (theme: string) => ({
         ":after": {
           borderBottom: `2px solid ${colors(theme).primary}`,
         },
-        "&.Mui-focused": {
-            backgroundColor: colors(theme).light_secondary,
-          },
-
+        ":hover": {
+          border: `1px solid ${colors(theme).light_secondary}`,
+        },
       },
     },
   },
   MuiCard: {
     styleOverrides: {
       root: {
-        boxShadow:
-          "0px 1px 7px 0px rgba(0,0,0,0.15)",
+        boxShadow: "0px 1px 7px 0px rgba(0,0,0,0.15)",
       },
     },
   },
@@ -34,7 +39,7 @@ const components = (theme: string) => ({
     styleOverrides: {
       root: {
         color: colors(theme).text_input,
-        height:"50px"
+        height: "50px",
       },
     },
   },
@@ -42,7 +47,8 @@ const components = (theme: string) => ({
   MuiAppBar: {
     styleOverrides: {
       root: {
-        backgroundColor: theme ==="dark"? "transparent" : colors(theme).primary  ,
+        backgroundColor: "transparent",
+          boxShadow:"0 0.125rem 0.25rem #9e9e9e"
       },
     },
   },
@@ -60,7 +66,10 @@ const components = (theme: string) => ({
         "&.Mui-focused": {
           color: colors(theme).primary,
         },
-        fontSize:"13px"
+        ":hover": {
+          border: `1px solid ${colors(theme).light_secondary}`,
+        },
+        fontSize: "13px",
       },
     },
   },

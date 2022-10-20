@@ -2,7 +2,7 @@ import AuthCart from "@components/utils/authCart";
 import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
 import { codeResetFields, SubmitForm } from "../../src/types/forms";
-import { styles } from "@styles/pages/login";
+import { styles } from "@styles/pages/auth";
 import {
   Alert,
   Button,
@@ -16,6 +16,7 @@ import {
 import { useRouter } from "next/router";
 import useTimer from "../../src/hooks/useTimer";
 import { statesForms } from "../../src/constants/states";
+import { useAppCtx } from "../../src/contexts/store";
 
 type props = {
   changeSteper(step: number): void;
@@ -26,6 +27,7 @@ type props = {
 const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
   const router = useRouter();
   const { seconds } = useTimer(60);
+  const { modeTheme } = useAppCtx();
 
   const { fields, errors, process, updateField, submit, updateFieldProps } =
     useForm<codeResetFields>(statesForms.code_reset);
@@ -40,27 +42,29 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
       changeToken(response.token);
     });
   };
+
+  const style = styles(modeTheme);
   return (
     <>
       <AuthCart>
         {process.loading && <LinearProgress color="primary" />}
         <form onSubmit={handleSubmit}>
-          <CardContent sx={styles.content}>
+          <CardContent sx={style.content.cardContent}>
             <Typography gutterBottom variant="h5" component="div">
               Codigo de Seguridad
             </Typography>
-            <div style={styles.semiFullWidth}>
+            <div style={style.utils.container}>
               <TextField
                 error={errors.code}
                 fullWidth
                 id="input-with-sx"
                 label="codigo de verificación"
-                variant="filled"
+                variant="outlined"
                 type="text"
                 name="code"
                 margin="normal"
                 value={fields.code}
-                sx={styles.input_text}
+                sx={style.utils.textInput}
                 helperText={
                   errors.code ? "Debes ingresar un codigo valido" : ""
                 }
@@ -68,11 +72,11 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
               />
             </div>
           </CardContent>
-          <div style={styles.semiFullWidth}>
-            <CardActions sx={styles.actions.code_container}>
+          <div style={style.utils.container}>
+            <CardActions sx={style.utils.codeContainer}>
               <Button
                 size="small"
-                sx={{ ...styles.link_text, textAlign: "left" }}
+                sx={{ ...style.utils.linkText, textAlign: "left" }}
                 onClick={() => router.reload()}
               >
                 Probar con otro correo electronico
@@ -88,7 +92,7 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
                 {process.loading && (
                   <CircularProgress
                     size={20}
-                    sx={styles.circularProgress}
+                    sx={style.utils.circularProgress}
                     color="inherit"
                   />
                 )}
@@ -97,20 +101,20 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
           </div>
         </form>
         {!process.validate && (
-          <div style={styles.error_message}>
+          <div style={style.utils.errorMessage}>
             <Alert severity="error">
               El codigo que ingresaste es invalido o expiro
             </Alert>
           </div>
         )}
         {seconds === 0 && (
-          <div style={styles.error_message}>
+          <div style={style.utils.errorMessage}>
             <Alert severity="error">
               Tu tiempo se ha terminado por favor intenta de nuevo.
             </Alert>
           </div>
         )}
-        <div style={styles.seconds_timer}>
+        <div style={style.utils.secondsTimer}>
           <small>Te quedan 00:{seconds >= 10 ? seconds : `0${seconds}`}</small>
         </div>
       </AuthCart>

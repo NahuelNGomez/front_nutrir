@@ -4,6 +4,9 @@ import components from "@styles/theme_components";
 
 
 let lightTheme = createTheme({
+  typography:{
+    fontFamily: '"Montserrat", sans-serif'
+  },
   palette: {
     primary: {
       main: colors("light").primary,
@@ -21,6 +24,9 @@ let lightTheme = createTheme({
 });
 
 let darkTheme = createTheme({
+  typography:{
+    fontFamily: '"Montserrat", sans-serif'
+  },
   palette: {
     mode: "dark",
   },
