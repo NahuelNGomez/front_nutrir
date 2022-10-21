@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppBarLayout from "./navigation/AppBar";
 import { DrawerHeader } from "@styles/components/navigation/utils";
 
-export default function LayoutAuth({children}:{children:React.ReactNode}) {
+export default function LayoutAuth({children}:{children?:React.ReactNode}) {
   
 
 
