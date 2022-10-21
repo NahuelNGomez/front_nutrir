@@ -47,8 +47,8 @@ const components = (theme: string) => ({
   MuiAppBar: {
     styleOverrides: {
       root: {
-        backgroundColor: "transparent",
-          boxShadow:"0 0.125rem 0.25rem #9e9e9e"
+        backgroundColor: theme == "light" ? "#fff" : "#fffffffff21",
+        boxShadow: theme == "light" ? "0 0.125rem 0.25rem #9e9e9e" : "",
       },
     },
   },
@@ -57,6 +57,10 @@ const components = (theme: string) => ({
       root: {
         backgroundColor: colors(theme).primary,
         color: "#121212",
+        ":hover": {
+          backgroundColor: colors(theme).offset_primary,
+          color:"white"
+        },
       },
     },
   },
@@ -70,6 +74,39 @@ const components = (theme: string) => ({
           border: `1px solid ${colors(theme).light_secondary}`,
         },
         fontSize: "13px",
+      },
+    },
+  },
+  MuiTypography: {
+    styleOverrides: {
+      root: {
+        fontSize: "14px",
+      },
+    },
+  },
+  MuiListItem: {
+    styleOverrides: {
+      root: {
+        paddingTop: "0px",
+      },
+    },
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+        marginTop: "0px",
+        ":hover": {
+          backgroundColor: colors(theme).offset_primary,
+          borderRadius: "3px",
+          borderLeft: `5px solid ${colors(theme).secondary}`,
+          boxShadow: "0px 1px 7px 0px rgba(0,0,0,0.15)",
+        },
+        "&.Mui-selected":{
+          backgroundColor: colors(theme).offset_primary,
+          borderRadius: "3px",
+          borderLeft: `5px solid ${colors(theme).secondary}`,
+          boxShadow: "0px 1px 7px 0px rgba(0,0,0,0.15)",
+        }
       },
     },
   },

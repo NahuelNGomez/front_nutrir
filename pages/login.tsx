@@ -42,11 +42,9 @@ const Login: NextPage = () => {
             }
           >
             <CardContent sx={style.content.cardContent}>
-              <Image
-                src={modeTheme == "dark" ? "/dark-logo.png" : "/light-logo.png"}
-                width={220}
-                height={110}
-                style={{ marginBottom: "7px" }}
+              <img
+                src={modeTheme == "dark" ? "/images/ui/NUTRIR logo-transparente-01.png" : "/images/ui/NUTRIR logo-03.png"}
+                style={{width:"200px"}}
               />
 
               <div style={style.utils.container}>

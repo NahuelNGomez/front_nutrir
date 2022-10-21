@@ -4,7 +4,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled, Theme } from "@mui/material";
 
 export const openedMixin = (theme: Theme): CSSObject => ({
-  width: 240,
+  width: 260,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -42,28 +42,26 @@ interface AppBarProps extends MuiAppBarProps {
 export const CustomAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
+  zIndex: 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   
   ...(open && {
-    marginLeft: 240,
-    width: `calc(100% - ${240}px)`,
+    marginLeft: 260,
+    width: `calc(100% - ${260}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     })
-  }),
-  paddingLeft: `${65}px`,
-  zIndex:1
+  })
 }));
 
 export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: 240,
+  width: 260,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",

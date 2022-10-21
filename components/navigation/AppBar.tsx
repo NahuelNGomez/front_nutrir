@@ -42,6 +42,7 @@ const AuthorizedAppBar = ({
         alignItems={"center"}
         justifyContent={"flex-start"}
       >
+        <Grid sx={{display: { sm: "inline", xs: "inline", md: "none",xl:"none",xxl:"none" } }}>
         <IconButton
           size="large"
           edge="start"
@@ -51,7 +52,7 @@ const AuthorizedAppBar = ({
         >
           <MenuIcon />
         </IconButton>
-        
+        </Grid>
       </Grid>
       <Grid
         container
@@ -71,7 +72,7 @@ export default function AppBarLayout() {
     <>
       {user?.logged && (
         <>
-          <Grid sx={{ display: { sm: "none", xs: "none", md: "inline",xl:"inline",xxl:"inline" } }}>
+          <Grid sx={{ display: { sm: "none", xs: "none", md: "none",xl:"block",xxl:"block" } }}>
             <CustomAppBar position="fixed" open={menuOpen}>
               <AuthorizedAppBar
                 open={menuOpen}
@@ -79,8 +80,8 @@ export default function AppBarLayout() {
               />
             </CustomAppBar>
           </Grid>
-          <Grid sx={{ display: { sm: "inline", xs: "inline", md: "none",xl:"none",xxl:"none" } }}>
-          <AppBar position="fixed" sx={styles.appBar}>
+          <Grid sx={{ display: { sm: "block", xs: "block", md: "block",xl:"none",xxl:"none" } }}>
+          <AppBar position="fixed" >
             <AuthorizedAppBar
               open={menuOpen}
               changeOpen={() => setMenuOpen(!menuOpen)}
