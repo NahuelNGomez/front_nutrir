@@ -49,6 +49,7 @@ const components = (theme: string) => ({
       root: {
         backgroundColor: theme == "light" ? "#fff" : "#fffffffff21",
         boxShadow: theme == "light" ? "0 0.125rem 0.25rem #9e9e9e" : "",
+       
       },
     },
   },

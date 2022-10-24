@@ -9,14 +9,11 @@ type props = {
 
 const AuthCart: FC<props> = ({ children }) => {
   const {modeTheme} = useAppCtx();
+  
   return (
     <>
-      
       <Grid
         container
-        justifyContent={"center"}
-        alignItems={"center"}
-        alignContent={"center"}
         sx={styles(modeTheme).content.container}
       >
         <Grid item xs={11} sm={8} lg={4} xl={3}>

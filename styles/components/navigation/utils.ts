@@ -47,7 +47,6 @@ export const CustomAppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  
   ...(open && {
     marginLeft: 260,
     width: `calc(100% - ${260}px)`,

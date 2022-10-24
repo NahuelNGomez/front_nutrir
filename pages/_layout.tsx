@@ -8,9 +8,9 @@ type props = {
 }
 
 const Layout:FC<props> = ({ children }) => {
-  const useStore = useAppCtx();
+  const {currentTheme} = useAppCtx();
   return (
-    <ThemeProvider theme={useStore.currentTheme}>
+    <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <main>{children}</main>
     </ThemeProvider>

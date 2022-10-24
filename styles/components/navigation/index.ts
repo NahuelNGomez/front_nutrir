@@ -66,6 +66,7 @@ export const styles = {
       justifyContent: open ? "space-between" : "center",
       alignItems: "flex-start",
       padding: "10px",
+      paddingTop:"20px"
     },
     drawerHeaderIcons: {
       logoIcon: {
@@ -125,11 +126,11 @@ export const styles = {
     },
     exitButton:{
       width: "100%",
-      borderRadius: "30px",
+      borderRadius: "3px",
       color: "#367c7b",
       backgroundColor: "#7cf6a3",
       borderColor: "#7cf6a3",
-      fontWeight: "bold",
+      fontWeight: "400",
       textTransform: "none",
       padding: "8px",
       fontSize: "15px",

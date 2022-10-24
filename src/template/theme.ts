@@ -29,6 +29,9 @@ let darkTheme = createTheme({
   },
   palette: {
     mode: "dark",
+    primary: {
+      main: colors("light").primary,
+    },
   },
   components: {
     ...components('dark')
