@@ -5,9 +5,8 @@ export const userMenuStyles = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    borderLeft: "1px solid #eee",
     cursor: "pointer",
-    paddingLeft: "15px",
+    borderLeft: "1px solid #eee",
   },
   avatar: { width: 42, height: 42 },
   text_content: {
@@ -19,7 +18,7 @@ export const userMenuStyles = {
       xxl: "block",
     },
   },
-  text: { fontSize: "16px", fontWeight: "500" },
+  text: { fontSize: "16px", fontWeight: "500",marginBottom:"-2px" },
   menu: {
     mt: "10px",
     mr: "7px",

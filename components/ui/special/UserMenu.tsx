@@ -24,12 +24,13 @@ const UserMenu: FC<{}> = () => {
   };
 
   return (
-    <Grid sx={userMenuStyles.container} onClick={handleClick}>
+    <Grid container sx={userMenuStyles.container} alignItems={"center"} onClick={handleClick}>
       <Avatar sx={userMenuStyles.avatar} src="/avatar.png" alt="comedor" />
       <Grid sx={userMenuStyles.text_content}>
+        <Grid container justifyContent={"center"} flexDirection={"column"}>
         <span style={userMenuStyles.text}>Manos en Acción</span>
-        <br />
         <small>{user.name}</small>
+        </Grid>
       </Grid>
       <Menu
         id="account-menu"

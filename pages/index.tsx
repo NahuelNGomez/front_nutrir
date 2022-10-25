@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         spacing={6}
         flexDirection={"row"}
         justifyContent={"space-around"}
-        sx={{ padding: "20px" }}
+        sx={{ padding: "40px" }}
       >
         <Grid item xs={12} lg={12}>
           <Typography variant={"h6"} sx={{ paddingBottom: "15px" }}>

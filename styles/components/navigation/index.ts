@@ -130,11 +130,11 @@ export const drawerStyles = (open: boolean, theme: string) => ({
   },
   exitButton: {
     width: "100%",
-    borderRadius: "3px",
+    borderRadius: "30px",
     color: "#367c7b",
     backgroundColor: "#7cf6a3",
     borderColor: "#7cf6a3",
-    fontWeight: "400",
+    fontWeight: "bold",
     textTransform: "none",
     padding: "8px",
     fontSize: "15px",

@@ -24,10 +24,6 @@ const DashboardNewsCards: FC<{}> = () => {
             <Typography gutterBottom variant="h5" component="div">
               ¡Las encuestas del día esperan tu respuesta!
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
           </CardContent>
           <CardActions sx={dashboardCardsStyle.actions}>
             <Button
@@ -49,10 +45,6 @@ const DashboardNewsCards: FC<{}> = () => {
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               Revisa y completa las encuestas que te faltan
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
             </Typography>
           </CardContent>
           <CardActions sx={dashboardCardsStyle.actions}>
@@ -76,10 +68,7 @@ const DashboardNewsCards: FC<{}> = () => {
             <Typography gutterBottom variant="h5" component="div">
               Ya puedes ver los balances semanales
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
+        
           </CardContent>
           <CardActions sx={dashboardCardsStyle.actions}>
             <Button
