@@ -3,6 +3,8 @@ import { lightTheme } from "../../../src/template/theme";
 export const styles = {
   unauthorizedAppBar: {
     width: "100%",
+    backgroundColor:"transparent",
+    boxShadow:"none"
   },
   menuButton: {
     display: {

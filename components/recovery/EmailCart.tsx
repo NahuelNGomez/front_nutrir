@@ -1,4 +1,3 @@
-import AuthCart from "@components/utils/authCart";
 import {
   Alert,
   Button,
@@ -8,6 +7,7 @@ import {
   LinearProgress,
   TextField,
   Typography,
+  Grid,
 } from "@mui/material";
 import { styles } from "@styles/pages/auth";
 import useForm from "../../src/hooks/useForm";
@@ -24,7 +24,7 @@ type props = {
 const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
   const { fields, errors, process, updateField, submit } =
     useForm<emailResetFields>(statesForms.email_reset);
-    const {modeTheme} = useAppCtx();
+  const { modeTheme } = useAppCtx();
 
   const handleSubmit = (e: React.FormEvent) => {
     submit(e, "/api/reset/email").then(() => {
@@ -36,14 +36,14 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
   const style = styles(modeTheme);
 
   return (
-    <AuthCart>
+    <>
       {process.loading && <LinearProgress color="primary" />}
       <form onSubmit={handleSubmit}>
         <CardContent sx={style.content.cardContent}>
           <Typography gutterBottom variant="h5" component="div">
             Restablecer Contraseña
           </Typography>
-          <div style={style.utils.container}>
+          <Grid style={style.utils.container}>
             <TextField
               error={errors.email}
               fullWidth
@@ -60,7 +60,7 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
               }
               onChange={updateField}
             />
-          </div>
+          </Grid>
         </CardContent>
         <CardActions sx={style.content.actions.container}>
           <Button
@@ -82,19 +82,19 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
         </CardActions>
       </form>
       {!process.validate && (
-        <div style={style.utils.errorMessage}>
+        <Grid style={style.utils.errorMessage}>
           <Alert severity="error">
             No encontramos un registro con el correo electronico ingresado.
           </Alert>
-        </div>
+        </Grid>
       )}
-      <div style={style.utils.errorMessage}>
+      <Grid style={style.utils.errorMessage}>
         <small>
           *Te enviaremos un correo electronico con un codigo unico para que
           puedas restablecer tu contraseña.
         </small>
-      </div>
-    </AuthCart>
+      </Grid>
+    </>
   );
 };
 

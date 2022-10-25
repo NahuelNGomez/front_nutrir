@@ -1,4 +1,3 @@
-import AuthCart from "@components/utils/authCart";
 import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
 import { passwordResetFields } from "../../src/types/forms";
@@ -12,6 +11,7 @@ import {
   LinearProgress,
   TextField,
   Typography,
+  Grid
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { statesForms } from "../../src/constants/states";
@@ -39,15 +39,14 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
   };
   const style = styles(modeTheme);
   return (
-    <>
-      <AuthCart>
+      <>
         {process.loading && <LinearProgress color="primary" />}
         <form onSubmit={handleSubmit}>
           <CardContent sx={style.content.cardContent}>
             <Typography gutterBottom variant="h5" component="div">
               Restablecer contraseña.
             </Typography>
-            <div style={style.utils.container}>
+            <Grid style={style.utils.container}>
               <TextField
                 error={errors.password}
                 fullWidth
@@ -80,9 +79,9 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
                 }
                 onChange={updateField}
               />
-            </div>
+            </Grid>
           </CardContent>
-          <div style={style.utils.container}>
+          <Grid style={style.utils.container}>
             <CardActions sx={style.content.actions.container}>
               <Button
                 disabled={process.loading}
@@ -101,15 +100,14 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
                 )}
               </Button>
             </CardActions>
-          </div>
+          </Grid>
         </form>
         {!process.validate && (
-          <div style={style.utils.errorMessage}>
+          <Grid style={style.utils.errorMessage}>
             <Alert severity="error">Hubo un error.</Alert>
-          </div>
+          </Grid>
         )}
-      </AuthCart>
-    </>
+      </>
   );
 };
 

@@ -6,8 +6,9 @@ import { CustomAppBar } from "@styles/components/navigation/utils";
 import DrawerMenu from "./DrawerMenu";
 import AuthorizedToolBar from "./ToolBarAuthorized";
 import UnauthorizedToolBar from "./ToolbarUnauthorized";
+import { FC } from "react";
 
-export default function AppBarLayout() {
+const Bar: FC<{}> = () => {
   const { user, menuOpen, setMenuOpen } = useAppCtx();
 
   return (
@@ -16,18 +17,12 @@ export default function AppBarLayout() {
         <>
           <Grid sx={utilsStyles.isDesktopVisible}>
             <CustomAppBar position="fixed" open={menuOpen}>
-              <AuthorizedToolBar
-                changeOpen={() => setMenuOpen(!menuOpen)}
-                user={user}
-              />
+              <AuthorizedToolBar changeOpen={() => setMenuOpen(!menuOpen)} />
             </CustomAppBar>
           </Grid>
           <Grid sx={utilsStyles.isMobileVisible}>
             <AppBar position="fixed">
-              <AuthorizedToolBar
-                changeOpen={() => setMenuOpen(!menuOpen)}
-                user={user}
-              />
+              <AuthorizedToolBar changeOpen={() => setMenuOpen(!menuOpen)} />
             </AppBar>
           </Grid>
           <DrawerMenu open={menuOpen} onClose={() => setMenuOpen(!menuOpen)} />
@@ -40,4 +35,6 @@ export default function AppBarLayout() {
       )}
     </>
   );
-}
+};
+
+export default Bar;

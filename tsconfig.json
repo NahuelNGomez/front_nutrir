@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@components/layouts/*"    : ["./components/layouts/*"],
       "@components/navigation/*" : ["./components/navigation/*"],
       "@components/ui/*" : ["./components/ui/*"],
       "@components/utils/*" : ["./components/utils/*"],

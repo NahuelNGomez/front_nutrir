@@ -16,12 +16,12 @@ import { useAppCtx } from "../../src/contexts/store";
 import { DrawerHeader } from "@styles/components/navigation/utils";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ExitToApp, ManageAccounts } from "@mui/icons-material";
-import { useState } from "react";
+import { FC, useState } from "react";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
 
-const MenuItems = () => {
+const MenuItems:FC<{}> = () => {
   const { menuOpen, setMenuOpen,modeTheme } = useAppCtx();
   const [optionsOpen, setOptionsOpen] = useState(false);
   const router = useRouter();

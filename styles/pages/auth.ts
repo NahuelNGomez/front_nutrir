@@ -36,15 +36,15 @@ export const styles = (theme: string): login_styles => ({
       theme == "light"
         ? "-webkit-linear-gradient(25deg, #ffffff 50%, #f1f3fa 50%)"
         : "-webkit-linear-gradient(25deg, #121212 50%, rgba(255, 255, 255, 0.09) 50%)",
-    height: "100vh",
+      minHeight:"100vh"
   },
   content: {
     container: {
       display: "flex",
       flexDirection: "column",
-      justifyContent: "center",
+      justifyContent: "space-between",
       alignItems: "center",
-      height: "100vh",
+      minHeight:"100vh"
     },
     header: {
       display: "flex",

@@ -8,7 +8,7 @@ import { styles } from "@styles/components/ui";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ( styles(theme).switchMode));
 
-export default function SwitchMode() {
+const SwitchMode:React.FC<{}> = () => {
   const { modeTheme, updateTheme } = useAppCtx();
 
   const handleChange = () => {
@@ -29,3 +29,5 @@ export default function SwitchMode() {
     </FormGroup>
   );
 }
+
+export default SwitchMode;

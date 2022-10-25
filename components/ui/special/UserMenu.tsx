@@ -1,9 +1,9 @@
 import { Avatar, Grid, Menu } from "@mui/material";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
-import UserOptions from "../contents/userOptions";
+import UserOptions from "../contents/UserOptions";
 
-const UserMenu = () => {
+const UserMenu:FC<{}> = () => {
   const { user } = useAppCtx();
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState(null);

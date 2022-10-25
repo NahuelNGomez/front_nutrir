@@ -14,7 +14,6 @@ type props = {
 
 const DrawerMenu: FC<props> = ({ open, onClose }) => {
   const {modeTheme,menuOpen} = useAppCtx();
-
   const drawerStyle = styles.drawer(menuOpen,modeTheme);
 
   return (

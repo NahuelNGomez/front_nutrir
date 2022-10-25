@@ -7,18 +7,18 @@ import {
   Alert,
   LinearProgress,
   CircularProgress,
+  Card,
+  Grid,
 } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
 import { styles } from "@styles/pages/auth";
 import useForm from "../src/hooks/useForm";
-import AuthCart from "@components/utils/authCart";
 import { useRouter } from "next/router";
 import { loginFields } from "../src/types/forms";
 import { statesForms } from "../src/constants/states";
-import Image from "next/image";
 import { useAppCtx } from "../src/contexts/store";
-import SwitchMode from "@components/ui/special/switchMode";
+import UnloggedLayout from "@components/layouts/UnloggedLayout";
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -29,12 +29,16 @@ const Login: NextPage = () => {
   const style = styles(modeTheme);
 
   return (
-    <div style={style.page}>
-      <div style={style.content.container}>
-        <div style={style.content.header}>
-          <SwitchMode />
-        </div>
-        <AuthCart>
+    <UnloggedLayout>
+      <Grid
+        flexDirection={"column"}
+        xs={12}
+        sm={12}
+        lg={4}
+        xl={4}
+        sx={{ padding: "10px" }}
+      >
+        <Card>
           {process.loading && <LinearProgress color="primary" />}
           <form
             onSubmit={(e) =>
@@ -43,8 +47,12 @@ const Login: NextPage = () => {
           >
             <CardContent sx={style.content.cardContent}>
               <img
-                src={modeTheme == "dark" ? "/images/ui/NUTRIR logo-transparente-01.png" : "/images/ui/NUTRIR logo-03.png"}
-                style={{width:"200px"}}
+                src={
+                  modeTheme == "dark"
+                    ? "/images/ui/NUTRIR logo-transparente-01.png"
+                    : "/images/ui/NUTRIR logo-03.png"
+                }
+                style={{ width: "200px" }}
               />
 
               <div style={style.utils.container}>
@@ -130,15 +138,9 @@ const Login: NextPage = () => {
               </div>
             )}
           </form>
-        </AuthCart>
-        <img
-          src={"/organica.png"}
-          style={{ filter: modeTheme == "light" ? "saturate(100%)" : "" }}
-          width={150}
-          height={75}
-        />
-      </div>
-    </div>
+        </Card>
+      </Grid>
+    </UnloggedLayout>
   );
 };
 

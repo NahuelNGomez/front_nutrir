@@ -1,16 +1,14 @@
-import { Avatar, Grid, IconButton, Toolbar } from "@mui/material";
+import {  Grid, IconButton, Toolbar } from "@mui/material";
 import { styles } from "@styles/components/navigation";
 import { FC } from "react";
-import { userType } from "../../src/contexts/store";
 import MenuIcon from "@mui/icons-material/Menu";
-import UserMenu from "@components/ui/special/userMenu";
+import UserMenu from "@components/ui/special/UserMenu";
 
 type props = {
   changeOpen(): void;
-  user: userType;
 };
 
-const AuthorizedToolBar: FC<props> = ({ changeOpen, user }) => (
+const AuthorizedToolBar: FC<props> = ({ changeOpen }) => (
   <Toolbar>
     <Grid container direction="row">
       <Grid
