@@ -50,7 +50,3 @@ export const styles = (theme: Theme) => ({
     },
   },
 });
-
-export const components = {
-  notification: { width: "100%", maxWidth: 360, bgcolor: "background.paper" },
-}
