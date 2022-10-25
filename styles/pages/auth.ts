@@ -1,35 +1,6 @@
-import { CSSProperties } from "react";
 import { lightTheme } from "../../src/template/theme";
 
-type login_styles = {
-  page: CSSProperties;
-  content: {
-    container: CSSProperties;
-    header: CSSProperties;
-    cardContent: CSSProperties;
-    actions: {
-      container: CSSProperties;
-      helperText: CSSProperties;
-      floatingText: CSSProperties;
-    };
-  };
-  utils: {
-    container: CSSProperties;
-    textInput: CSSProperties;
-    linkText: CSSProperties;
-    submitButton: CSSProperties;
-    circularProgress: CSSProperties;
-    errorMessage: CSSProperties;
-    codeContainer:CSSProperties;
-    secondsTimer:CSSProperties
-  };
-  register:{
-    title:CSSProperties,
-    fields:CSSProperties
-  }
-};
-
-export const styles = (theme: string): login_styles => ({
+export const styles = (theme: string) => ({
   page: {
     backgroundColor: theme == "light" ? "#013A6B" : "#121212",
     backgroundImage:

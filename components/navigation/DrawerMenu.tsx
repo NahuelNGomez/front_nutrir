@@ -1,7 +1,7 @@
 import { Drawer } from "@mui/material";
 import { FC } from "react";
-import { styles } from "@styles/components/navigation";
-import MenuItems from "@components/navigation/MenuItems";
+import { drawerStyles } from "@styles/components/navigation";
+import MenuItems from "@components/ui/contents/MenuItems";
 import {
   Drawer as DrawerDesktop,
 } from "@styles/components/navigation/utils";
@@ -14,7 +14,7 @@ type props = {
 
 const DrawerMenu: FC<props> = ({ open, onClose }) => {
   const {modeTheme,menuOpen} = useAppCtx();
-  const drawerStyle = styles.drawer(menuOpen,modeTheme);
+  const drawerStyle = drawerStyles(menuOpen,modeTheme);
 
   return (
     <>

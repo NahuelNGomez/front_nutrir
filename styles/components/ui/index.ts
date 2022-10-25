@@ -1,6 +1,7 @@
 import { Theme } from "@mui/material";
 import { lightTheme } from "../../../src/template/theme";
 
+
 export const styles = (theme: Theme) => ({
   switchMode: {
     width: 62,

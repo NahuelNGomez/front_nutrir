@@ -7,16 +7,17 @@ import {
   ListItemText,
 } from "@mui/material";
 import { ExitToApp, PublishedWithChanges } from "@mui/icons-material";
+import {userMenuStyles} from "@styles/components/ui/content";
 
 const UserOptions: FC<{}> = () => {
   return (
-    <MenuList sx={{ padding: "10px" }}>
+    <MenuList sx={userMenuStyles.menu_list}>
       <MenuItem>
         <ListItemIcon>
           <PublishedWithChanges />
         </ListItemIcon>
         <ListItemText
-          primaryTypographyProps={{ sx: { fontSize: "13px" } }}
+          primaryTypographyProps={userMenuStyles.menu_text}
           primary={"Cambiar de comedor"}
         />
       </MenuItem>
@@ -26,7 +27,7 @@ const UserOptions: FC<{}> = () => {
           <ExitToApp />
         </ListItemIcon>
         <ListItemText
-          primaryTypographyProps={{ sx: { fontSize: "13px" } }}
+          primaryTypographyProps={userMenuStyles.menu_text}
           primary={"Salir"}
         />
       </MenuItem>
