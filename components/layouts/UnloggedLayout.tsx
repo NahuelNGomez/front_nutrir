@@ -13,8 +13,8 @@ const UnloggedLayout: FC<props> = ({ children }) => {
   const style = styles(modeTheme);
 
   return (
-    <Grid style={style.page}>
-      <Grid style={style.content.container}>
+    <Grid sx={style.page}>
+      <Grid sx={style.content.container}>
         <Bar />
         <Grid container justifyContent={"center"}>
           {children}
