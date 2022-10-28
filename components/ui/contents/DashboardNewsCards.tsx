@@ -17,8 +17,8 @@ const DashboardNewsCards: FC<{}> = () => {
 
   return (
     <>
-      {dashboardCards.map(({ title, image, redirectTo }) => (
-        <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+      {dashboardCards.map(({ title, image, redirectTo },index) => (
+        <Grid item xs={12} sm={12} md={6} lg={4} xl={4} key={index}>
           <Card>
             <CardMedia component="img" image={image} alt="green iguana" />
             <CardContent>
