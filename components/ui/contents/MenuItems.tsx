@@ -11,21 +11,20 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { useRouter } from "next/router";
 import { drawerStyles } from "@styles/components/navigation";
-import { MenuList } from "../../../src/contents/menuList";
+import { HeaderMenuList, MenuList } from "../../../src/contents/menuList";
 import { useAppCtx } from "../../../src/contexts/store";
 import { DrawerHeader } from "@styles/components/navigation/utils";
 import MenuIcon from "@mui/icons-material/Menu";
-import { ExitToApp, ManageAccounts } from "@mui/icons-material";
 import { FC, useState } from "react";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import LogoutButton from "../special/LogoutButton";
 
-
-const MenuItems:FC<{}> = () => {
-  const { menuOpen, setMenuOpen,modeTheme } = useAppCtx();
+const MenuItems: FC<{}> = () => {
+  const { menuOpen, setMenuOpen, modeTheme } = useAppCtx();
   const [optionsOpen, setOptionsOpen] = useState(false);
   const router = useRouter();
-  const styles = drawerStyles(menuOpen,modeTheme);
+  const styles = drawerStyles(menuOpen, modeTheme);
   return (
     <>
       <DrawerHeader sx={styles.DrawerHeader}>
@@ -58,42 +57,40 @@ const MenuItems:FC<{}> = () => {
       </DrawerHeader>
       <Grid sx={styles.ListItem.ListItemContainer}>
         <List>
-          <ListItem sx={styles.ListItem.parent} key={"perfil"}>
-            <ListItemButton
-              selected={true}
-              sx={styles.ListItem.container}
-              onClick={() => router.push("api/logout")}
-            >
-              <ManageAccounts sx={styles.ListItem.icons} />
-              {menuOpen && (
-                <ListItemText
-                  sx={styles.ListItem.text}
-                  primary={"Perfil de usuario"}
-                />
-              )}
-            </ListItemButton>
-          </ListItem>
+          {HeaderMenuList.map(({ key, text, Icon, action,path }) => (
+            <ListItem sx={styles.ListItem.parent} key={key}>
+              <ListItemButton
+                selected={router.pathname === path}
+                sx={styles.ListItem.container}
+                onClick={() => action && action(router)}
+              >
+                <Icon sx={styles.ListItem.icons} />
+                {menuOpen && (
+                  <ListItemText sx={styles.ListItem.text} primary={text} />
+                )}
+              </ListItemButton>
+            </ListItem>
+          ))}
+
           {menuOpen && (
-            <Typography sx={styles.ListItem.text_separator}>
-              COMEDOR
-            </Typography>
+            <Typography sx={styles.ListItem.text_separator}>COMEDOR</Typography>
           )}
-          {MenuList.map(({ key, text, Icon, action, childrens }) => (
+          {MenuList.map(({ key, text, Icon, action, childrens,path }) => (
             <>
               <ListItem sx={styles.ListItem.parent} key={key}>
                 <ListItemButton
+                  selected={router.pathname === path}
                   sx={styles.ListItem.container}
                   onClick={() =>
-                    childrens ? setOptionsOpen(!optionsOpen) : action(router)
+                    childrens
+                      ? setOptionsOpen(!optionsOpen)
+                      : action && action(router)
                   }
                 >
                   <Icon sx={styles.ListItem.icons} />
                   {menuOpen && (
                     <>
-                      <ListItemText
-                        sx={styles.ListItem.text}
-                        primary={text}
-                      />
+                      <ListItemText sx={styles.ListItem.text} primary={text} />
                       {childrens &&
                         (optionsOpen ? (
                           <ExpandLess sx={{ color: "white" }} />
@@ -106,9 +103,13 @@ const MenuItems:FC<{}> = () => {
               </ListItem>
               {childrens && menuOpen && (
                 <Collapse in={optionsOpen}>
-                  {childrens.map(({ key, text, Icon, action }) => (
+                  {childrens.map(({ key, text, Icon, action,path }) => (
                     <ListItem key={key} sx={styles.ListItem.children_parent}>
-                      <ListItemButton sx={styles.ListItem.children_item}>
+                      <ListItemButton
+                        selected={router.pathname === path}
+                        sx={styles.ListItem.children_item}
+                        onClick={() => action && action(router)}
+                      >
                         <Icon sx={styles.ListItem.children_icon} />
                         <ListItemText
                           primary={text}
@@ -123,16 +124,7 @@ const MenuItems:FC<{}> = () => {
           ))}
         </List>
         <Grid sx={styles.exitContainer}>
-          <Button sx={styles.exitButton} onClick={() => router.push('/api/logout')}>
-            {menuOpen ? (
-              <>
-                <ExitToApp sx={{ mr: 1 }} />
-                Cerrar Sesión
-              </>
-            ) : (
-              <ExitToApp />
-            )}
-          </Button>
+          <LogoutButton />
         </Grid>
       </Grid>
     </>

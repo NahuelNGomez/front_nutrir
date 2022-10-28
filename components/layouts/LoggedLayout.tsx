@@ -13,7 +13,7 @@ const LoggedLayout: React.FC<props> = ({ children }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <Bar />
-      <Box component="main" sx={{backgroundColor:modeTheme === 'light' ? '#f7f8fa' : '',minHeight:"100vh"}}>
+      <Box component="main" sx={{backgroundColor:modeTheme === 'light' ? '#f7f8fa' : '',minHeight:"100vh",width:"100%"}}>
         <DrawerHeader />
         {children}
       </Box>

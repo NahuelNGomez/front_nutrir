@@ -8,78 +8,36 @@ import {
   Typography,
 } from "@mui/material";
 import { dashboardCardsStyle } from "@styles/components/ui/content";
+import { useRouter } from "next/router";
 import { FC } from "react";
+import { dashboardCards } from "../../../src/contents/cards";
 
 const DashboardNewsCards: FC<{}> = () => {
+  const router = useRouter();
+
   return (
     <>
-      <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-        <Card>
-          <CardMedia
-            component="img"
-            image="/images/ui/dash/01.png"
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              ¡Las encuestas del día esperan tu respuesta!
-            </Typography>
-          </CardContent>
-          <CardActions sx={dashboardCardsStyle.actions}>
-            <Button
-              sx={dashboardCardsStyle.button}
-              size="large"
-            >
-              Completar
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-        <Card>
-          <CardMedia
-            component="img"
-            image="/images/ui/dash/02.png"
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Revisa y completa las encuestas que te faltan
-            </Typography>
-          </CardContent>
-          <CardActions sx={dashboardCardsStyle.actions}>
-            <Button
-              sx={dashboardCardsStyle.button}
-              size="large"
-            >
-              Revisar
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-        <Card>
-          <CardMedia
-            component="img"
-            image="/images/ui/dash/03.png"
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Ya puedes ver los balances semanales
-            </Typography>
-        
-          </CardContent>
-          <CardActions sx={dashboardCardsStyle.actions}>
-            <Button
-              sx={dashboardCardsStyle.button}
-              size="large"
-            >
-              Ver análisis
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
+      {dashboardCards.map(({ title, image, redirectTo }) => (
+        <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+          <Card>
+            <CardMedia component="img" image={image} alt="green iguana" />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {title}
+              </Typography>
+            </CardContent>
+            <CardActions sx={dashboardCardsStyle.actions}>
+              <Button
+                sx={dashboardCardsStyle.button}
+                size="large"
+                onClick={() => router.push(redirectTo)}
+              >
+                Completar
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      ))}
     </>
   );
 };

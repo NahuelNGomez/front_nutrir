@@ -1,8 +1,9 @@
-import { codeResetFields, emailResetFields, loginFields, passwordResetFields, registerFields, stateFormBase } from "../types/forms";
+import { codeResetFields, emailResetFields, loginFields, passwordResetFields, profileFields, profileFieldsRules, registerFields, stateFormBase } from "../types/forms";
 
 export function initialFormState<T>(Fields:T):stateFormBase<T> {
 
   type errorFieldsType<T> = {[Property in keyof T] : Boolean}
+
 
   //@ts-ignore
   const error_fields = Object.keys(Fields).reduce<errorFieldsType>((err,field:keyof T) => {
@@ -10,10 +11,23 @@ export function initialFormState<T>(Fields:T):stateFormBase<T> {
     return err;
   },{});
 
+  //@ts-ignore
+  const field_rules = Object.keys(Fields).reduce((rules:any,field:keyof T) => {
+    rules[field] = Fields[field];
+    return rules;
+  },{});
+
+   //@ts-ignore
+   const field_values = Object.keys(Fields).reduce((values:any,field:keyof T) => {
+    values[field] = '';
+    return values;
+  },{});
+
  return {
-    fields: Fields,
+    fields: field_values,
     errors: error_fields,
-    process: { validate: true, loading: false },
+    rules: field_rules,
+    process: { validate: true, loading: false,finish:false },
   };
  
 }
@@ -23,6 +37,7 @@ export const statesForms = {
   login: initialFormState<typeof loginFields>(loginFields),
   email_reset: initialFormState<typeof emailResetFields>(emailResetFields),
   code_reset: initialFormState<typeof codeResetFields>(codeResetFields),
-  password_reset: initialFormState<typeof passwordResetFields>(passwordResetFields)
+  password_reset: initialFormState<typeof passwordResetFields>(passwordResetFields),
+  profile:initialFormState<typeof profileFields>(profileFields)
 };
 

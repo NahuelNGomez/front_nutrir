@@ -10,6 +10,13 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
   const reducer = buildReducer<T>(initialState);
   const [Form, dispatch] = useReducer(reducer, initialState);
 
+  const defaultValues = (values:typeof Form.fields) => {
+    dispatch({
+      type: ActionsForm.FETCH_FIELDS,
+      payload: { ...values},
+    });
+  }
+
   const updateFieldProps = (field: string, value: any) => {
     dispatch({
       type: ActionsForm.FETCH_FIELDS,
@@ -26,7 +33,7 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
 
   const validateFields = (): boolean => {
     const errors = Object.keys(Form.fields).reduce((err: any, field) => {
-      err[field] = !Form.fields[field];
+      err[field] =   !Form.fields[field] && !Form.rules[field].includes('optional');
       return err;
     }, {});
 
@@ -41,10 +48,10 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
     );
   };
 
-  const setProcess = ({ validate, loading }: typeof Form.process) => {
+  const setProcess = ({ validate, loading,finish }: typeof Form.process) => {
     dispatch({
       type: ActionsForm.FETCH_PROCESS,
-      payload: { validate, loading },
+      payload: { validate, loading,finish },
     });
   };
 
@@ -55,7 +62,7 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
     e.preventDefault();
 
     return new Promise(async (resolve, reject) => {
-      setProcess({ validate: true, loading: true });
+      setProcess({ validate: true, loading: true,finish:false });
 
       if (validateFields()) {
         const response = await fetch(action, {
@@ -64,9 +71,10 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
         }).then((res) => res.json());
 
         if (response.success) {
-          resolve(response);
+          resolve(response); 
+          
         } else {
-          setProcess({ validate: false, loading: false });
+          setProcess({ validate: false, loading: false,finish:false });
 
           if (response.errors) {
             dispatch({
@@ -79,11 +87,14 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
           }
         }
       } else {
-        setProcess({ validate: true, loading: false });
+        setProcess({ validate: true, loading: false,finish:false });
         reject({ errors: {} });
       }
     });
   };
 
-  return { ...Form, submit, updateField, updateFieldProps };
+  const finishProcess = () => {
+    setProcess({ validate: true, loading: false,finish:true });
+  }
+  return { ...Form, submit, updateField, updateFieldProps,defaultValues,finishProcess };
 }

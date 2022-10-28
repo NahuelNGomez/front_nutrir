@@ -5,9 +5,11 @@ import config from '../constants/config';
 declare module 'iron-session' {
 	interface IronSessionData {
 		user?: {
+			user?:string;
 			name?: string;
 			email?: string;
 			profile_picture?: string;
+			phone?:string;
 			logged?: boolean;
 		};
 	}

@@ -1,41 +1,55 @@
 import { statesForms } from "../constants/states";
 
+export enum profileFields {
+  user = "required",
+  name = "required",
+  phone = "required",
+  email = "required",
+  password = "optional"
+}
+
+export enum profileFieldsRules {
+  password = ''
+}
+
 export enum registerFields {
-  user = "",
-  name = "",
-  phone = "",
-  email = "",
-  password = "",
-  exists_dinning_room = "",
-  dinning_room = ""
+  user = "required",
+  name = "required",
+  phone = "required",
+  email = "required",
+  password = "required",
+  exists_dinning_room = "required",
+  dinning_room = "required"
 };
 
 export enum loginFields {
-  email =  "",
-  password = "",
+  email =  "required",
+  password = "required",
 };
 
 export enum emailResetFields {
-  email = ""
+  email = "required"
 };
 
 export enum codeResetFields {
-  code = "",
-  email = ""
+  code = "required",
+  email = "required"
 };
 
 export enum passwordResetFields {
-  password = "",
-  confirm_password = "",
-  token = "",
+  password = "required",
+  confirm_password = "required",
+  token = "required",
 };
 
 export type stateFormBase<T> = {
   fields: T | any;
   errors: T | any;
+  rules: T | any; 
   process: {
     validate: boolean;
     loading: boolean;
+    finish:boolean;
   };
 };
 

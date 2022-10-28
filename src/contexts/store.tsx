@@ -5,10 +5,11 @@ import { darkTheme, lightTheme } from "../template/theme";
 import { sessionOptions } from "../utils/withIronSession";
 
 export type userType = {
-  username?: string;
-  name?: string;
-  email?:string;
-  comedor?: string;
+  user: string;
+  phone: string;
+  name: string;
+  email: string;
+  comedor: string;
   logged: boolean;
 };
 
@@ -20,30 +21,45 @@ const themes = {
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [currentTheme, setCurrentTheme] = useState(lightTheme);
   const [modeTheme, setModeTheme] = useState("light");
-  const [menuOpen,setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
     setModeTheme(mode);
-    localStorage.setItem('theme-mode',mode);
+    localStorage.setItem("theme-mode", mode);
   };
 
   useEffect(() => {
-    const savedMode:keyof typeof themes = localStorage.getItem('theme-mode') as keyof typeof themes ?? 'light';
+    const savedMode: keyof typeof themes =
+      (localStorage.getItem("theme-mode") as keyof typeof themes) ?? "light";
     setModeTheme(savedMode);
     setCurrentTheme(themes[savedMode]);
-  },[]);
+  }, []);
 
-  return { currentTheme, updateTheme, modeTheme, user: userLog,menuOpen,setMenuOpen };
+  return {
+    currentTheme,
+    updateTheme,
+    modeTheme,
+    user: userLog,
+    menuOpen,
+    setMenuOpen,
+  };
 };
 
 export const AppCtx = createContext<ReturnType<typeof useStoreController>>({
   currentTheme: lightTheme,
   updateTheme: () => {},
   modeTheme: "light",
-  user: { logged: false },
-  menuOpen:false,
-  setMenuOpen:() => {}
+  user: {
+    user: "",
+    phone: "",
+    name: "",
+    email: "",
+    comedor: "",
+    logged: false,
+  },
+  menuOpen: false,
+  setMenuOpen: () => {},
 });
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -67,7 +83,6 @@ export const AppCtxProvider = ({
   user: userType;
   children: React.ReactNode;
 }) => {
-  
   return (
     <AppCtx.Provider value={useStoreController({ userLog: user })}>
       {children}

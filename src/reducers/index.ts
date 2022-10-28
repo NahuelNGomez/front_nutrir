@@ -6,7 +6,7 @@ export type ActionReducer<T> =
   | { type: ActionsForm.FETCH_ERRORS; payload: T }
   | {
       type: ActionsForm.FETCH_PROCESS;
-      payload: { loading: boolean; validate: boolean };
+      payload: { loading: boolean; validate: boolean,finish:boolean };
     };
 
 function buildReducer<T>(initialState: stateFormBase<T>) {
