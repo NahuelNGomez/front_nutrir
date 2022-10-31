@@ -75,7 +75,7 @@ const components = (theme: string) => ({
           border: `1px solid ${colors(theme).light_secondary}`,
         },
         fontSize: "14px",
-        marginLeft:"8px"
+        marginLeft:"7px"
       },
     },
   },

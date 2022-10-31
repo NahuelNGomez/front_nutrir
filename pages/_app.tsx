@@ -4,7 +4,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/template/createEmotionCache";
 import Layout from "./_layout";
 import {  AppCtxProvider, userType } from "../src/contexts/store";
-import ModalSeleccion from "@components/utils/ModalSeleccion";
+import ModalSeleccion from "@components/ui/special/ModalSeleccion";
 
 const clientSideEmotionCache = createEmotionCache();
 

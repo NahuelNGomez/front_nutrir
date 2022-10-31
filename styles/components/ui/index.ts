@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
+import colors from "@styles/colors";
 import { lightTheme } from "../../../src/template/theme";
-
 
 export const styles = (theme: Theme) => ({
   switchMode: {
@@ -49,5 +49,43 @@ export const styles = (theme: Theme) => ({
       backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
       borderRadius: 20 / 2,
     },
+  },
+  modalStyles: {
+    modal: {
+      position: "absolute" as "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: { xs: "100%", sm: "100%", lg: "60%", xl: "50" },
+      height: { xs: "100%", sm: "100%", lg: "80%", xl: "60%" },
+      maxHeight: { xs: "100%", sm: "100%", lg: "80%", xl: "60%" },
+      overflow: "auto",
+      overflowX: "hidden",
+      bgcolor: "background.paper",
+      boxShadow: 24,
+      p: { xs: 2, sm: 2, lg: 4, xl: 4 },
+      borderRadius: { xs: 0, sm: 0, lg: 2, xl: 2 },
+    },
+    headerContainer: { mb: 4 },
+    closeIcon: { cursor: "pointer", fontSize: "20px", fontWeight: "600" },
+    searchInput: { width: "100%" },
+    borderSelected: `1px solid ${colors(theme.palette.mode).offset_primary}`,
+    borderUnselected: "1px rgba(0, 0, 0, 0.4) solid",
+    item: {
+      borderRadius: 1,
+      mt: 1,
+      p: 1,
+      ":hover": {
+        backgroundColor: "white",
+        borderRadius: "3px",
+        border: `1px solid ${colors(theme.palette.mode).offset_primary}`,
+        boxShadow: "none",
+        color: `${colors(theme.palette.mode).offset_primary}`,
+      },
+    },
+    colorSelected : `${colors(theme.palette.mode).offset_primary}`,
+    colorUnselected : '#000000DE',
+    itemIcon: {ml:1},
+    primaryText:{fontWeight:"bold",textTransform:"uppercase",mb:1 }
   },
 });
