@@ -4,6 +4,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/template/createEmotionCache";
 import Layout from "./_layout";
 import {  AppCtxProvider, userType } from "../src/contexts/store";
+import ModalSeleccion from "@components/utils/ModalSeleccion";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -26,6 +27,7 @@ function MyApp({
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <Layout>
+          <ModalSeleccion />
           <Component {...pageProps} />
         </Layout>
       </CacheProvider>

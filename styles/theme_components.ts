@@ -74,7 +74,8 @@ const components = (theme: string) => ({
         ":hover": {
           border: `1px solid ${colors(theme).light_secondary}`,
         },
-        fontSize: "13px",
+        fontSize: "14px",
+        marginLeft:"8px"
       },
     },
   },
@@ -101,6 +102,7 @@ const components = (theme: string) => ({
           borderRadius: "3px",
           borderLeft: `5px solid ${colors(theme).secondary}`,
           boxShadow: "0px 1px 7px 0px rgba(0,0,0,0.15)",
+          color:"white"
         },
         "&.Mui-selected":{
           backgroundColor: colors(theme).offset_primary,

@@ -6,7 +6,7 @@ export type MenuItem = {
   text: string;
   path?:string;
   Icon(props:{sx:CSSProperties}):JSX.Element;
-  action?(router: NextRouter): void;
+  action?(router: NextRouter,storeActions?:any): void;
   childrens?: Array<{
     key: string;
     text: string;

@@ -1,8 +1,5 @@
-import { getIronSession, IronSessionData } from "iron-session";
-import { GetServerSideProps } from "next";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../template/theme";
-import { sessionOptions } from "../utils/withIronSession";
 
 export type userType = {
   user: string;
@@ -18,10 +15,29 @@ const themes = {
   dark: darkTheme,
 };
 
+const initialStoreState = {
+  currentTheme: lightTheme,
+  updateTheme: () => {},
+  modeTheme: "light",
+  user: {
+    user: "",
+    phone: "",
+    name: "",
+    email: "",
+    comedor: "",
+    logged: false,
+  },
+  menuOpen: false,
+  setMenuOpen: () => {},
+  modalOpen: false,
+  setModalOpen: () => {},
+};
+
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [currentTheme, setCurrentTheme] = useState(lightTheme);
   const [modeTheme, setModeTheme] = useState("light");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -43,36 +59,8 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     user: userLog,
     menuOpen,
     setMenuOpen,
-  };
-};
-
-export const AppCtx = createContext<ReturnType<typeof useStoreController>>({
-  currentTheme: lightTheme,
-  updateTheme: () => {},
-  modeTheme: "light",
-  user: {
-    user: "",
-    phone: "",
-    name: "",
-    email: "",
-    comedor: "",
-    logged: false,
-  },
-  menuOpen: false,
-  setMenuOpen: () => {},
-});
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const ironSession: IronSessionData = await getIronSession(
-    ctx.req,
-    ctx.res,
-    sessionOptions
-  );
-
-  return {
-    props: {
-      user: ironSession.user ?? { logged: false },
-    },
+    modalOpen,
+    setModalOpen,
   };
 };
 
@@ -89,5 +77,8 @@ export const AppCtxProvider = ({
     </AppCtx.Provider>
   );
 };
+
+export const AppCtx =
+  createContext<ReturnType<typeof useStoreController>>(initialStoreState);
 
 export const useAppCtx = () => useContext(AppCtx);

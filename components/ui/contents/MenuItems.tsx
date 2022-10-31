@@ -21,7 +21,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import LogoutButton from "../special/LogoutButton";
 
 const MenuItems: FC<{}> = () => {
-  const { menuOpen, setMenuOpen, modeTheme } = useAppCtx();
+  const { menuOpen, setMenuOpen, modeTheme,setModalOpen } = useAppCtx();
   const [optionsOpen, setOptionsOpen] = useState(false);
   const router = useRouter();
   const styles = drawerStyles(menuOpen, modeTheme);
@@ -57,7 +57,7 @@ const MenuItems: FC<{}> = () => {
       </DrawerHeader>
       <Grid sx={styles.ListItem.ListItemContainer}>
         <List>
-          {HeaderMenuList.map(({ key, text, Icon, action,path }) => (
+          {HeaderMenuList.map(({ key, text, Icon, action, path }) => (
             <ListItem sx={styles.ListItem.parent} key={key}>
               <ListItemButton
                 selected={router.pathname === path}
@@ -75,8 +75,8 @@ const MenuItems: FC<{}> = () => {
           {menuOpen && (
             <Typography sx={styles.ListItem.text_separator}>COMEDOR</Typography>
           )}
-          {MenuList.map(({ key, text, Icon, action, childrens,path }) => (
-            <>
+          {MenuList.map(({ key, text, Icon, action, childrens, path }) => (
+            <div key={key}>
               <ListItem sx={styles.ListItem.parent} key={key}>
                 <ListItemButton
                   selected={router.pathname === path}
@@ -84,7 +84,7 @@ const MenuItems: FC<{}> = () => {
                   onClick={() =>
                     childrens
                       ? setOptionsOpen(!optionsOpen)
-                      : action && action(router)
+                      : action && action(router,{setModalOpen})
                   }
                 >
                   <Icon sx={styles.ListItem.icons} />
@@ -103,7 +103,7 @@ const MenuItems: FC<{}> = () => {
               </ListItem>
               {childrens && menuOpen && (
                 <Collapse in={optionsOpen}>
-                  {childrens.map(({ key, text, Icon, action,path }) => (
+                  {childrens.map(({ key, text, Icon, action, path }) => (
                     <ListItem key={key} sx={styles.ListItem.children_parent}>
                       <ListItemButton
                         selected={router.pathname === path}
@@ -120,7 +120,7 @@ const MenuItems: FC<{}> = () => {
                   ))}
                 </Collapse>
               )}
-            </>
+            </div>
           ))}
         </List>
         <Grid sx={styles.exitContainer}>

@@ -8,11 +8,14 @@ import {
 } from "@mui/material";
 import { ExitToApp, PublishedWithChanges } from "@mui/icons-material";
 import {userMenuStyles} from "@styles/components/ui/content";
+import { useAppCtx } from "../../../src/contexts/store";
 
 const UserOptions: FC<{}> = () => {
+  const {setModalOpen} = useAppCtx();
+
   return (
     <MenuList sx={userMenuStyles.menu_list}>
-      <MenuItem>
+      <MenuItem onClick={() => setModalOpen(true)}>
         <ListItemIcon>
           <PublishedWithChanges />
         </ListItemIcon>

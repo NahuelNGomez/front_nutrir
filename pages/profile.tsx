@@ -19,7 +19,7 @@ import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import useForm from "../src/hooks/useForm";
 import { profileFields } from "../src/types/forms";
-export { getServerSideProps } from "../src/contexts/store";
+export { getServerSideProps } from "../src/serverSideProps";
 
 const Profile: NextPage = () => {
   const { modeTheme, user } = useAppCtx();
@@ -47,7 +47,7 @@ const Profile: NextPage = () => {
   }, []);
 
   return (
-    <LoggedLayout>
+    <LoggedLayout >
       <Grid
         container
         spacing={6}
@@ -61,7 +61,7 @@ const Profile: NextPage = () => {
           </Typography>
           <Divider />
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
+        <Grid item xs={12} sm={12} md={12} lg={8} xl={6}>
           <Card>
             {process.loading && <LinearProgress color="primary" />}
             <form
@@ -73,14 +73,14 @@ const Profile: NextPage = () => {
               }
             >
               <CardContent>
-              <Typography
-                sx={style.register.title}
-                gutterBottom
-                variant="h5"
-                component="div"
-              >
-                Edita tu perfil
-              </Typography>
+                <Typography
+                  sx={style.register.title}
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                >
+                  Edita tu perfil
+                </Typography>
                 <Grid
                   container
                   direction={"row"}

@@ -8,6 +8,7 @@ import {
 } from "@mui/icons-material";
 import { MenuItem } from "../types/navigation";
 
+
 export const HeaderMenuList: Array<MenuItem> = [
   {
     key: "dashboard",
@@ -71,8 +72,9 @@ export const MenuList: Array<MenuItem> = [
     key: "elegir-comedor",
     text: "Cambiar de Comedor",
     Icon:(props) =>  <PublishedWithChanges {...props} />,
-    action: (router) => {
-      router.push("/api/logout");
+    action: (router,storeActions) => {
+      console.log('llega');
+      storeActions.setModalOpen(true);
     },
   },
 

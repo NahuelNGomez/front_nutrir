@@ -6,7 +6,7 @@ import {
 import type { NextPage } from "next";
 import LoggedLayout from "@components/layouts/LoggedLayout";
 import DashboardNewsCards from "@components/ui/contents/DashboardNewsCards";
-export { getServerSideProps } from "../src/contexts/store";
+export { getServerSideProps } from "../src/serverSideProps";
 
 const Home: NextPage = () => {
   return (
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         spacing={6}
         flexDirection={"row"}
         justifyContent={"space-around"}
-        sx={{ padding: "40px" }}
+        sx={{ padding: "20px" }}
       >
         <Grid item xs={12} lg={12}>
           <Typography variant={"h6"} sx={{ paddingBottom: "15px" }}>
