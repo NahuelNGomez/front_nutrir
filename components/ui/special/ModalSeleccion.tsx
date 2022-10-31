@@ -48,6 +48,31 @@ const ModalSeleccion: FC<{}> = () => {
       address: "Onelli y Palacios, Bariloche",
       selected: false,
     },
+    {
+      name: "comedor 1",
+      address: "9 de Julio y Rivadavia, Buenos Aires",
+      selected: true,
+    },
+    {
+      name: "comedor 2",
+      address: "Cuyin Manzano, Bariloche",
+      selected: false,
+    },
+    {
+      name: "comedor 3",
+      address: "Lago Steffen y Lago Moreno, San Martin de Los Andes",
+      selected: false,
+    },
+    {
+      name: "comedor 4",
+      address: "Av. San Martin 50, Junin de los andes",
+      selected: false,
+    },
+    {
+      name: "comedor 5",
+      address: "Onelli y Palacios, Bariloche",
+      selected: false,
+    },
   ];
 
   const results = useMemo(() => {
@@ -86,7 +111,7 @@ const ModalSeleccion: FC<{}> = () => {
               key={index}
               sx={{
                 border: !comedor.selected ? modalStyles.borderUnselected : modalStyles.borderSelected,
-                color:  comedor.selected ? modalStyles.colorSelected: modalStyles.colorUnselected,
+                color:  comedor.selected ? modalStyles.colorSelected: "",
                 ...modalStyles.item
               }}
             >

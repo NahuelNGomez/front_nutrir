@@ -51,6 +51,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   modalStyles: {
+    
     modal: {
       position: "absolute" as "absolute",
       top: "50%",
@@ -65,6 +66,9 @@ export const styles = (theme: Theme) => ({
       boxShadow: 24,
       p: { xs: 2, sm: 2, lg: 4, xl: 4 },
       borderRadius: { xs: 0, sm: 0, lg: 2, xl: 2 },
+      "::-webkit-scrollbar":{
+        display:"none"
+      }
     },
     headerContainer: { mb: 4 },
     closeIcon: { cursor: "pointer", fontSize: "20px", fontWeight: "600" },
@@ -76,7 +80,7 @@ export const styles = (theme: Theme) => ({
       mt: 1,
       p: 1,
       ":hover": {
-        backgroundColor: "white",
+        backgroundColor: "transparent",
         borderRadius: "3px",
         border: `1px solid ${colors(theme.palette.mode).offset_primary}`,
         boxShadow: "none",

@@ -1,3 +1,5 @@
+import colors from "@styles/colors";
+
 export const userMenuStyles = {
   container: {
     width: "100%",
@@ -8,7 +10,7 @@ export const userMenuStyles = {
     cursor: "pointer",
     borderLeft: "1px solid #eee",
   },
-  avatar: { width: 42, height: 42 },
+  avatar: { width: 42, height: 42,backgroundColor:"grey" },
   text_content: {
     display: {
       sm: "none",
@@ -30,11 +32,11 @@ export const userMenuStyles = {
   menu_text: { sx: { fontSize: "13px" } },
 };
 
+
 export const dashboardCardsStyle = {
   actions: { justifyContent: "center", paddingBottom: "20px" },
   button: {
-    width: "80%",
-    borderRadius: "20px",
-    color: "white",
+    width: "70%",
+    borderRadius: "12px"
   },
 };

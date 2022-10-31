@@ -19,7 +19,7 @@ const SwitchMode:React.FC<{}> = () => {
       <FormControlLabel
         control={
           <MaterialUISwitch
-            sx={{ m: 1 }}
+            
             checked={modeTheme === "dark"}
             onChange={handleChange}
           />

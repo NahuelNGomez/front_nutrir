@@ -3,6 +3,7 @@ import {userMenuStyles} from "@styles/components/ui/content";
 import { FC, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import UserOptions from "../contents/UserOptions";
+import PersonIcon from '@mui/icons-material/Person';
 
 const UserMenu: FC<{}> = () => {
   const { user } = useAppCtx();
@@ -25,7 +26,9 @@ const UserMenu: FC<{}> = () => {
 
   return (
     <Grid container sx={userMenuStyles.container} alignItems={"center"} onClick={handleClick}>
-      <Avatar sx={userMenuStyles.avatar} src="/avatar.png" alt="comedor" />
+      <Avatar sx={userMenuStyles.avatar} >
+        <PersonIcon />
+      </Avatar>
       <Grid sx={userMenuStyles.text_content}>
         <Grid container justifyContent={"center"} flexDirection={"column"}>
         <span style={userMenuStyles.text}>Manos en Acción</span>

@@ -124,7 +124,7 @@ export const drawerStyles = (open: boolean, theme: string) => ({
   },
   exitContainer: {
     width: "100%",
-    padding: "15px",
+    padding: "14px",
     display: "flex",
     justifyContent: "center",
   },
@@ -138,5 +138,6 @@ export const drawerStyles = (open: boolean, theme: string) => ({
     textTransform: "none",
     padding: "8px",
     fontSize: "15px",
+    alignSelf:"center",
   },
 });
