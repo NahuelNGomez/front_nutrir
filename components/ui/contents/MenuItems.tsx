@@ -15,7 +15,7 @@ import { HeaderMenuList, MenuList } from "../../../src/contents/menuList";
 import { useAppCtx } from "../../../src/contexts/store";
 import { DrawerHeader } from "@styles/components/navigation/utils";
 import MenuIcon from "@mui/icons-material/Menu";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LogoutButton from "../special/LogoutButton";
@@ -25,6 +25,9 @@ const MenuItems: FC<{}> = () => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const router = useRouter();
   const styles = drawerStyles(menuOpen, modeTheme);
+  useEffect(() => {
+    console.log(router.pathname);
+  },[]);
   return (
     <>
       <DrawerHeader sx={styles.DrawerHeader}>

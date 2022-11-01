@@ -14,15 +14,16 @@ import {
 } from "@mui/material";
 import { styles } from "@styles/pages/forms";
 import { NextPage } from "next";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import useForm from "../src/hooks/useForm";
-import { profileFields } from "../src/types/forms";
+import { merenderoFields } from "../src/types/forms";
 export { getServerSideProps } from "../src/serverSideProps";
 
-const Profile: NextPage = () => {
-  const { modeTheme, user } = useAppCtx();
+const Edit: NextPage = () => {
+  const { modeTheme } = useAppCtx();
+  const router = useRouter();
 
   const {
     fields,
@@ -30,24 +31,13 @@ const Profile: NextPage = () => {
     process,
     updateField,
     submit,
-    defaultValues,
     finishProcess,
-  } = useForm<profileFields>(statesForms.profile);
+  } = useForm<merenderoFields>(statesForms.merendero);
 
   const style = styles(modeTheme);
 
-  useEffect(() => {
-    defaultValues({
-      user: user.user,
-      name: user.name,
-      phone: user.phone,
-      email: user.email,
-      password: "",
-    });
-  }, []);
-
   return (
-    <LoggedLayout >
+    <LoggedLayout>
       <Grid
         container
         spacing={6}
@@ -57,16 +47,43 @@ const Profile: NextPage = () => {
       >
         <Grid item xs={12} lg={12}>
           <Typography variant={"h6"} sx={{ paddingBottom: "15px" }}>
-            Perfil de Usuario
+            Modificar Comedor
           </Typography>
           <Divider />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          xl={12}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            sx={{
+              ...style.utils.submitButton,
+              width: "auto",
+              pl: 4,
+              pr: 4,
+              color: "white",
+            }}
+            onClick={() => router.push("/days")}
+          >
+            Modificar Horarios
+          </Button>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={8} xl={6}>
           <Card>
             {process.loading && <LinearProgress color="primary" />}
             <form
               onSubmit={(e) =>
-                submit(e, "/api/profile").then(() => {
+                submit(e, "/api/merendero").then(() => {
                   console.log("it works!");
                   finishProcess();
                 })
@@ -79,7 +96,7 @@ const Profile: NextPage = () => {
                   variant="h5"
                   component="div"
                 >
-                  Edita tu perfil
+                  Editar Comedor
                 </Typography>
                 <Grid
                   container
@@ -95,35 +112,10 @@ const Profile: NextPage = () => {
                     sx={style.register.fields}
                   >
                     <TextField
-                      error={errors.user}
-                      fullWidth
-                      id="input-with-sx"
-                      label="Usuario"
-                      variant="outlined"
-                      type="text"
-                      name="user"
-                      margin="normal"
-                      value={fields.user}
-                      sx={style.utils.textInput}
-                      helperText={
-                        errors.user ? "Debes ingresar tu usuario" : ""
-                      }
-                      onChange={updateField}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={12}
-                    lg={6}
-                    xl={6}
-                    sx={style.register.fields}
-                  >
-                    <TextField
                       error={errors.name}
                       fullWidth
                       id="input-with-sx"
-                      label="Nombre y Apellido"
+                      label="Comedor"
                       variant="outlined"
                       type="text"
                       name="name"
@@ -132,18 +124,12 @@ const Profile: NextPage = () => {
                       sx={style.utils.textInput}
                       helperText={
                         errors.name
-                          ? "Debes ingresar tu nombre y appellido"
+                          ? "Debes ingresar el nombre del comedor"
                           : ""
                       }
                       onChange={updateField}
                     />
                   </Grid>
-                </Grid>
-                <Grid
-                  container
-                  direction={"row"}
-                  justifyContent={"space-between"}
-                >
                   <Grid
                     item
                     xs={12}
@@ -153,18 +139,18 @@ const Profile: NextPage = () => {
                     sx={style.register.fields}
                   >
                     <TextField
-                      error={errors.phone}
+                      error={errors.street}
                       fullWidth
                       id="input-with-sx"
-                      label="Telefono"
+                      label="Calle"
                       variant="outlined"
                       type="text"
-                      name="phone"
+                      name="street"
                       margin="normal"
-                      value={fields.phone}
+                      value={fields.street}
                       sx={style.utils.textInput}
                       helperText={
-                        errors.phone ? "Debes ingresar tu telefono" : ""
+                        errors.street ? "Debes ingresar una calle" : ""
                       }
                       onChange={updateField}
                     />
@@ -178,28 +164,22 @@ const Profile: NextPage = () => {
                     sx={style.register.fields}
                   >
                     <TextField
-                      error={errors.email}
+                      error={errors.number}
                       fullWidth
                       id="input-with-sx"
-                      label="Correo Electronico"
+                      label="Numero"
                       variant="outlined"
-                      type="email"
-                      name="email"
+                      type="number"
+                      name="number"
                       margin="normal"
-                      value={fields.email}
+                      value={fields.number}
                       sx={style.utils.textInput}
                       helperText={
-                        errors.email ? "Debes ingresar tu correo" : ""
+                        errors.number ? "Debes ingresar una altura" : ""
                       }
                       onChange={updateField}
                     />
                   </Grid>
-                </Grid>
-                <Grid
-                  container
-                  direction={"row"}
-                  justifyContent={"space-between"}
-                >
                   <Grid
                     item
                     xs={12}
@@ -209,18 +189,40 @@ const Profile: NextPage = () => {
                     sx={style.register.fields}
                   >
                     <TextField
-                      error={errors.password}
+                      error={errors.between_streets}
                       fullWidth
                       id="input-with-sx"
-                      label="Elegi una contraseña"
+                      label="Entre Calles"
                       variant="outlined"
-                      type="password"
-                      name="password"
+                      type="text"
+                      name="between_streets"
                       margin="normal"
-                      value={fields.password}
+                      value={fields.between_streets}
+                      sx={style.utils.textInput}
+                      onChange={updateField}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    lg={6}
+                    xl={6}
+                    sx={style.register.fields}
+                  >
+                    <TextField
+                      error={errors.province}
+                      fullWidth
+                      id="input-with-sx"
+                      label="Provincia"
+                      variant="outlined"
+                      type="text"
+                      name="province"
+                      margin="normal"
+                      value={fields.province}
                       sx={style.utils.textInput}
                       helperText={
-                        errors.password ? "Debes ingresar tu telefono" : ""
+                        errors.province ? "Debes ingresar una province" : ""
                       }
                       onChange={updateField}
                     />
@@ -264,7 +266,7 @@ const Profile: NextPage = () => {
               {process.finish && (
                 <div style={style.utils.errorMessage}>
                   <Alert severity="success" sx={{ justifyContent: "center" }}>
-                    Se Modifico con exito tu perfil
+                    Se Modifico con exito el comedor
                   </Alert>
                 </div>
               )}
@@ -276,4 +278,4 @@ const Profile: NextPage = () => {
   );
 };
 
-export default Profile;
+export default Edit;

@@ -9,7 +9,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { styles } from "@styles/pages/auth";
+import { styles } from "@styles/pages/forms";
 import useForm from "../../src/hooks/useForm";
 import { emailResetFields } from "../../src/types/forms";
 import { FC } from "react";

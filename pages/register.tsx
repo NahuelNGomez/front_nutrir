@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { NextPage } from "next";
-import { styles } from "@styles/pages/auth";
+import { styles } from "@styles/pages/forms";
 import { useRouter } from "next/router";
 import useForm from "../src/hooks/useForm";
 import { registerFields } from "../src/types/forms";

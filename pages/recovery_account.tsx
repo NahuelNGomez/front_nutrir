@@ -2,7 +2,7 @@ import { Card, Grid, Slide } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";
 import EmailCart from "../components/recovery/EmailCart";
-import { styles as stylesAuth } from "@styles/pages/auth";
+import { styles as stylesAuth } from "@styles/pages/forms";
 import CodeCart from "../components/recovery/CodeCart";
 import PasswordCart from "../components/recovery/PasswordCart";
 import { useAppCtx } from "../src/contexts/store";

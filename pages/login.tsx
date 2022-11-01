@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
-import { styles } from "@styles/pages/auth";
+import { styles } from "@styles/pages/forms";
 import useForm from "../src/hooks/useForm";
 import { useRouter } from "next/router";
 import { loginFields } from "../src/types/forms";

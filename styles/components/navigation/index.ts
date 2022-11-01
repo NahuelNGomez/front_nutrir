@@ -119,7 +119,7 @@ export const drawerStyles = (open: boolean, theme: string) => ({
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      paddingTop: "30px",
+      paddingTop: "10px",
     },
   },
   exitContainer: {

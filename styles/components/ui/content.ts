@@ -6,8 +6,9 @@ export const userMenuStyles = {
     height: "100%",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: {xs:"center",sm:"center",lg:"space-around",xl:"space-around"},
     cursor: "pointer",
+    alignItems:"center",
     borderLeft: "1px solid #eee",
   },
   avatar: { width: 42, height: 42,backgroundColor:"grey" },
@@ -37,6 +38,7 @@ export const dashboardCardsStyle = {
   actions: { justifyContent: "center", paddingBottom: "20px" },
   button: {
     width: "70%",
-    borderRadius: "12px"
+    borderRadius: "12px",
+    color:"white"
   },
 };

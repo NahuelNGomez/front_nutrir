@@ -8,8 +8,12 @@ export enum profileFields {
   password = "optional"
 }
 
-export enum profileFieldsRules {
-  password = ''
+export enum merenderoFields {
+  name = "required",
+  street = "required",
+  number = "required",
+  between_streets = "optional",
+  province = "required"
 }
 
 export enum registerFields {

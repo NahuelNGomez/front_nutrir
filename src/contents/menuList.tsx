@@ -41,7 +41,7 @@ export const MenuList: Array<MenuItem> = [
       {
         key: "completar-encuestas",
         text: "Completar encuestas",
-        path:"survey",
+        path:"/survey",
         Icon:(props) => <LensOutlined fontSize="small" {...props}/>,
         action: (router) => {
           router.push("/api/logout");
@@ -50,7 +50,7 @@ export const MenuList: Array<MenuItem> = [
       {
         key: "ver-estadistinas",
         text: "Ver estadísticas",
-        path:"stadistics",
+        path:"/stadistics",
         Icon:(props) =>  <LensOutlined fontSize="small" {...props} />,
         action: (router) => {
           router.push("/api/logout");
@@ -61,10 +61,10 @@ export const MenuList: Array<MenuItem> = [
   {
     key: "comedor",
     text: "Editar Comedor",
-    path:"edit",
+    path:"/edit",
     Icon:(props) =>  <Flatware {...props} />,
     action: (router) => {
-      router.push("/api/logout");
+      router.push("edit");
     },
   },
 

@@ -25,7 +25,7 @@ const UserMenu: FC<{}> = () => {
   };
 
   return (
-    <Grid container sx={userMenuStyles.container} alignItems={"center"} onClick={handleClick}>
+    <Grid container sx={userMenuStyles.container}  onClick={handleClick}>
       <Avatar sx={userMenuStyles.avatar} >
         <PersonIcon />
       </Avatar>

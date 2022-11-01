@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import { dashboardCards } from "../../../src/contents/cards";
 import { useAppCtx } from "../../../src/contexts/store";
-import SwitchMode from "../special/SwitchMode";
 
 const DashboardNewsCards: FC<{}> = () => {
   const router = useRouter();

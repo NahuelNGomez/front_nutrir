@@ -1,4 +1,4 @@
-import { codeResetFields, emailResetFields, loginFields, passwordResetFields, profileFields, profileFieldsRules, registerFields, stateFormBase } from "../types/forms";
+import { codeResetFields, emailResetFields, loginFields, merenderoFields, passwordResetFields, profileFields, registerFields, stateFormBase } from "../types/forms";
 
 export function initialFormState<T>(Fields:T):stateFormBase<T> {
 
@@ -38,6 +38,7 @@ export const statesForms = {
   email_reset: initialFormState<typeof emailResetFields>(emailResetFields),
   code_reset: initialFormState<typeof codeResetFields>(codeResetFields),
   password_reset: initialFormState<typeof passwordResetFields>(passwordResetFields),
-  profile:initialFormState<typeof profileFields>(profileFields)
+  profile:initialFormState<typeof profileFields>(profileFields),
+  merendero:initialFormState<typeof merenderoFields>(merenderoFields)
 };
 

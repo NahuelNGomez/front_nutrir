@@ -1,6 +1,6 @@
 import Bar from "@components/navigation/Bar";
 import { Grid } from "@mui/material";
-import { styles } from "@styles/pages/auth";
+import { styles } from "@styles/pages/forms";
 import React, { FC, ReactNode } from "react";
 import { useAppCtx } from "../../src/contexts/store";
 

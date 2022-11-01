@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
 import { passwordResetFields } from "../../src/types/forms";
-import { styles } from "@styles/pages/auth";
+import { styles } from "@styles/pages/forms";
 import {
   Alert,
   Button,
