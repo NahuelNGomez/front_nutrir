@@ -1,8 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Bar from "../navigation/Bar";
-import { DrawerHeader } from "@styles/components/navigation/utils";
+import { componentsStyles } from "@styles/index";
 import { useAppCtx } from "../../src/contexts/store";
+import { DrawerHeader } from "@styles/components/navigation/utils";
 
 type props = {
   children: React.ReactNode;
@@ -10,10 +11,11 @@ type props = {
 
 const LoggedLayout: React.FC<props> = ({ children }) => {
   const {modeTheme} = useAppCtx();
+  const {layoutStyles} = componentsStyles(modeTheme);
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={layoutStyles.logged.container}>
       <Bar />
-      <Box component="main" sx={{backgroundColor:modeTheme === 'light' ? '#f7f8fa' : '',minHeight:"100vh",width:"100%"}}>
+      <Box component="main" sx={layoutStyles.logged.body}>
         <DrawerHeader />
         {children}
       </Box>

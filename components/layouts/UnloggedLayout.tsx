@@ -1,8 +1,8 @@
 import Bar from "@components/navigation/Bar";
 import { Grid } from "@mui/material";
-import { styles } from "@styles/pages/forms";
 import React, { FC, ReactNode } from "react";
 import { useAppCtx } from "../../src/contexts/store";
+import { componentsStyles } from "@styles/index";
 
 type props = {
   children: ReactNode;
@@ -10,11 +10,11 @@ type props = {
 
 const UnloggedLayout: FC<props> = ({ children }) => {
   const { modeTheme } = useAppCtx();
-  const style = styles(modeTheme);
-
+ 
+  const {layoutStyles} = componentsStyles(modeTheme);
   return (
-    <Grid sx={style.page}>
-      <Grid sx={style.content.container}>
+    <Grid sx={layoutStyles.unlogged.page}>
+      <Grid sx={layoutStyles.unlogged.container}>
         <Bar />
         <Grid container justifyContent={"center"}>
           {children}
@@ -22,7 +22,7 @@ const UnloggedLayout: FC<props> = ({ children }) => {
         <Grid>
           <img
             src={"/organica.png"}
-            style={{ filter: modeTheme == "light" ? "saturate(100%)" : "" }}
+            style={layoutStyles.unlogged.footer_image}
             width={150}
             height={75}
           />

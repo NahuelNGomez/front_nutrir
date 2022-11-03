@@ -18,8 +18,6 @@ const UserOptions: FC<{}> = () => {
 
   return (
     <MenuList sx={userMenuStyles.menu_list}>
-     
-      
       <MenuItem onClick={() => setModalOpen(true)}>
         <ListItemIcon>
           <PublishedWithChanges />

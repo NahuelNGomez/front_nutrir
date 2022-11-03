@@ -8,11 +8,11 @@ export const userMenuStyles = {
     flexDirection: "row",
     justifyContent: {xs:"center",sm:"center",lg:"space-around",xl:"space-around"},
     cursor: "pointer",
-    alignItems:"center",
-    borderLeft: "1px solid #eee",
+    alignItems:"center"
   },
-  avatar: { width: 42, height: 42,backgroundColor:"grey" },
+  avatar: { width: 36, height: 36,backgroundColor:"grey" },
   text_content: {
+    pl:1,
     display: {
       sm: "none",
       xs: "none",
@@ -34,11 +34,3 @@ export const userMenuStyles = {
 };
 
 
-export const dashboardCardsStyle = {
-  actions: { justifyContent: "center", paddingBottom: "20px" },
-  button: {
-    width: "70%",
-    borderRadius: "12px",
-    color:"white"
-  },
-};

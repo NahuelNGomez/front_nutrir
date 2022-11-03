@@ -2,7 +2,7 @@ import { Card, Grid, Slide } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";
 import EmailCart from "../components/recovery/EmailCart";
-import { styles as stylesAuth } from "@styles/pages/forms";
+import { pagesStyles } from "@styles/index";
 import CodeCart from "../components/recovery/CodeCart";
 import PasswordCart from "../components/recovery/PasswordCart";
 import { useAppCtx } from "../src/contexts/store";
@@ -14,7 +14,7 @@ const ResetPassword: NextPage = () => {
   const [token, setToken] = useState("");
   const { modeTheme } = useAppCtx();
 
-  const style = stylesAuth(modeTheme);
+  const { recoveryAccountStyles } = pagesStyles(modeTheme);
 
   return (
     <UnloggedLayout>
@@ -24,7 +24,7 @@ const ResetPassword: NextPage = () => {
         sm={12}
         lg={5}
         xl={5}
-        sx={{ padding: "10px" }}
+        sx={recoveryAccountStyles.container}
       >
         {step === 0 && (
           <Slide direction="left" in={step == 0} mountOnEnter unmountOnExit>

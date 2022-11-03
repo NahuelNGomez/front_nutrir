@@ -9,7 +9,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { styles } from "@styles/pages/forms";
+import { pagesStyles } from "@styles/index";
 import useForm from "../../src/hooks/useForm";
 import { emailResetFields } from "../../src/types/forms";
 import { FC } from "react";
@@ -33,17 +33,19 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
     });
   };
 
-  const style = styles(modeTheme);
+  const {
+    recoveryAccountStyles: { emailCartStyles },
+  } = pagesStyles(modeTheme);
 
   return (
     <>
       {process.loading && <LinearProgress color="primary" />}
       <form onSubmit={handleSubmit}>
-        <CardContent sx={style.content.cardContent}>
+        <CardContent sx={emailCartStyles.cardContent}>
           <Typography gutterBottom variant="h5" component="div">
             Restablecer Contraseña
           </Typography>
-          <Grid style={style.utils.container}>
+          <Grid style={emailCartStyles.utils.container}>
             <TextField
               error={errors.email}
               fullWidth
@@ -54,7 +56,7 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
               name="email"
               margin="normal"
               value={fields.email}
-              sx={style.utils.textInput}
+              sx={emailCartStyles.utils.textInput}
               helperText={
                 errors.email ? "Debes ingresar tu usuario/correo" : ""
               }
@@ -62,7 +64,7 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
             />
           </Grid>
         </CardContent>
-        <CardActions sx={style.content.actions.container}>
+        <CardActions sx={emailCartStyles.actions.container}>
           <Button
             disabled={process.loading}
             type="submit"
@@ -74,7 +76,7 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
             {process.loading && (
               <CircularProgress
                 size={20}
-                sx={style.utils.circularProgress}
+                sx={emailCartStyles.utils.circularProgress}
                 color="inherit"
               />
             )}
@@ -82,13 +84,13 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
         </CardActions>
       </form>
       {!process.validate && (
-        <Grid style={style.utils.errorMessage}>
+        <Grid style={emailCartStyles.utils.errorMessage}>
           <Alert severity="error">
             No encontramos un registro con el correo electronico ingresado.
           </Alert>
         </Grid>
       )}
-      <Grid style={style.utils.errorMessage}>
+      <Grid style={emailCartStyles.utils.errorMessage}>
         <small>
           *Te enviaremos un correo electronico con un codigo unico para que
           puedas restablecer tu contraseña.

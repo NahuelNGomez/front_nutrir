@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { styles } from "@styles/pages/forms";
+import { pagesStyles } from "@styles/index";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { statesForms } from "../src/constants/states";
@@ -34,7 +34,7 @@ const Edit: NextPage = () => {
     finishProcess,
   } = useForm<merenderoFields>(statesForms.merendero);
 
-  const style = styles(modeTheme);
+  const {editStyles} = pagesStyles(modeTheme);
 
   return (
     <LoggedLayout>
@@ -43,10 +43,10 @@ const Edit: NextPage = () => {
         spacing={6}
         flexDirection={"row"}
         justifyContent={"space-around"}
-        sx={{ padding: "20px" }}
+        sx={editStyles.container}
       >
         <Grid item xs={12} lg={12}>
-          <Typography variant={"h6"} sx={{ paddingBottom: "15px" }}>
+          <Typography variant={"h6"} sx={editStyles.title}>
             Modificar Comedor
           </Typography>
           <Divider />
@@ -58,21 +58,10 @@ const Edit: NextPage = () => {
           md={12}
           lg={12}
           xl={12}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
+          sx={editStyles.daysContainerButton}
         >
           <Button
-            sx={{
-              ...style.utils.submitButton,
-              width: "auto",
-              pl: 4,
-              pr: 4,
-              color: "white",
-            }}
+            sx={editStyles.utils.daysButton}
             onClick={() => router.push("/days")}
           >
             Modificar Horarios
@@ -91,7 +80,7 @@ const Edit: NextPage = () => {
             >
               <CardContent>
                 <Typography
-                  sx={style.register.title}
+                  sx={editStyles.form.title}
                   gutterBottom
                   variant="h5"
                   component="div"
@@ -109,7 +98,7 @@ const Edit: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={style.register.fields}
+                    sx={editStyles.form.fields}
                   >
                     <TextField
                       error={errors.name}
@@ -121,7 +110,7 @@ const Edit: NextPage = () => {
                       name="name"
                       margin="normal"
                       value={fields.name}
-                      sx={style.utils.textInput}
+                      sx={editStyles.utils.textInput}
                       helperText={
                         errors.name
                           ? "Debes ingresar el nombre del comedor"
@@ -136,7 +125,7 @@ const Edit: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={style.register.fields}
+                    sx={editStyles.form.fields}
                   >
                     <TextField
                       error={errors.street}
@@ -148,7 +137,7 @@ const Edit: NextPage = () => {
                       name="street"
                       margin="normal"
                       value={fields.street}
-                      sx={style.utils.textInput}
+                      sx={editStyles.utils.textInput}
                       helperText={
                         errors.street ? "Debes ingresar una calle" : ""
                       }
@@ -161,7 +150,7 @@ const Edit: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={style.register.fields}
+                    sx={editStyles.form.fields}
                   >
                     <TextField
                       error={errors.number}
@@ -173,7 +162,7 @@ const Edit: NextPage = () => {
                       name="number"
                       margin="normal"
                       value={fields.number}
-                      sx={style.utils.textInput}
+                      sx={editStyles.utils.textInput}
                       helperText={
                         errors.number ? "Debes ingresar una altura" : ""
                       }
@@ -186,7 +175,7 @@ const Edit: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={style.register.fields}
+                    sx={editStyles.form.fields}
                   >
                     <TextField
                       error={errors.between_streets}
@@ -198,7 +187,7 @@ const Edit: NextPage = () => {
                       name="between_streets"
                       margin="normal"
                       value={fields.between_streets}
-                      sx={style.utils.textInput}
+                      sx={editStyles.utils.textInput}
                       onChange={updateField}
                     />
                   </Grid>
@@ -208,7 +197,7 @@ const Edit: NextPage = () => {
                     sm={12}
                     lg={6}
                     xl={6}
-                    sx={style.register.fields}
+                    sx={editStyles.form.fields}
                   >
                     <TextField
                       error={errors.province}
@@ -220,7 +209,7 @@ const Edit: NextPage = () => {
                       name="province"
                       margin="normal"
                       value={fields.province}
-                      sx={style.utils.textInput}
+                      sx={editStyles.utils.textInput}
                       helperText={
                         errors.province ? "Debes ingresar una province" : ""
                       }
@@ -230,42 +219,35 @@ const Edit: NextPage = () => {
                 </Grid>
               </CardContent>
               <CardActions
-                sx={{
-                  ...style.content.actions.container,
-                  alignItems: "center",
-                }}
+                sx={editStyles.actions.container}
               >
                 <Button
                   disabled={process.loading}
                   type="submit"
                   variant="contained"
-                  sx={{
-                    ...style.utils.submitButton,
-                    width: "40%",
-                    margin: "15px",
-                  }}
+                  sx={editStyles.utils.submitButton}
                   color={process.loading ? "inherit" : "primary"}
                 >
                   Actualizar{" "}
                   {process.loading && (
                     <CircularProgress
                       size={20}
-                      sx={style.utils.circularProgress}
+                      sx={editStyles.utils.circularProgress}
                       color="inherit"
                     />
                   )}
                 </Button>
               </CardActions>
               {!process.validate && (
-                <div style={style.utils.errorMessage}>
-                  <Alert severity="error" sx={{ justifyContent: "center" }}>
+                <div style={editStyles.utils.errorMessage}>
+                  <Alert severity="error" sx={editStyles.utils.AlertMessage}>
                     Hubo un error!
                   </Alert>
                 </div>
               )}
               {process.finish && (
-                <div style={style.utils.errorMessage}>
-                  <Alert severity="success" sx={{ justifyContent: "center" }}>
+                <div style={editStyles.utils.errorMessage}>
+                  <Alert severity="success" sx={editStyles.utils.AlertMessage}>
                     Se Modifico con exito el comedor
                   </Alert>
                 </div>

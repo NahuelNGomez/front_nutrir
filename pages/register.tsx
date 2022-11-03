@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { NextPage } from "next";
-import { styles } from "@styles/pages/forms";
+import { pagesStyles } from "@styles/index";
 import { useRouter } from "next/router";
 import useForm from "../src/hooks/useForm";
 import { registerFields } from "../src/types/forms";
@@ -28,7 +28,7 @@ const Register: NextPage = () => {
   const { modeTheme } = useAppCtx();
   const { fields, errors, process, updateField, updateFieldProps, submit } =
     useForm<registerFields>(statesForms.register);
-  const style = styles(modeTheme);
+  const { registerStyles } = pagesStyles(modeTheme);
 
   return (
     <UnloggedLayout>
@@ -38,7 +38,7 @@ const Register: NextPage = () => {
         sm={12}
         lg={6}
         xl={6}
-        sx={{ padding: "10px" }}
+        sx={registerStyles.container}
       >
         <Card>
           {process.loading && <LinearProgress color="primary" />}
@@ -49,7 +49,7 @@ const Register: NextPage = () => {
           >
             <CardContent>
               <Typography
-                sx={style.register.title}
+                sx={registerStyles.title}
                 gutterBottom
                 variant="h5"
                 component="div"
@@ -67,7 +67,7 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <TextField
                     error={errors.user}
@@ -79,7 +79,7 @@ const Register: NextPage = () => {
                     name="user"
                     margin="normal"
                     value={fields.user}
-                    sx={style.utils.textInput}
+                    sx={registerStyles.utils.textInput}
                     helperText={errors.user ? "Debes ingresar tu usuario" : ""}
                     onChange={updateField}
                   />
@@ -90,7 +90,7 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <TextField
                     error={errors.name}
@@ -102,7 +102,7 @@ const Register: NextPage = () => {
                     name="name"
                     margin="normal"
                     value={fields.name}
-                    sx={style.utils.textInput}
+                    sx={registerStyles.utils.textInput}
                     helperText={
                       errors.name ? "Debes ingresar tu nombre y appellido" : ""
                     }
@@ -121,7 +121,7 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <TextField
                     error={errors.phone}
@@ -133,7 +133,7 @@ const Register: NextPage = () => {
                     name="phone"
                     margin="normal"
                     value={fields.phone}
-                    sx={style.utils.textInput}
+                    sx={registerStyles.utils.textInput}
                     helperText={
                       errors.phone ? "Debes ingresar tu telefono" : ""
                     }
@@ -146,7 +146,7 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <TextField
                     error={errors.email}
@@ -158,7 +158,7 @@ const Register: NextPage = () => {
                     name="email"
                     margin="normal"
                     value={fields.email}
-                    sx={style.utils.textInput}
+                    sx={registerStyles.utils.textInput}
                     helperText={errors.email ? "Debes ingresar tu correo" : ""}
                     onChange={updateField}
                   />
@@ -175,7 +175,7 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <TextField
                     error={errors.password}
@@ -187,7 +187,7 @@ const Register: NextPage = () => {
                     name="password"
                     margin="normal"
                     value={fields.password}
-                    sx={style.utils.textInput}
+                    sx={registerStyles.utils.textInput}
                     helperText={
                       errors.password ? "Debes ingresar tu telefono" : ""
                     }
@@ -200,16 +200,16 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <FormControl
                     variant="outlined"
-                    sx={{ width: "100%", marginTop: "20px" }}
+                    sx={registerStyles.utils.selectInput}
                     error={errors.exists_dinning_room}
                   >
                     <InputLabel
                       id="exists_dinning_room-label"
-                      sx={{ top: "-10px" }}
+                      sx={registerStyles.utils.selectInputLabel}
                     >
                       Ya esta registrado su comedor?
                     </InputLabel>
@@ -235,14 +235,17 @@ const Register: NextPage = () => {
                   sm={12}
                   lg={6}
                   xl={6}
-                  sx={style.register.fields}
+                  sx={registerStyles.utils.fields}
                 >
                   <FormControl
                     variant="outlined"
-                    sx={{ width: "100%", marginTop: "20px" }}
+                    sx={registerStyles.utils.selectInput}
                     error={errors.dinning_room}
                   >
-                    <InputLabel id="dinning_room-label" sx={{ top: "-10px" }}>
+                    <InputLabel
+                      id="dinning_room-label"
+                      sx={registerStyles.utils.selectInputLabel}
+                    >
                       Comedor al que perteneces.
                     </InputLabel>
                     <Select
@@ -261,20 +264,20 @@ const Register: NextPage = () => {
                 </Grid>
               </Grid>
             </CardContent>
-            <CardActions sx={style.content.actions.container}>
-              <div style={style.utils.container}>
+            <CardActions sx={registerStyles.actions.container}>
+              <div style={registerStyles.utils.container}>
                 <Button
                   disabled={process.loading}
                   type="submit"
                   variant="contained"
-                  sx={style.utils.submitButton}
+                  sx={registerStyles.utils.submitButton}
                   color={process.loading ? "inherit" : "primary"}
                 >
                   Registrarse{" "}
                   {process.loading && (
                     <CircularProgress
                       size={20}
-                      sx={style.utils.circularProgress}
+                      sx={registerStyles.utils.circularProgress}
                       color="inherit"
                     />
                   )}

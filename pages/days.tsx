@@ -26,7 +26,7 @@ const Days: NextPage = () => {
         container
         spacing={6}
         flexDirection={"row"}
-        justifyContent={"space-around"}
+        justifyContent={"flex-start"}
         sx={{ padding: "20px" }}
       >
         <Grid item xs={12} lg={12}>

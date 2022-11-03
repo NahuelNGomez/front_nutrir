@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { NextPage } from "next";
 import React from "react";
-import { styles } from "@styles/pages/forms";
+import { pagesStyles } from "@styles/index";
 import useForm from "../src/hooks/useForm";
 import { useRouter } from "next/router";
 import { loginFields } from "../src/types/forms";
@@ -26,7 +26,7 @@ const Login: NextPage = () => {
   const { fields, errors, process, updateField, submit } = useForm<loginFields>(
     statesForms.login
   );
-  const style = styles(modeTheme);
+  const { loginStyles } = pagesStyles(modeTheme);
 
   return (
     <UnloggedLayout>
@@ -45,7 +45,7 @@ const Login: NextPage = () => {
               submit(e, "/api/login").then(() => router.push("/"))
             }
           >
-            <CardContent sx={style.content.cardContent}>
+            <CardContent sx={loginStyles.cardContent}>
               <img
                 src={
                   modeTheme == "dark"
@@ -55,7 +55,7 @@ const Login: NextPage = () => {
                 style={{ width: "200px" }}
               />
 
-              <div style={style.utils.container}>
+              <div style={loginStyles.utils.container}>
                 <TextField
                   error={errors.email}
                   fullWidth
@@ -66,7 +66,7 @@ const Login: NextPage = () => {
                   name="email"
                   margin="normal"
                   value={fields.email}
-                  sx={style.utils.textInput}
+                  sx={loginStyles.utils.textInput}
                   helperText={
                     errors.email ? "Debes ingresar tu usuario/correo" : ""
                   }
@@ -82,7 +82,7 @@ const Login: NextPage = () => {
                   variant="outlined"
                   margin="normal"
                   name="password"
-                  sx={style.utils.textInput}
+                  sx={loginStyles.utils.textInput}
                   value={fields.password}
                   helperText={
                     errors.password ? "Debes ingresar tu contraseña" : ""
@@ -90,7 +90,7 @@ const Login: NextPage = () => {
                   onChange={updateField}
                 />
                 <Typography
-                  sx={style.utils.linkText}
+                  sx={loginStyles.utils.linkText}
                   onClick={() => router.push("recovery_account")}
                 >
                   {" "}
@@ -98,32 +98,32 @@ const Login: NextPage = () => {
                 </Typography>
               </div>
             </CardContent>
-            <CardActions sx={style.content.actions.container}>
-              <div style={style.utils.container}>
+            <CardActions sx={loginStyles.actions.container}>
+              <div style={loginStyles.utils.container}>
                 <Button
                   disabled={process.loading}
                   type="submit"
                   variant="contained"
-                  sx={style.utils.submitButton}
+                  sx={loginStyles.utils.submitButton}
                   color={process.loading ? "inherit" : "primary"}
                 >
                   Ingresar{" "}
                   {process.loading && (
                     <CircularProgress
                       size={20}
-                      sx={style.utils.circularProgress}
+                      sx={loginStyles.utils.circularProgress}
                       color="inherit"
                     />
                   )}
                 </Button>
               </div>
             </CardActions>
-            <CardActions sx={style.content.actions.helperText}>
-              <Typography sx={style.content.actions.floatingText}>
+            <CardActions sx={loginStyles.actions.helperText}>
+              <Typography sx={loginStyles.actions.floatingText}>
                 ¿No tienes una cuenta?{" "}
                 <Button
                   size="small"
-                  sx={style.utils.linkText}
+                  sx={loginStyles.utils.linkText}
                   onClick={() => router.push("register")}
                 >
                   Registrate
@@ -131,7 +131,7 @@ const Login: NextPage = () => {
               </Typography>
             </CardActions>
             {!process.validate && (
-              <div style={style.utils.errorMessage}>
+              <div style={loginStyles.utils.errorMessage}>
                 <Alert severity="error" sx={{ justifyContent: "center" }}>
                   Usuario o Contraseña son incorrectas
                 </Alert>

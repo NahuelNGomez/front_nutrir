@@ -4,17 +4,25 @@ import { useAppCtx } from "../src/contexts/store";
 import { FC, ReactNode } from "react";
 
 type props = {
-    children:ReactNode
-}
+  children: ReactNode;
+};
 
-const Layout:FC<props> = ({ children }) => {
-  const {currentTheme} = useAppCtx();
+const Layout: FC<props> = ({ children }) => {
+  const { currentTheme } = useAppCtx();
   return (
-    <ThemeProvider theme={currentTheme}>
-      <CssBaseline />
-      <main>{children}</main>
-    </ThemeProvider>
+    <>
+      <style global jsx>{`
+        body {
+          padding-right: 0px !important;
+          overflow: auto !important;
+        }
+      `}</style>
+      <ThemeProvider theme={currentTheme}>
+        <CssBaseline />
+        <main>{children}</main>
+      </ThemeProvider>
+    </>
   );
-}
+};
 
 export default Layout;

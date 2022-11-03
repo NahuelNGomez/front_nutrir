@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import useForm from "../../src/hooks/useForm";
 import { codeResetFields, SubmitForm } from "../../src/types/forms";
-import { styles } from "@styles/pages/forms";
+import { pagesStyles } from "@styles/index";
 import {
   Alert,
   Button,
@@ -43,16 +43,18 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
     });
   };
 
-  const style = styles(modeTheme);
+  const {
+    recoveryAccountStyles: { codeCartStyles },
+  } = pagesStyles(modeTheme);
   return (
     <>
       {process.loading && <LinearProgress color="primary" />}
       <form onSubmit={handleSubmit}>
-        <CardContent sx={style.content.cardContent}>
+        <CardContent sx={codeCartStyles.cardContent}>
           <Typography gutterBottom variant="h5" component="div">
             Codigo de Seguridad
           </Typography>
-          <Grid style={style.utils.container}>
+          <Grid style={codeCartStyles.utils.container}>
             <TextField
               error={errors.code}
               fullWidth
@@ -63,17 +65,17 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
               name="code"
               margin="normal"
               value={fields.code}
-              sx={style.utils.textInput}
+              sx={codeCartStyles.utils.textInput}
               helperText={errors.code ? "Debes ingresar un codigo valido" : ""}
               onChange={updateField}
             />
           </Grid>
         </CardContent>
-        <Grid style={style.utils.container}>
-          <CardActions sx={style.utils.codeContainer}>
+        <Grid style={codeCartStyles.utils.container}>
+          <CardActions sx={codeCartStyles.container}>
             <Button
               size="small"
-              sx={{ ...style.utils.linkText, textAlign: "left" }}
+              sx={codeCartStyles.utils.linkText}
               onClick={() => router.reload()}
             >
               Probar con otro correo electronico
@@ -89,7 +91,7 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
               {process.loading && (
                 <CircularProgress
                   size={20}
-                  sx={style.utils.circularProgress}
+                  sx={codeCartStyles.utils.circularProgress}
                   color="inherit"
                 />
               )}
@@ -98,20 +100,20 @@ const CodeCart: FC<props> = ({ changeSteper, changeToken, email }) => {
         </Grid>
       </form>
       {!process.validate && (
-        <Grid style={style.utils.errorMessage}>
+        <Grid style={codeCartStyles.utils.errorMessage}>
           <Alert severity="error">
             El codigo que ingresaste es invalido o expiro
           </Alert>
         </Grid>
       )}
       {seconds === 0 && (
-        <Grid style={style.utils.errorMessage}>
+        <Grid style={codeCartStyles.utils.errorMessage}>
           <Alert severity="error">
             Tu tiempo se ha terminado por favor intenta de nuevo.
           </Alert>
         </Grid>
       )}
-      <Grid style={style.utils.secondsTimer}>
+      <Grid style={codeCartStyles.utils.secondsTimer}>
         <small>Te quedan 00:{seconds >= 10 ? seconds : `0${seconds}`}</small>
       </Grid>
     </>

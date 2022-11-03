@@ -1,5 +1,5 @@
-import { lightTheme } from "../../../src/template/theme";
-
+import colors from "@styles/colors";
+/*
 export const styles = {
   unauthorizedAppBar: {
     width: "100%",
@@ -35,13 +35,84 @@ export const styles = {
   logo: {
     marginRight: "8px",
   },
-};
+};*/
 
-export const drawerStyles = (open: boolean, theme: string) => ({
+const bar = (theme = "light") => ({
+  unauthorizedAppBar: {
+    width: "100%",
+    backgroundColor: "transparent",
+    boxShadow: "none",
+  },
+  menuButton: {
+    display: {
+      sm: "inline",
+      xs: "inline",
+      md: "inline",
+      xl: "none",
+      xxl: "none",
+    },
+  },
+  profileItem: {
+    backgroundColor: colors("light").primary,
+    marginTop: "-10px",
+    padding: "15px",
+  },
+  avatarName: {
+    width: 60,
+    height: 60,
+    color: "white",
+  },
+  avatarReggard: {
+    color: "white",
+  },
+  toolBarComponents: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  logo: {
+    marginRight: "8px",
+  },
+  isMobileVisible: {
+    display: {
+      sm: "block",
+      xs: "block",
+      md: "block",
+      xl: "none",
+      xxl: "none",
+    },
+  },
+  isDesktopVisible: {
+    display: {
+      sm: "none",
+      xs: "none",
+      md: "none",
+      xl: "block",
+      xxl: "block",
+    },
+  },
+});
+
+const toolbar = () => ({
+  coomponents: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  menuIcon: {
+    display: {
+      sm: "inline",
+      xs: "inline",
+      md: "none",
+      xl: "none",
+      xxl: "none",
+    },
+  },
+});
+
+export const drawer = (open: boolean, theme: string) => ({
   drawerDesktop: {
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
-      backgroundColor: theme == "light" ? lightTheme.palette.primary.main : "",
+      backgroundColor: theme == "light" ? colors('light').primary : "",
     },
     display: {
       sm: "none",
@@ -55,7 +126,7 @@ export const drawerStyles = (open: boolean, theme: string) => ({
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
       width: "69%",
-      backgroundColor: theme == "light" ? lightTheme.palette.primary.main : "",
+      backgroundColor: theme == "light" ? colors('light').primary  : "",
     },
     display: {
       sm: "inline",
@@ -124,9 +195,8 @@ export const drawerStyles = (open: boolean, theme: string) => ({
   },
   exitContainer: {
     width: "100%",
-    padding: "14px",
-    display: "flex",
-    justifyContent: "center",
+    padding: "8px",
+    mb:1
   },
   exitButton: {
     width: "100%",
@@ -136,8 +206,17 @@ export const drawerStyles = (open: boolean, theme: string) => ({
     borderColor: "#7cf6a3",
     fontWeight: "bold",
     textTransform: "none",
-    padding: "8px",
+    padding: "12px",
     fontSize: "15px",
     alignSelf:"center",
+    minWidth:"0px"
   },
 });
+
+const navigation = (theme = "light", open = false) => ({
+  drawer: drawer(open, theme),
+  bar: bar(theme),
+  toolbar: toolbar(),
+});
+
+export default navigation;

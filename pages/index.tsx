@@ -1,14 +1,14 @@
-import {
-  Divider,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import LoggedLayout from "@components/layouts/LoggedLayout";
 import DashboardNewsCards from "@components/ui/contents/DashboardNewsCards";
 export { getServerSideProps } from "../src/serverSideProps";
+import { pagesStyles } from "@styles/index";
+import { useAppCtx } from "../src/contexts/store";
 
 const Home: NextPage = () => {
+  const {modeTheme} = useAppCtx();
+  const { dashboardStyles } = pagesStyles(modeTheme);
   return (
     <LoggedLayout>
       <Grid
@@ -16,10 +16,10 @@ const Home: NextPage = () => {
         spacing={6}
         flexDirection={"row"}
         justifyContent={"space-around"}
-        sx={{ padding: "20px" }}
+        sx={dashboardStyles.container}
       >
         <Grid item xs={12} lg={12}>
-          <Typography variant={"h6"} sx={{ paddingBottom: "15px" }}>
+          <Typography variant={"h6"} sx={dashboardStyles.title}>
             NOVEDADES
           </Typography>
           <Divider />
