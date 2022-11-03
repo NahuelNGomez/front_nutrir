@@ -4,11 +4,14 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { useAppCtx } from "../../../src/contexts/store";
-import { styles } from "@styles/components/ui";
+import { componentsStyles } from "@styles/index";
 
-const MaterialUISwitch = styled(Switch)(({ theme }) => ( styles(theme).switchMode));
+const MaterialUISwitch = styled(Switch)(
+  ({ theme }) =>
+    componentsStyles(theme.palette.mode).uiComponentStyles.switchThemeStyles
+);
 
-const SwitchMode:React.FC<{}> = () => {
+const SwitchMode: React.FC<{}> = () => {
   const { modeTheme, updateTheme } = useAppCtx();
 
   const handleChange = () => {
@@ -19,7 +22,6 @@ const SwitchMode:React.FC<{}> = () => {
       <FormControlLabel
         control={
           <MaterialUISwitch
-            
             checked={modeTheme === "dark"}
             onChange={handleChange}
           />
@@ -28,6 +30,6 @@ const SwitchMode:React.FC<{}> = () => {
       />
     </FormGroup>
   );
-}
+};
 
 export default SwitchMode;

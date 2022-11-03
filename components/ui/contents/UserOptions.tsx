@@ -9,12 +9,14 @@ import {
   Grid,
 } from "@mui/material";
 import { ExitToApp, PublishedWithChanges } from "@mui/icons-material";
-import {userMenuStyles} from "@styles/components/ui/content";
+import {componentsStyles} from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
 import SwitchMode from "../special/SwitchMode";
 
+
 const UserOptions: FC<{}> = () => {
   const {setModalOpen,modeTheme,updateTheme} = useAppCtx();
+  const {contentStyles:{userMenuStyles}} = componentsStyles(modeTheme);
 
   return (
     <MenuList sx={userMenuStyles.menu_list}>

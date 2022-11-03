@@ -1,41 +1,5 @@
 import colors from "@styles/colors";
-/*
-export const styles = {
-  unauthorizedAppBar: {
-    width: "100%",
-    backgroundColor: "transparent",
-    boxShadow: "none",
-  },
-  menuButton: {
-    display: {
-      sm: "inline",
-      xs: "inline",
-      md: "inline",
-      xl: "none",
-      xxl: "none",
-    },
-  },
-  profileItem: {
-    backgroundColor: lightTheme.palette.primary.main,
-    marginTop: "-10px",
-    padding: "15px",
-  },
-  avatarName: {
-    width: 60,
-    height: 60,
-    color: "white",
-  },
-  avatarReggard: {
-    color: "white",
-  },
-  toolBarComponents: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  logo: {
-    marginRight: "8px",
-  },
-};*/
+
 
 const bar = (theme = "light") => ({
   unauthorizedAppBar: {
@@ -108,7 +72,7 @@ const toolbar = () => ({
   },
 });
 
-export const drawer = (open: boolean, theme: string) => ({
+const drawer = (open: boolean, theme: string) => ({
   drawerDesktop: {
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
