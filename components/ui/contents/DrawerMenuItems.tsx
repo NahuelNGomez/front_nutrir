@@ -9,13 +9,13 @@ import { MenuItem, MenuItemHeader } from "../special/DrawerMenuItem";
 import DrawerMenuHeader from "../special/DrawerMenuHeader";
 
 const DrawerMenuItems: FC<{}> = () => {
-  const { menuOpen, modeTheme } = useAppCtx();
+  const { menuOpen, modeTheme,setMenuOpen } = useAppCtx();
   const { navigationStyles } = componentsStyles(modeTheme);
 
   return (
     <>
       <DrawerMenuHeader />
-      <Grid sx={navigationStyles(menuOpen).drawer.ListItem.ListItemContainer}>
+      <Grid sx={navigationStyles(menuOpen).drawer.ListItem.ListItemContainer} onMouseEnter={() => setMenuOpen(true)} onMouseLeave={() =>  setMenuOpen(false)}>
         <List>
           {HeaderMenuList.map(({ key, text, Icon, action, path }, index) => (
             <MenuItemHeader

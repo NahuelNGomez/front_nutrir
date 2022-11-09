@@ -10,7 +10,7 @@ type props = {
 
 const UnloggedLayout: FC<props> = ({ children }) => {
   const { modeTheme } = useAppCtx();
- 
+
   const {layoutStyles} = componentsStyles(modeTheme);
   return (
     <Grid sx={layoutStyles.unlogged.page}>

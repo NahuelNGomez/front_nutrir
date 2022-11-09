@@ -35,11 +35,6 @@ export enum emailResetFields {
   email = "required"
 };
 
-export enum codeResetFields {
-  code = "required",
-  email = "required"
-};
-
 export enum passwordResetFields {
   password = "required",
   confirm_password = "required",

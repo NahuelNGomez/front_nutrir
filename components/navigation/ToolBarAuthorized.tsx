@@ -17,10 +17,10 @@ const AuthorizedToolBar: FC<props> = ({ changeOpen }) => {
     <Toolbar>
       <Grid container direction="row">
         <Grid
-          xs={9}
-          sm={9}
-          lg={10}
-          xl={10}
+          xs={3}
+          sm={3}
+          lg={1}
+          xl={1}
           item
           sx={navigationStyles(menuOpen).toolbar.coomponents}
           alignItems={"center"}
@@ -41,13 +41,12 @@ const AuthorizedToolBar: FC<props> = ({ changeOpen }) => {
           </Grid>
         </Grid>
         <Grid
-          xs={3}
-          sm={3}
-          lg={2}
-          xl={2}
+          xs={9}
+          sm={9}
+          lg={11}
+          xl={11}
           item
           justifyContent={"flex-end"}
-          alignContent="center"
         >
           <UserMenu />
         </Grid>

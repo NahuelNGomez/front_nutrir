@@ -28,49 +28,26 @@ const EmailCart = (theme = "light") => ({
     errorMessage: {
       padding: "15px",
     },
+    titleCard:{
+      fontSize:"1.5rem",
+      fontWeight:"700",
+      pt:1,
+      pb:1
+    },
+    submitbutton:{
+      borderRadius:"30px",
+      color:"white"
+    },
+    linkBack:{
+      pt:3,
+      color:colors('light').primary,
+      textDecoration:"underline",
+      cursor:"pointer"
+    }
   },
 });
 
-const CodeCart = (theme = "light") => ({
-  cardContent: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  utils: {
-    container: {
-      width: "98%",
-    },
-    textInput: {
-      marginTop: "15px",
-    },
-    linkText: {
-      color: colors(theme).primary,
-      fontWeight: "500",
-      fontSize: "13px",
-      textTransform: "none",
-      backgroundColor: "transparent",
-      cursor: "pointer",
-      textAlign: "left",
-    },
-    circularProgress: {
-      marginLeft: "5px",
-    },
-    errorMessage: {
-      padding: "15px",
-    },
-    secondsTimer: {
-      padding: 10,
-    },
-  },
-});
+
 
 const PasswordCart = (theme = "light") => ({
   cardContent: {
@@ -100,13 +77,30 @@ const PasswordCart = (theme = "light") => ({
     errorMessage: {
       padding: "15px",
     },
+    titleCard:{
+      fontSize:"1.5rem",
+      fontWeight:"700",
+      pt:1,
+      pb:1
+    },
+    submitbutton:{
+      borderRadius:"30px",
+      color:"white",
+      mb:1
+    },
+    linkBack:{
+      pt:3,
+      color:colors('light').primary,
+      textDecoration:"underline",
+      cursor:"pointer"
+    }
   },
 });
 
 const recoveryAccount = (theme = "light") => ({
-  container: { padding: "10px" },
+  container: { p: "10px" },
+  cardContainer:{p:{xs:"2px",sm:"18px",lg:"24px",xl:"24px"}},
   emailCartStyles: EmailCart(theme),
-  codeCartStyles: CodeCart(theme),
   passwordCartStyles: PasswordCart(theme),
 });
 

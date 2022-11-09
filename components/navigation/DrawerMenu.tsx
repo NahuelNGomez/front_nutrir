@@ -1,4 +1,4 @@
-import { Drawer } from "@mui/material";
+import { Drawer as DrawerMobile } from "@mui/material";
 import { FC } from "react";
 import { componentsStyles } from "@styles/index";
 import DrawerMenuItems from "@components/ui/contents/DrawerMenuItems";
@@ -16,14 +16,14 @@ const DrawerMenu: FC<props> = ({ open, onClose }) => {
 
   return (
     <>
-      <Drawer
+      <DrawerMobile
         anchor={"left"}
         open={open}
         onClose={onClose}
         sx={navigationStyles(menuOpen).drawer.drawerMobile}
       >
         <DrawerMenuItems />
-      </Drawer>
+      </DrawerMobile>
       <DrawerDesktop
         sx={navigationStyles(menuOpen).drawer.drawerDesktop}
         variant="permanent"

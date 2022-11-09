@@ -9,7 +9,7 @@ const DrawerMenuHeader: FC<{}> = () => {
   const { menuOpen, setMenuOpen, modeTheme } = useAppCtx();
   const { navigationStyles } = componentsStyles(modeTheme);
   return (
-    <DrawerHeader sx={navigationStyles(menuOpen).drawer.DrawerHeader}>
+    <DrawerHeader sx={navigationStyles(menuOpen).drawer.DrawerHeader} onMouseEnter={() => setMenuOpen(true)} onMouseLeave={() =>  setMenuOpen(false)}>
       {menuOpen ? (
         <>
           <img

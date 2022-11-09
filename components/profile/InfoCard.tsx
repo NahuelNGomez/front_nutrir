@@ -30,10 +30,10 @@ const InfoCard: FC<{}> = () => {
         </Avatar>
         <Grid>
           <Typography sx={infoCardStyles.userName}>Isaias Diaz</Typography>
-          <Typography sx={infoCardStyles.infoSeccion}>
+          <Typography sx={infoCardStyles.userInfo}>
             Tipo de Perfil: Admin
           </Typography>
-          <Typography sx={infoCardStyles.infoSeccion}>
+          <Typography sx={infoCardStyles.userInfo}>
             Te uniste el : 10 de diciembre del 2022
           </Typography>
         </Grid>

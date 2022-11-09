@@ -13,14 +13,14 @@ const Cards = (theme = "light") => ({
   actions: { justifyContent: "center", paddingBottom: "20px" },
   button: {
     width: "70%",
-    borderRadius: "12px",
+    borderRadius: "30px",
     color: "white",
   },
 });
 
 const dashboard = (theme = "light") => ({
   container: { padding: "20px" },
-  title: { paddingBottom: "15px" },
+  title: { paddingBottom: "10px",fontSize:"22px",fontWeight:"700" },
   CardsStyles: Cards(theme),
 });
 

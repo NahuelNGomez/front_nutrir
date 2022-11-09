@@ -29,7 +29,7 @@ const InfoCard = (theme = "light") => ({
   userInfo: {
     pl: 1,
     fontSize: "13px",
-    fontWeight: "bold",
+    fontWeight: "500",
   },
 });
 
@@ -84,7 +84,7 @@ const Form = (theme = "light") => ({
     container: {
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "center",
       alignItems: "center",
     },
   },

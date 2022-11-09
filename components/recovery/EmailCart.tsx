@@ -15,23 +15,13 @@ import { emailResetFields } from "../../src/types/forms";
 import { FC } from "react";
 import { statesForms } from "../../src/constants/states";
 import { useAppCtx } from "../../src/contexts/store";
+import { useRouter } from "next/router";
 
-type props = {
-  changeSteper(step: number): void;
-  changeEmail(email: string): void;
-};
-
-const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
-  const { fields, errors, process, updateField, submit } =
+const EmailCart: FC<{}> = () => {
+  const { fields, errors, process, updateField, submit, finishProcess } =
     useForm<emailResetFields>(statesForms.email_reset);
   const { modeTheme } = useAppCtx();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    submit(e, "/api/reset/email").then(() => {
-      changeEmail(fields.email);
-      changeSteper(1);
-    });
-  };
+  const router = useRouter();
 
   const {
     recoveryAccountStyles: { emailCartStyles },
@@ -40,10 +30,19 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
   return (
     <>
       {process.loading && <LinearProgress color="primary" />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => submit(e, "/api/reset/email").then(() => finishProcess())}>
         <CardContent sx={emailCartStyles.cardContent}>
-          <Typography gutterBottom variant="h5" component="div">
-            Restablecer Contraseña
+          <Typography
+            sx={emailCartStyles.utils.titleCard}
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
+            Recuperá tu contraseña
+          </Typography>
+          <Typography>
+            Con tu correo electrónico vas a poder generar una nueva contraseña
+            para acceder a la plataforma.
           </Typography>
           <Grid style={emailCartStyles.utils.container}>
             <TextField
@@ -70,6 +69,7 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
             type="submit"
             variant="contained"
             size="medium"
+            sx={emailCartStyles.utils.submitbutton}
             color={process.loading ? "inherit" : "primary"}
           >
             Enviar{" "}
@@ -81,6 +81,12 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
               />
             )}
           </Button>
+          <Typography
+            sx={emailCartStyles.utils.linkBack}
+            onClick={() => router.push("/login")}
+          >
+            Volver al inicio
+          </Typography>
         </CardActions>
       </form>
       {!process.validate && (
@@ -90,12 +96,13 @@ const EmailCart: FC<props> = ({ changeSteper, changeEmail }) => {
           </Alert>
         </Grid>
       )}
-      <Grid style={emailCartStyles.utils.errorMessage}>
-        <small>
-          *Te enviaremos un correo electronico con un codigo unico para que
-          puedas restablecer tu contraseña.
-        </small>
-      </Grid>
+      {process.finish && (
+        <Grid style={emailCartStyles.utils.errorMessage}>
+          <Alert severity="success">
+            Se envio el correo de verificación exitosamente.
+          </Alert>
+        </Grid>
+      )}
     </>
   );
 };

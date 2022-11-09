@@ -171,7 +171,7 @@ const Form: FC<{}> = () => {
         </Grid>
       </Grid>
       <Grid
-        sx={formStyles.actions}
+        sx={formStyles.actions.container}
       >
         <Button
           disabled={process.loading}

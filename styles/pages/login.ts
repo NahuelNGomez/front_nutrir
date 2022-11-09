@@ -30,6 +30,7 @@ const login = (theme: string) => ({
       textTransform: "none",
       padding: "10px",
       fontSize: "14px",
+      color:"white"
     },
     circularProgress: {
       marginLeft: "5px",

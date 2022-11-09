@@ -20,7 +20,7 @@ const DashboardNewsCards: FC<{}> = () => {
     <>
       {dashboardCards.map(
         ({ title, image, redirectTo, background_light }, index) => (
-          <Grid item xs={12} sm={12} md={6} lg={4} xl={4} key={index}>
+          <Grid item xs={12} sm={12} md={6} lg={4} xl={4}  key={index}>
             <Card>
               <Grid
                 sx={{
@@ -31,7 +31,7 @@ const DashboardNewsCards: FC<{}> = () => {
                       : CardsStyles.dark_bg,
                 }}
               >
-                <img src={image} width="120" />
+                <img src={image} width="148" />
               </Grid>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

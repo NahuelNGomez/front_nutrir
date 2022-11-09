@@ -31,11 +31,12 @@ const Login: NextPage = () => {
   return (
     <UnloggedLayout>
       <Grid
+        item
         flexDirection={"column"}
         xs={12}
-        sm={12}
+        sm={8}
         lg={4}
-        xl={4}
+        xl={3}
         sx={{ padding: "10px" }}
       >
         <Card>

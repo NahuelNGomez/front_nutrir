@@ -60,6 +60,8 @@ const toolbar = () => ({
   coomponents: {
     display: "flex",
     flexDirection: "row",
+    justifyContent:"space-between",
+    p:1
   },
   menuIcon: {
     display: {
@@ -70,6 +72,9 @@ const toolbar = () => ({
       xxl: "none",
     },
   },
+  icon:{
+    cursor:"pointer",
+  }
 });
 
 const drawer = (open: boolean, theme: string) => ({
@@ -165,12 +170,13 @@ const drawer = (open: boolean, theme: string) => ({
   exitButton: {
     width: "100%",
     borderRadius: "30px",
-    color: "#367c7b",
+    color: "#5a9a9a",
     backgroundColor: "#7cf6a3",
     borderColor: "#7cf6a3",
     fontWeight: "bold",
     textTransform: "none",
-    padding: "12px",
+    pt: open ? "6px" :"10px",
+    pb: open ?"6px" : "10px",
     fontSize: "15px",
     alignSelf:"center",
     minWidth:"0px"

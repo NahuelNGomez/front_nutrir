@@ -1,3 +1,5 @@
+import colors from "@styles/colors";
+
 const UserMenu = (theme = "light") => ({
   container: {
     width: "100%",
@@ -5,17 +7,17 @@ const UserMenu = (theme = "light") => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: {
-      xs: "center",
-      sm: "center",
-      lg: "space-around",
-      xl: "space-around",
+      xs: "flex-end",
+      sm: "flex-end",
+      lg: "flex-end",
+      xl: "flex-end",
     },
     cursor: "pointer",
     alignItems: "center",
   },
-  avatar: { width: 36, height: 36, backgroundColor: "grey" },
+  avatar: { width: 36, height: 36, backgroundColor: colors('light').primary },
   text_content: {
-    pl: 1,
+    pr: 1,
     display: {
       sm: "none",
       xs: "none",
@@ -26,11 +28,31 @@ const UserMenu = (theme = "light") => ({
   },
   text: { fontSize: "16px", fontWeight: "500", marginBottom: "-2px" },
   menu: {
-    mt: "10px",
-    mr: "7px",
-    padding: "10px",
-    boxShadow: "0 0.5rem 1rem rgb(0 0 0 / 15%)",
-    borderRadius: "10px",
+    elevation: 0,
+    sx: {
+      ml:1,
+      overflow: 'visible',
+      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+      mt: 1.5,
+      '& .MuiAvatar-root': {
+        width: 32,
+        height: 32,
+        ml: -0.5,
+        mr: 1,
+      },
+      '&:before': {
+        content: '""',
+        display: 'block',
+        position: 'absolute',
+        top: 0,
+        right: 14,
+        width: 10,
+        height: 10,
+        bgcolor: 'background.paper',
+        transform: 'translateY(-50%) rotate(45deg)',
+        zIndex: 0,
+      },
+    },
   },
   menu_list: { padding: "10px" },
   menu_text: { sx: { fontSize: "13px" } },

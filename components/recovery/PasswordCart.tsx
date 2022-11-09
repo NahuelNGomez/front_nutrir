@@ -13,28 +13,34 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { useRouter } from "next/router";
 import { statesForms } from "../../src/constants/states";
 import { useAppCtx } from "../../src/contexts/store";
 
 type props = {
-  changeSteper(step: number): void;
-  token: string;
+  token: string | string[] | undefined;
 };
 
-const PasswordCart: FC<props> = ({ changeSteper, token }) => {
-  const router = useRouter();
+const PasswordCart: FC<props> = ({ token }) => {
   const { modeTheme } = useAppCtx();
 
-  const { fields, errors, process, updateField, submit, updateFieldProps } =
-    useForm<passwordResetFields>(statesForms.password_reset);
+  const {
+    fields,
+    errors,
+    process,
+    updateField,
+    submit,
+    updateFieldProps,
+    finishProcess,
+  } = useForm<passwordResetFields>(statesForms.password_reset);
 
-  useEffect(() => updateFieldProps("token", token), []);
+  useEffect(() => {
+    updateFieldProps("token", token);
+    console.log(token);
+  }, [token]);
 
   const handleSubmit = (e: React.FormEvent) => {
     submit(e, "/api/reset/password").then(() => {
-      changeSteper(2);
-      router.push("login");
+      finishProcess();
     });
   };
   const {
@@ -45,7 +51,7 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
       {process.loading && <LinearProgress color="primary" />}
       <form onSubmit={handleSubmit}>
         <CardContent sx={passwordCartStyles.cardContent}>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={passwordCartStyles.utils.titleCard}>
             Restablecer contraseña.
           </Typography>
           <Grid style={passwordCartStyles.utils.container}>
@@ -91,6 +97,7 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
               variant="contained"
               size="medium"
               color={process.loading ? "inherit" : "primary"}
+              sx={passwordCartStyles.utils.submitbutton}
             >
               Cambiar Contraseña{" "}
               {process.loading && (
@@ -107,6 +114,13 @@ const PasswordCart: FC<props> = ({ changeSteper, token }) => {
       {!process.validate && (
         <Grid style={passwordCartStyles.utils.errorMessage}>
           <Alert severity="error">Hubo un error.</Alert>
+        </Grid>
+      )}
+       {process.finish && (
+        <Grid style={passwordCartStyles.utils.errorMessage}>
+          <Alert severity="success">
+            Se modifico tu contraseña exitosamente
+          </Alert>
         </Grid>
       )}
     </>
