@@ -4,7 +4,7 @@ const InfoCard = (theme = "light") => ({
   container: {
     p: { xs: 3, sm: 3, md: 3, lg: 4, xl: 4 },
     borderRadius: "10px",
-    height: { xs: "100%", sm: "100%", md: "50%", lg: "25%", xl: "35%" },
+    height: { xs: "100%", sm: "100%", md: "55%", lg: "30%", xl: "35%" },
     backgroundImage:
       theme === "light"
         ? "-webkit-linear-gradient(71deg, #7ec8c7 50%, #6fc2c1 50%)"
@@ -13,7 +13,7 @@ const InfoCard = (theme = "light") => ({
   cardTitle: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "15px",
+    fontSize: "20px",
     pb: 2,
     color: "white",
   },
@@ -25,7 +25,7 @@ const InfoCard = (theme = "light") => ({
     pt: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
   },
   avatar: { width: 60, height: 60, backgroundColor: "grey" },
-  userName: { pl: 1, fontWeight: "Bold", fontSize: "18px" },
+  userName: { pl: 0, fontWeight: "Bold", fontSize: "18px" },
   userInfo: {
     pl: 1,
     fontSize: "13px",
@@ -38,7 +38,7 @@ const MerenderoCards = (theme = "light") => ({
   title: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "15px",
+    fontSize: "20px",
     pb: 2,
   },
   card: {
@@ -66,7 +66,7 @@ const Form = (theme = "light") => ({
   title: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "15px",
+    fontSize: "20px",
   },
   fields: {
     padding: "5px",
@@ -77,7 +77,7 @@ const Form = (theme = "light") => ({
   seccionTitle: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "15px",
+    fontSize: "20px",
     pt: 1,
   },
   actions: {
@@ -89,18 +89,19 @@ const Form = (theme = "light") => ({
     },
   },
   submiButton: {
-    borderRadius: "18px",
+    borderRadius: "32px",
     textTransform: "none",
     padding: "10px",
     fontSize: "14px",
-    width: "40%",
+    width: {xs:"100%",sm:"100%",md:"80%",lg:"40%",xl:"40%"}, 
     margin: "15px",
+    color:"white"
   },
   circularProgress: {
     marginLeft: "5px",
   },
   errorMessage: {
-    padding: "15px",
+    paddingTop: "15px",
   },
   alertComponent: {
     justifyContent: "center",
@@ -109,9 +110,14 @@ const Form = (theme = "light") => ({
 
 const profile = (theme = "light") => ({
   container: { padding: "20px" },
-  title: { paddingBottom: "15px" },
+  title: { paddingBottom: "15px", fontSize: "22px", fontWeight: "700" },
   firstContainer: { display: "flex", flexDirection: "column" },
-  secondContainer: { p: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 } },
+  secondContainer: {
+    p: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+    width: { xs: "100%", sm: "100%", md: "100%", lg: "99%", xl: "99%" },
+    ml: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
+    borderRadius:"10px"
+  },
   infoCardStyles: InfoCard(theme),
   merenderosCardsStyles: MerenderoCards(theme),
   formStyles: Form(theme),

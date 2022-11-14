@@ -24,39 +24,32 @@ const Profile: NextPage = () => {
       >
         <Grid item xs={12} lg={12}>
           <Typography variant={"h6"} sx={profileStyles.title}>
-            Perfil de Usuario
+            PERFIL DE USUARIO
           </Typography>
           <Divider />
         </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <Card>
-            <Grid container>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={6}
-                xl={6}
-                sx={profileStyles.firstContainer}
-              >
-                <InfoCard />
-                <MerenderoCards />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={6}
-                xl={6}
-                sx={profileStyles.secondContainer}
-              >
-                <Form />
-              </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{mt:-2}}>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={6}
+              xl={6}
+              sx={profileStyles.firstContainer}
+              
+            >
+              <InfoCard />
+              <MerenderoCards />
             </Grid>
-          </Card>
+            <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
+              <Card sx={profileStyles.secondContainer}>
+                <Form />
+              </Card>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </LoggedLayout>

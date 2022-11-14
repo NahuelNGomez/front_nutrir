@@ -19,7 +19,7 @@ const DashboardNewsCards: FC<{}> = () => {
   return (
     <>
       {dashboardCards.map(
-        ({ title, image, redirectTo, background_light }, index) => (
+        ({ title, image, redirectTo, background_light,title_button }, index) => (
           <Grid item xs={12} sm={12} md={6} lg={4} xl={4}  key={index}>
             <Card>
               <Grid
@@ -45,7 +45,7 @@ const DashboardNewsCards: FC<{}> = () => {
                   onClick={() => router.push(redirectTo)}
                   color="primary"
                 >
-                  Completar
+                  {title_button}
                 </Button>
               </CardActions>
             </Card>

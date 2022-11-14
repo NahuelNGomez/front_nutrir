@@ -14,7 +14,7 @@ const InfoCard: FC<{}> = () => {
   return (
     <Grid sx={infoCardStyles.container}>
       <Typography sx={infoCardStyles.cardTitle}>
-        Información General de tu perfil
+        Isaias Diaz
       </Typography>
       <Grid
         item
@@ -29,7 +29,6 @@ const InfoCard: FC<{}> = () => {
           <PersonIcon fontSize="large" sx={{ color: "white" }} />
         </Avatar>
         <Grid>
-          <Typography sx={infoCardStyles.userName}>Isaias Diaz</Typography>
           <Typography sx={infoCardStyles.userInfo}>
             Tipo de Perfil: Admin
           </Typography>
