@@ -9,6 +9,7 @@ import login from "./pages/login";
 import profile from "./pages/profile";
 import recoveryAccount from "./pages/recoveryAccount";
 import register from "./pages/register";
+import survey from "./pages/survey";
 
 export const pagesStyles = (theme = "light") => ({
   loginStyles: login(theme),
@@ -17,7 +18,8 @@ export const pagesStyles = (theme = "light") => ({
   dashboardStyles: dashboard(theme),
   editStyles: edit(theme),
   profileStyles: profile(theme),
-  daysStyles: days(theme)
+  daysStyles: days(theme),
+  surveyStyles: survey(theme)
 });
 
 export const componentsStyles = (theme = "light") => ({

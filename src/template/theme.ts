@@ -32,6 +32,9 @@ let darkTheme = createTheme({
     primary: {
       main: colors("light").primary,
     },
+    secondary:{
+      main: colors("light").secondary,
+    },
   },
   components: {
     ...components('dark')

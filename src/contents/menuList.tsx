@@ -41,10 +41,10 @@ export const MenuList: Array<MenuItem> = [
       {
         key: "completar-encuestas",
         text: "Completar encuestas",
-        path:"/survey",
+        path:"/surveys",
         Icon:(props) => <LensOutlined fontSize="small" {...props}/>,
         action: (router) => {
-          router.push("/api/logout");
+          router.push("/surveys");
         },
       },
       {

@@ -1,23 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { darkTheme, lightTheme } from "../template/theme";
+import { lightTheme } from "../template/theme";
+import { storeType, themes, userType } from "../types/global";
 
-export type userType = {
-  user: string;
-  phone: string;
-  name: string;
-  email: string;
-  comedor: string;
-  logged: boolean;
-};
-
-const themes = {
-  light: lightTheme,
-  dark: darkTheme,
-};
-
-const initialStoreState = {
+const initialStoreState: storeType = {
   currentTheme: lightTheme,
-  updateTheme: () => {},
   modeTheme: "light",
   user: {
     user: "",
@@ -28,9 +14,16 @@ const initialStoreState = {
     logged: false,
   },
   menuOpen: false,
-  setMenuOpen: () => {},
+  surveyModalOpen: false,
   modalOpen: false,
+  surveyInfo: {},
+  surverOptionsModal:false,
+  setSurverOptionsModal:() => {},
+  setMenuOpen: () => {},
   setModalOpen: () => {},
+  setSurverModalOpen: () => {},
+  updateTheme: () => {},
+  setSurveynfo: () => {},
 };
 
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
@@ -38,6 +31,9 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [modeTheme, setModeTheme] = useState("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [surveyModalOpen, setSurverModalOpen] = useState(false);
+  const [surveyInfo, setSurveynfo] = useState({});
+  const [surverOptionsModal,setSurverOptionsModal] = useState(false);
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -54,12 +50,18 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
 
   return {
     currentTheme,
-    updateTheme,
+    surveyInfo,
     modeTheme,
     user: userLog,
     menuOpen,
-    setMenuOpen,
+    surveyModalOpen,
     modalOpen,
+    surverOptionsModal,
+    setSurverOptionsModal,
+    setSurveynfo,
+    setSurverModalOpen,
+    updateTheme,
+    setMenuOpen,
     setModalOpen,
   };
 };

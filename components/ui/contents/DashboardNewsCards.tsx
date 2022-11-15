@@ -9,7 +9,7 @@ import {
 import { pagesStyles } from "@styles/index";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { dashboardCards } from "../../../src/contents/cards";
+import { dashboardCards } from "../../../src/contents/cardsList";
 import { useAppCtx } from "../../../src/contexts/store";
 
 const DashboardNewsCards: FC<{}> = () => {
