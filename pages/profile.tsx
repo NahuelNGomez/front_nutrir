@@ -6,7 +6,8 @@ import { useAppCtx } from "../src/contexts/store";
 export { getServerSideProps } from "../src/serverSideProps";
 import InfoCard from "../components/profile/InfoCard";
 import MerenderoCards from "../components/profile/MerenderoCards";
-import Form from "../components/profile/Form";
+import UserForm from "../components/profile/UserForm";
+import PassForm from "../components/profile/PassForm";
 
 const Profile: NextPage = () => {
   const { modeTheme } = useAppCtx();
@@ -24,13 +25,13 @@ const Profile: NextPage = () => {
       >
         <Grid item xs={12} lg={12}>
           <Typography variant={"h6"} sx={profileStyles.title}>
-            PERFIL DE USUARIO
+            EDITAR COMEDOR
           </Typography>
           <Divider />
         </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{mt:-2}}>
-          <Grid container>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ mt: -2 }}>
+          <Grid container spacing={2}>
             <Grid
               item
               xs={12}
@@ -39,14 +40,20 @@ const Profile: NextPage = () => {
               lg={6}
               xl={6}
               sx={profileStyles.firstContainer}
-              
+
             >
               <InfoCard />
-              <MerenderoCards />
+              <Card sx={profileStyles.secondContainer}>
+                <UserForm />
+              </Card>
+
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
               <Card sx={profileStyles.secondContainer}>
-                <Form />
+                <PassForm />
+              </Card>
+              <Card sx={profileStyles.thirContainer}>
+                <MerenderoCards />
               </Card>
             </Grid>
           </Grid>

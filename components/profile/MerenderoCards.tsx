@@ -1,4 +1,4 @@
-import { Card, Collapse, Grid, Typography } from "@mui/material";
+import { Card, CardContent, Collapse, Grid, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../src/contexts/store";
@@ -23,13 +23,18 @@ const MerenderoCards: FC<{}> = () => {
   const [collapse, setCollapse] = useState(false);
 
   return (
-    <Grid xl={12} sx={merenderosCardsStyles.container}>
+    <Grid xl={12}>
+
       <Typography sx={merenderosCardsStyles.title}>
         Comedores Habilitados
       </Typography>
-      <MerenderoCard {...merenderos[0]} />
+      {/* <MerenderoCard {...merenderos[0]} />
+           */}
+      {merenderos.map((merendero, index) => (
+        <MerenderoCard {...merendero} key={index} />
+      ))}
       <Grid justifyContent={"center"}>
-        
+
       </Grid>
       {merenderos.length > 1 && (
         <Collapse in={collapse} timeout="auto" unmountOnExit>
@@ -38,6 +43,7 @@ const MerenderoCards: FC<{}> = () => {
           ))}
         </Collapse>
       )}
+
     </Grid>
   );
 };

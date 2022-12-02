@@ -10,43 +10,25 @@ import SurveyStepper from '../surveyStepper/SurveyStepper'
 const defaultMeals = [
   {
     compound: true,
-    name: 'Leche chocolatada',
+    name: 'Pan con adheresos',
     composition: [
       {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
+        ingredienteName: 'Pan',
+        picture: '/images/ui/mock/bread.jpg'
       },
       {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
+        ingredienteName: 'Queso Crema',
+        picture: '/images/ui/mock/cheese.jpg'
       },
       {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
-      },
-    ]
-  },
-  {
-    compound: true,
-    name: 'Leche chocolatada',
-    composition: [
-      {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
-      },
-      {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
-      },
-      {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
+        ingredienteName: 'Mermelada',
+        picture: '/images/ui/mock/jam.jpg'
       },
     ]
   },
   {
     compound: false,
-    name: 'Yogurt'
+    name: 'Torta'
   },
 ]
 
@@ -67,9 +49,11 @@ type Props = {
   }
   drinkStep: {}
   setDrinkStep: () => {}
+  setBreakFastMainMealStep: ()=>{}
+  breakFastMainMailStep: {}
 }
 
-const DrinksStep: FC<Props> = ({
+const BreakFastMailStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
   setDateStep,
@@ -78,7 +62,9 @@ const DrinksStep: FC<Props> = ({
   guestsStep,
   setGuestStep,
   drinkStep,
-  setDrinkStep
+  setDrinkStep,
+  setBreakFastMainMealStep,
+  breakFastMainMailStep
 }) => {
 
   const [displayStepper, setDisplayStepper] = useState(true)
@@ -112,7 +98,7 @@ const DrinksStep: FC<Props> = ({
           backClickHandler={handleGoToPreviousStep}
           fowardClickHandler={handleGoToNextStep}
         >
-          <CustomAccordion meals={defaultMeals} drinkStep={drinkStep} setDrinkStep={setDrinkStep} />
+          <CustomAccordion meals={defaultMeals} drinkStep={breakFastMainMailStep} setDrinkStep={setBreakFastMainMealStep} />
         </FormPanel>
       </Grid>
 
@@ -125,7 +111,8 @@ const DrinksStep: FC<Props> = ({
           displayStepper={displayStepper}
           mealTypeStep={mealTypeStep}
           guestsStep={add}
-          stepActive={1}
+          stepActive={2}
+          drinkStep={drinkStep}
         />
       </Grid>
 
@@ -133,4 +120,4 @@ const DrinksStep: FC<Props> = ({
   )
 }
 
-export default DrinksStep
+export default BreakFastMailStep

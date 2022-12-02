@@ -2,9 +2,10 @@ import colors from "@styles/colors";
 
 const InfoCard = (theme = "light") => ({
   container: {
-    p: { xs: 3, sm: 3, md: 3, lg: 4, xl: 4 },
+    mb: 1,
+    p: { xs: 3, sm: 3, md: 3, lg: 2.7, xl: 2.7 },
     borderRadius: "10px",
-    height: { xs: "100%", sm: "100%", md: "55%", lg: "30%", xl: "35%" },
+    height: { xs: "100%", sm: "100%", md: "55%", lg: "18%", xl: "23%" },
     backgroundImage:
       theme === "light"
         ? "-webkit-linear-gradient(71deg, #7ec8c7 50%, #6fc2c1 50%)"
@@ -13,8 +14,8 @@ const InfoCard = (theme = "light") => ({
   cardTitle: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "20px",
-    pb: 2,
+    fontSize: "17px",
+    pb: 0.5,
     color: "white",
   },
   infoSeccion: {
@@ -22,7 +23,7 @@ const InfoCard = (theme = "light") => ({
     flexDirection: "row",
     alignItems: "center",
     color: "white",
-    pt: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
+    pt: { xs: 0, sm: 0, md: 0, lg: 0, xl: 0 },
   },
   avatar: { width: 60, height: 60, backgroundColor: "grey" },
   userName: { pl: 0, fontWeight: "Bold", fontSize: "18px" },
@@ -31,14 +32,14 @@ const InfoCard = (theme = "light") => ({
     fontSize: "13px",
     fontWeight: "500",
   },
+  
 });
 
 const MerenderoCards = (theme = "light") => ({
-  container: { p: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 } },
   title: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "20px",
+    fontSize: "18px",
     pb: 2,
   },
   card: {
@@ -66,13 +67,59 @@ const Form = (theme = "light") => ({
   title: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: "20px",
+    fontSize: "18px",
+  },
+  fields: {
+    padding: "3px",
+  },
+  textInput: {
+    marginTop: "10px",
+  },
+  seccionTitle: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: "18px",
+    pt: 1,
+  },
+  actions: {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  },
+  submiButton: {
+    borderRadius: "32px",
+    textTransform: "none",
+    padding: "10px",
+    fontSize: "14px",
+    width: { xs: "100%", sm: "100%", md: "80%", lg: "40%", xl: "40%" },
+    margin: "10px",
+    color: "white"
+  },
+  circularProgress: {
+    marginLeft: "5px",
+  },
+  errorMessage: {
+    paddingTop: "15px",
+  },
+  alertComponent: {
+    justifyContent: "center",
+  },
+});
+
+const PassForm = (theme = "light") => ({
+  title: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: "18px",
   },
   fields: {
     padding: "5px",
   },
   textInput: {
-    marginTop: "15px",
+    marginTop: "10px",
   },
   seccionTitle: {
     textAlign: "left",
@@ -93,9 +140,9 @@ const Form = (theme = "light") => ({
     textTransform: "none",
     padding: "10px",
     fontSize: "14px",
-    width: {xs:"100%",sm:"100%",md:"80%",lg:"40%",xl:"40%"}, 
+    width: { xs: "100%", sm: "100%", md: "80%", lg: "40%", xl: "40%" },
     margin: "15px",
-    color:"white"
+    color: "white"
   },
   circularProgress: {
     marginLeft: "5px",
@@ -111,16 +158,30 @@ const Form = (theme = "light") => ({
 const profile = (theme = "light") => ({
   container: { padding: "20px" },
   title: { paddingBottom: "15px", fontSize: "22px", fontWeight: "700" },
-  firstContainer: { display: "flex", flexDirection: "column" },
+  firstContainer: { display: "flex", flexDirection: "column"},
   secondContainer: {
-    p: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+    pl: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+    pr: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+    pb: { xs: 2, sm: 2, md: 4, lg: 2, xl: 2 },
+    pt: { xs: 2, sm: 2, md: 4, lg: 2, xl: 2 },
     width: { xs: "100%", sm: "100%", md: "100%", lg: "99%", xl: "99%" },
     ml: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
-    borderRadius:"10px"
+    borderRadius: "10px",
+  },
+  thirContainer: {
+    pl: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+    pr: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+    pb: { xs: 2, sm: 2, md: 4, lg: 2, xl: 2 },
+    pt: { xs: 2, sm: 2, md: 4, lg: 2, xl: 2 },
+    width: { xs: "100%", sm: "100%", md: "100%", lg: "99%", xl: "99%" },
+    ml: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
+    borderRadius: "10px",
+    mt: 1
   },
   infoCardStyles: InfoCard(theme),
   merenderosCardsStyles: MerenderoCards(theme),
   formStyles: Form(theme),
+  passFormStyles: PassForm(theme),
 });
 
 export default profile;

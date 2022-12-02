@@ -14,7 +14,8 @@ import useForm from "../../src/hooks/useForm";
 import { profileFields } from "../../src/types/forms";
 import { pagesStyles } from "@styles/index";
 
-const Form: FC<{}> = () => {
+
+const PassForm: FC<{}> = () => {
   const { modeTheme, user } = useAppCtx();
 
   const {
@@ -28,7 +29,7 @@ const Form: FC<{}> = () => {
   } = useForm<profileFields>(statesForms.profile);
 
   const {
-    profileStyles: { formStyles },
+    profileStyles: { passFormStyles },
   } = pagesStyles(modeTheme);
 
   useEffect(() => {
@@ -53,15 +54,16 @@ const Form: FC<{}> = () => {
       >
         <Grid>
           <Typography
-            sx={formStyles.title}
+            sx={passFormStyles.title}
             gutterBottom
             variant="h5"
             component="h5"
           >
-            Edita tu perfil
+            Cambia tu contraseña
           </Typography>
+{/* 
           <Grid container direction={"row"} justifyContent={"space-between"}>
-            <Grid item xs={12} sm={12} lg={12} xl={6} sx={formStyles.fields}>
+            <Grid item xs={12} sm={12} lg={12} xl={6} sx={passFormStyles.fields}>
               <TextField
                 error={errors.user}
                 fullWidth
@@ -72,12 +74,12 @@ const Form: FC<{}> = () => {
                 name="user"
                 margin="normal"
                 value={fields.user}
-                sx={formStyles.textInput}
+                sx={passFormStyles.textInput}
                 helperText={errors.user ? "Debes ingresar tu usuario" : ""}
                 onChange={updateField}
               />
             </Grid>
-            <Grid item xs={12} sm={12} lg={12} xl={6} sx={formStyles.fields}>
+            <Grid item xs={12} sm={12} lg={12} xl={6} sx={passFormStyles.fields}>
               <TextField
                 error={errors.name}
                 fullWidth
@@ -88,7 +90,7 @@ const Form: FC<{}> = () => {
                 name="name"
                 margin="normal"
                 value={fields.name}
-                sx={formStyles.textInput}
+                sx={passFormStyles.textInput}
                 helperText={
                   errors.name ? "Debes ingresar tu nombre y appellido" : ""
                 }
@@ -97,7 +99,7 @@ const Form: FC<{}> = () => {
             </Grid>
           </Grid>
           <Grid container direction={"row"} justifyContent={"space-between"}>
-            <Grid item xs={12} sm={12} lg={12} xl={12} sx={formStyles.fields}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} sx={passFormStyles.fields}>
               <TextField
                 error={errors.phone}
                 fullWidth
@@ -108,12 +110,12 @@ const Form: FC<{}> = () => {
                 name="phone"
                 margin="normal"
                 value={fields.phone}
-                sx={formStyles.textInput}
+                sx={passFormStyles.textInput}
                 helperText={errors.phone ? "Debes ingresar tu telefono" : ""}
                 onChange={updateField}
               />
             </Grid>
-            <Grid item xs={12} sm={12} lg={12} xl={12} sx={formStyles.fields}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} sx={passFormStyles.fields}>
               <TextField
                 error={errors.email}
                 fullWidth
@@ -124,18 +126,19 @@ const Form: FC<{}> = () => {
                 name="email"
                 margin="normal"
                 value={fields.email}
-                sx={formStyles.textInput}
+                sx={passFormStyles.textInput}
                 helperText={errors.email ? "Debes ingresar tu correo" : ""}
                 onChange={updateField}
               />
             </Grid>
           </Grid>
-          <Typography sx={formStyles.seccionTitle}>
+          <Typography sx={passFormStyles.seccionTitle}>
             Cambia tu contraseña
           </Typography>
+           */}
         </Grid>
         <Grid container direction={"row"} justifyContent={"space-between"}>
-          <Grid item xs={12} sm={12} lg={12} xl={6} sx={formStyles.fields}>
+          <Grid item xs={12} sm={12} lg={12} xl={12} sx={passFormStyles.fields}>
             <TextField
               error={errors.password}
               fullWidth
@@ -146,12 +149,12 @@ const Form: FC<{}> = () => {
               name="password"
               margin="normal"
               value={fields.password}
-              sx={formStyles.textInput}
+              sx={passFormStyles.textInput}
               helperText={errors.password ? "Debes ingresar tu contraseña" : ""}
               onChange={updateField}
             />
           </Grid>
-          <Grid item xs={12} sm={12} lg={12} xl={6} sx={formStyles.fields}>
+          <Grid item xs={12} sm={12} lg={12} xl={12} sx={passFormStyles.fields}>
             <TextField
               error={errors.password}
               fullWidth
@@ -162,7 +165,7 @@ const Form: FC<{}> = () => {
               name="password"
               margin="normal"
               value={fields.password}
-              sx={formStyles.textInput}
+              sx={passFormStyles.textInput}
               helperText={
                 errors.password ? "Debes ingresar confirmar tu contraseña" : ""
               }
@@ -170,34 +173,34 @@ const Form: FC<{}> = () => {
             />
           </Grid>
         </Grid>
-        <Grid sx={formStyles.actions.container}>
+        <Grid sx={passFormStyles.actions.container}>
           <Button
             disabled={process.loading}
             type="submit"
             variant="contained"
-            sx={formStyles.submiButton}
+            sx={passFormStyles.submiButton}
             color={process.loading ? "inherit" : "primary"}
           >
             Actualizar{" "}
             {process.loading && (
               <CircularProgress
                 size={20}
-                sx={formStyles.circularProgress}
+                sx={passFormStyles.circularProgress}
                 color="inherit"
               />
             )}
           </Button>
         </Grid>
         {!process.validate && (
-          <div style={formStyles.errorMessage}>
-            <Alert severity="error" sx={formStyles.alertComponent}>
+          <div style={passFormStyles.errorMessage}>
+            <Alert severity="error" sx={passFormStyles.alertComponent}>
               Hubo un error!
             </Alert>
           </div>
         )}
         {process.finish && (
-          <div style={formStyles.errorMessage}>
-            <Alert severity="success" sx={formStyles.alertComponent}>
+          <div style={passFormStyles.errorMessage}>
+            <Alert severity="success" sx={passFormStyles.alertComponent}>
               Se Modifico con exito tu perfil
             </Alert>
           </div>
@@ -207,4 +210,4 @@ const Form: FC<{}> = () => {
   );
 };
 
-export default Form;
+export default PassForm;

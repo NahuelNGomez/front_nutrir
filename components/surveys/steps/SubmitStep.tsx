@@ -1,4 +1,3 @@
-
 import FormPanel from '@components/ui/contents/FormPanel'
 import { Grid } from '@mui/material'
 import React, { FC, useState } from 'react'
@@ -10,43 +9,25 @@ import SurveyStepper from '../surveyStepper/SurveyStepper'
 const defaultMeals = [
   {
     compound: true,
-    name: 'Leche chocolatada',
+    name: 'Pan con adheresos',
     composition: [
       {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
+        ingredienteName: 'Pan',
+        picture: '/images/ui/mock/bread.jpg'
       },
       {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
+        ingredienteName: 'Queso Crema',
+        picture: '/images/ui/mock/cheese.jpg'
       },
       {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
-      },
-    ]
-  },
-  {
-    compound: true,
-    name: 'Leche chocolatada',
-    composition: [
-      {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
-      },
-      {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
-      },
-      {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
+        ingredienteName: 'Mermelada',
+        picture: '/images/ui/mock/jam.jpg'
       },
     ]
   },
   {
     compound: false,
-    name: 'Yogurt'
+    name: 'Torta'
   },
 ]
 
@@ -67,9 +48,11 @@ type Props = {
   }
   drinkStep: {}
   setDrinkStep: () => {}
+  setBreakFastMainMealStep: ()=>{}
+  breakFastMainMailStep: {}
 }
 
-const DrinksStep: FC<Props> = ({
+const SubmitStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
   setDateStep,
@@ -78,7 +61,9 @@ const DrinksStep: FC<Props> = ({
   guestsStep,
   setGuestStep,
   drinkStep,
-  setDrinkStep
+  setDrinkStep,
+  setBreakFastMainMealStep,
+  breakFastMainMailStep
 }) => {
 
   const [displayStepper, setDisplayStepper] = useState(true)
@@ -102,7 +87,7 @@ const DrinksStep: FC<Props> = ({
       xl={12}
       justifyContent={"space-around"}
     >
-      <Grid
+      {/* <Grid
         item
         xs={8}
       >
@@ -112,20 +97,23 @@ const DrinksStep: FC<Props> = ({
           backClickHandler={handleGoToPreviousStep}
           fowardClickHandler={handleGoToNextStep}
         >
-          <CustomAccordion meals={defaultMeals} drinkStep={drinkStep} setDrinkStep={setDrinkStep} />
+          <CustomAccordion meals={defaultMeals} drinkStep={breakFastMainMailStep} setDrinkStep={setBreakFastMainMealStep} />
         </FormPanel>
-      </Grid>
+      </Grid> */}
 
       <Grid
         item
-        xs={4}
+        xs={8}
       >
         <SurveyStepper
           dateStep={dateStep}
           displayStepper={displayStepper}
           mealTypeStep={mealTypeStep}
           guestsStep={add}
-          stepActive={1}
+          stepActive={3}
+          drinkStep={drinkStep}
+          breakFastMainMailStep={breakFastMainMailStep}
+          backClickHandler={handleGoToPreviousStep}
         />
       </Grid>
 
@@ -133,4 +121,4 @@ const DrinksStep: FC<Props> = ({
   )
 }
 
-export default DrinksStep
+export default SubmitStep

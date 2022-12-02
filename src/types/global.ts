@@ -36,9 +36,17 @@ export type dishestype = {
   ingredients: Array<{ name: string; description: string }>;
 };
 
+export type guestType = {
+  childs?: number;
+  kids?: number;
+  teens?: number; 
+  adults?: number
+}
+
 export type invoiceInfoType = {
   type?: keyof typeof surveyTypes;
   dishes?: Array<dishestype>;
+  adults?: Array<guestType>;
 };
 
 export type storeType = {

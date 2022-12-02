@@ -9,7 +9,7 @@ type dashCards = {
 export const dashboardCards:Array<dashCards> = [
     {
         title:'¡Las encuestas del día esperan tu respuesta!',
-        redirectTo:'/',
+        redirectTo:'/surveys',
         image:'/images/ui/dash/01sin fondo.png',
         background_light: "-webkit-linear-gradient(71deg, #7ef6a3 50%, #7aeea7 50%)",
         title_button: 'COMPLETAR'

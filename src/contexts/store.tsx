@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme } from "../template/theme";
-import { storeType, themes, userType } from "../types/global";
+import { storeType, themes, userType, invoiceInfoType } from "../types/global";
 
 const initialStoreState: storeType = {
   currentTheme: lightTheme,
@@ -32,7 +32,7 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
-  const [surveyInfo, setSurveynfo] = useState({});
+  const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal,setSurverOptionsModal] = useState(false);
 
   const updateTheme = (mode: keyof typeof themes): void => {
