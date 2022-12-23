@@ -19,6 +19,7 @@ import { loginFields } from "../src/types/forms";
 import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import UnloggedLayout from "@components/layouts/UnloggedLayout";
+
 const Cookies = require('js-cookie')
 // import Cookies from 'js-cookie'
 import axios from "axios";
@@ -33,6 +34,7 @@ const Login: NextPage = () => {
   );
   const { loginStyles } = pagesStyles(modeTheme);
 
+  /*
   const handleSubmit = (e: any) => {
     e.preventDefault()
 
@@ -67,7 +69,7 @@ const Login: NextPage = () => {
       }
     }
     loginHandler()
-  }
+  }*/
 
   return (
     <UnloggedLayout>
@@ -83,7 +85,9 @@ const Login: NextPage = () => {
         <Card>
           {processing.loading && <LinearProgress color="primary" />}
           <form
-            onSubmit={handleSubmit}
+              onSubmit={(e) =>
+                submit(e, "/api/login").then(() => router.push("/"))
+              }
           >
             <CardContent sx={loginStyles.cardContent}>
               <img
@@ -97,18 +101,18 @@ const Login: NextPage = () => {
 
               <div style={loginStyles.utils.container}>
                 <TextField
-                  error={errors.email}
+                  error={errors.cuil}
                   fullWidth
                   id="input-with-sx"
                   label="Usuario"
                   variant="outlined"
                   // type="email"
-                  name="email"
+                  name="cuil"
                   margin="normal"
-                  value={fields.email}
+                  value={fields.cuil}
                   sx={loginStyles.utils.textInput}
                   helperText={
-                    errors.email ? "Debes ingresar tu usuario/correo" : ""
+                    errors.cuil ? "Debes ingresar tu usuario/correo" : ""
                   }
                   onChange={updateField}
                 />
