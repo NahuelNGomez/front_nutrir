@@ -5,11 +5,15 @@ import DashboardNewsCards from "@components/ui/contents/DashboardNewsCards";
 export { getServerSideProps } from "../src/serverSideProps";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../src/contexts/store";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
   const { modeTheme, user } = useAppCtx();
   const { dashboardStyles } = pagesStyles(modeTheme);
 
+  useEffect(() => {
+  console.log(user);
+  });
   return (
     <LoggedLayout>
       <Grid

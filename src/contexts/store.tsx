@@ -38,17 +38,7 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal, setSurverOptionsModal] = useState(false);
-  const [user, setUser] = useState<userType>({
-    firstName: "",
-    lastName: "",
-    cuil: 1,
-    email: "",
-    comedor: "",
-    logged: false,
-    phone: '+1122443344',
-    comedorActivo: 1,
-    token: ''
-  })
+  const [user, setUser] = useState<userType>(userLog);
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);

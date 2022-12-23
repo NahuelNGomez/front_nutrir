@@ -1,25 +1,44 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { withSessionRoute } from '../../src/utils/withIronSession';
+import type { NextApiRequest, NextApiResponse } from "next";
+import { withSessionRoute } from "../../src/utils/withIronSession";
 
-const handler = async(req:NextApiRequest,res:NextApiResponse) =>  {
-
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const body = JSON.parse(req.body);
-  if(body.email === 'isaarg2312@gmail.com' && body.password === '123456'){
-      req.session.user = {
-        user:"isa95Arg",
-        name: "Isaias Diaz",
-		  	email: "isaarg2312@gmail.com",
-        phone:"+5492944550116",
-		  	logged: true
-      }
+  if (body.cuil && body.password) {
 
-      await req.session.save();
+    const response = await fetch("http://50.116.44.91:3600/user/sesion/login/", {
+      method: "POST",
+      body: JSON.stringify({ cuil: "20276253418", password: "Geneos2022" }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
 
-      res.status(200).json({success:true});
+    const resParsed = await response.json();
+    if (!resParsed.user) {
+      res.status(401).json({ success: false });
+    } 
+
+    req.session.user = {
+      access_token: resParsed.access_token,
+      refresh_token: resParsed.refresh_token,
+      pk: resParsed.user.pk,
+      cuil: resParsed.user.cuil,
+      email: resParsed.user.email,
+      first_name: resParsed.user.first_name,
+      last_name: resParsed.user.last_name,
+      telefono: resParsed.user.telefono,
+      picture: resParsed.user.picture,
+      groups: resParsed.user.groups,
+      logged: true
+    };
+
+    await req.session.save();
+
+    res.status(200).json({ success: true });
   } else {
-    res.status(401).json({ success: false })
+    res.status(401).json({ success: false });
   }
-  
-}
+};
 
 export default withSessionRoute(handler);

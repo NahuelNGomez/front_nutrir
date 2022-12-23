@@ -28,7 +28,7 @@ export enum registerFields {
 };
 
 export enum loginFields {
-  email =  "required",
+  cuil =  "required",
   password = "required",
 };
 
