@@ -32,7 +32,7 @@ const Edit: NextPage = () => {
   const {
     fields,
     errors,
-    process,
+    processing,
     updateField,
     submit,
     finishProcess,
@@ -40,29 +40,7 @@ const Edit: NextPage = () => {
 
   const { editStyles } = pagesStyles(modeTheme);
 
-  useEffect(() => {
-    // fetch('https://pokeapi.co/api/v2/ability/1')
-    //   .then(json => {
-    //     console.log(json);
-    //   })
-    // fetch('http://50.116.44.91:3600/comedor')
-    //   .then(res => {
-    //     console.log(res);
-    //   })
-    //   .catch(err =>{
-    //     console.log(err);
-        
-    //   })
-    // axios('https://pokeapi.co/api/v2/ability/1')
-    //   .then(res => {
-    //     console.log(res.data);
-    //   })
-    //   .catch(err =>{
-    //     console.log(err);
-        
-    //   })
-
-    
+  useEffect(() => {   
   }, [])
 
   return (

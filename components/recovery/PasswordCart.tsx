@@ -26,7 +26,7 @@ const PasswordCart: FC<props> = ({ token }) => {
   const {
     fields,
     errors,
-    process,
+    processing,
     updateField,
     submit,
     updateFieldProps,
@@ -48,7 +48,7 @@ const PasswordCart: FC<props> = ({ token }) => {
   } = pagesStyles(modeTheme);
   return (
     <>
-      {process.loading && <LinearProgress color="primary" />}
+      {processing.loading && <LinearProgress color="primary" />}
       <form onSubmit={handleSubmit}>
         <CardContent sx={passwordCartStyles.cardContent}>
           <Typography gutterBottom variant="h5" component="div" sx={passwordCartStyles.utils.titleCard}>
@@ -92,15 +92,15 @@ const PasswordCart: FC<props> = ({ token }) => {
         <Grid style={passwordCartStyles.utils.container}>
           <CardActions sx={passwordCartStyles.actions.container}>
             <Button
-              disabled={process.loading}
+              disabled={processing.loading}
               type="submit"
               variant="contained"
               size="medium"
-              color={process.loading ? "inherit" : "primary"}
+              color={processing.loading ? "inherit" : "primary"}
               sx={passwordCartStyles.utils.submitbutton}
             >
               Cambiar Contraseña{" "}
-              {process.loading && (
+              {processing.loading && (
                 <CircularProgress
                   size={20}
                   sx={passwordCartStyles.utils.circularProgress}
@@ -111,12 +111,12 @@ const PasswordCart: FC<props> = ({ token }) => {
           </CardActions>
         </Grid>
       </form>
-      {!process.validate && (
+      {!processing.validate && (
         <Grid style={passwordCartStyles.utils.errorMessage}>
           <Alert severity="error">Hubo un error.</Alert>
         </Grid>
       )}
-       {process.finish && (
+       {processing.finish && (
         <Grid style={passwordCartStyles.utils.errorMessage}>
           <Alert severity="success">
             Se modifico tu contraseña exitosamente

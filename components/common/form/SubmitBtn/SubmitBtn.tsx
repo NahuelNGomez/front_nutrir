@@ -9,9 +9,9 @@ import { useAppCtx } from "../../../../src/contexts/store"
 interface Props {
   text: string,
   type: string,
-  columData: any
-  handleGoToNextStep?: () => {}
-  setDateStep: (date: string) => {}
+  columData: any,
+  handleGoToNextStep?: any,
+  setDateStep: (date: string) => {},
 }
 
 

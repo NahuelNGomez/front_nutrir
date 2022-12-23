@@ -13,9 +13,8 @@ type Props = {
   ingredienteName: string,
   picture: string
   // ingredientHandleChange?: any
-  setDrinkStep: ()=>{}
-  drinkStep: {
-  }
+  setDrinkStep: any
+  drinkStep: any
 }
 
 const MealIngredientCard: FC<Props> = ({ ingredienteName, picture, setDrinkStep, drinkStep }) => {

@@ -5,8 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Card, CardContent, Checkbox, Grid } from '@mui/material';
-
-import MealIngredientCard from './MealIngredientCard';
+import MealIngredientCard from '../customAccordion/MealIngredientCard';
 
 type compositionType = {
   ingredienteName: string,
@@ -20,8 +19,8 @@ type mealsType = {
 
 type Props = {
   meals: Array<mealsType>
-  setDrinkStep: () => {}
-  drinkStep: {}
+  setDrinkStep: any
+  drinkStep: any
 }
 
 const DishAccordion: React.FC<Props> = ({ meals, setDrinkStep, drinkStep }) => {

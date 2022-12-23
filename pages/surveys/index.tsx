@@ -17,12 +17,12 @@ import DrinksStep from "../../components/surveys/steps/DrinksStep";
 import BreakFastMailStep from "../../components/surveys/steps/BreakFastMailStep";
 import SubmitStep from "../../components/surveys/steps/SubmitStep";
 
-type stepType = {
-  label: string;
-  content: FC<Props>
-}
+// type stepType = {
+//   label: string;
+//   content: FC<Props:any>
+// }
 
-const stepsBreakfast: Array<stepType> = [
+const stepsBreakfast: Array<any> = [
   { label: '¿Qué día vas a cargar?', content: SurveyPanel },
   { label: '1. ¿Qué comida vas a cargar?', content: DishSelectionStep },
   { label: '2. ¿Cuántos comenzales tienes?', content: PopulationStep },
@@ -31,7 +31,7 @@ const stepsBreakfast: Array<stepType> = [
   { label: 'Resumen de la encuesta', content: SubmitStep },
 ]
 
-const stepsLunch: Array<stepType> = [
+const stepsLunch: Array<any> = [
   { label: '¿Qué día vas a cargar?', content: SurveyPanel },
   { label: '1. ¿Qué comida vas a cargar?', content: SurveyPanel },
   { label: '2. ¿Cuántos comenzales tienes?', content: SurveyPanel },

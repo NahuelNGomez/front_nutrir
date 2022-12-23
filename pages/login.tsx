@@ -19,7 +19,8 @@ import { loginFields } from "../src/types/forms";
 import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import UnloggedLayout from "@components/layouts/UnloggedLayout";
-import Cookies from 'js-cookie'
+const Cookies = require('js-cookie')
+// import Cookies from 'js-cookie'
 import axios from "axios";
 
 

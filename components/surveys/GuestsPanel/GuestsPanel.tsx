@@ -4,7 +4,7 @@ import { guestType } from "../../../src/types/global"
 
 type Props = {
   guestsStep: {}
-  setGuestStep: () => {}
+  setGuestStep: any
 }
 
 

@@ -10,7 +10,7 @@ import DishIcon from "../special/DishIcon";
 
 type Props = {
   surveys: SurveysAvailableType
-  setMealTypeStep: () => {}
+  setMealTypeStep: (name:string) => {}
 }
 
 const SurveysAvailable: FC<Props> = ({

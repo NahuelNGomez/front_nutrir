@@ -26,7 +26,7 @@ import UnloggedLayout from "@components/layouts/UnloggedLayout";
 const Register: NextPage = () => {
   const router = useRouter();
   const { modeTheme } = useAppCtx();
-  const { fields, errors, process, updateField, updateFieldProps, submit } =
+  const { fields, errors, processing, updateField, updateFieldProps, submit } =
     useForm<registerFields>(statesForms.register);
   const { registerStyles } = pagesStyles(modeTheme);
 
@@ -41,7 +41,7 @@ const Register: NextPage = () => {
         sx={registerStyles.container}
       >
         <Card>
-          {process.loading && <LinearProgress color="primary" />}
+          {processing.loading && <LinearProgress color="primary" />}
           <form
             onSubmit={(e) =>
               submit(e, "/api/register").then(() => router.push("/"))
@@ -267,14 +267,14 @@ const Register: NextPage = () => {
             <CardActions sx={registerStyles.actions.container}>
               <div style={registerStyles.utils.container}>
                 <Button
-                  disabled={process.loading}
+                  disabled={processing.loading}
                   type="submit"
                   variant="contained"
                   sx={registerStyles.utils.submitButton}
-                  color={process.loading ? "inherit" : "primary"}
+                  color={processing.loading ? "inherit" : "primary"}
                 >
                   Registrarse{" "}
-                  {process.loading && (
+                  {processing.loading && (
                     <CircularProgress
                       size={20}
                       sx={registerStyles.utils.circularProgress}

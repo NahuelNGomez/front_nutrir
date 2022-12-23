@@ -48,7 +48,7 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
     );
   };
 
-  const setProcess = ({ validate, loading,finish }: typeof Form.process) => {
+  const setProcess = ({ validate, loading,finish }: typeof Form.processing) => {
     dispatch({
       type: ActionsForm.FETCH_PROCESS,
       payload: { validate, loading,finish },

@@ -20,8 +20,8 @@ type mealsType = {
 
 type Props = {
   meals: Array<mealsType>
-  setDrinkStep: () => {}
-  drinkStep: {}
+  setDrinkStep: any
+  drinkStep: any
 }
 
 const CustomAccordion: React.FC<Props> = ({ meals, setDrinkStep, drinkStep }) => {

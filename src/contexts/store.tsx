@@ -12,7 +12,9 @@ const initialStoreState: storeType = {
     email: "",
     comedor: "",
     logged: false,
-    phone: '+151133443355'
+    phone: '+151133443355',
+    token: '',
+    comedorActivo: 1
   },
   menuOpen: false,
   surveyModalOpen: false,

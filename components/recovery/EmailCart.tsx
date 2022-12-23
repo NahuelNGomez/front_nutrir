@@ -18,7 +18,7 @@ import { useAppCtx } from "../../src/contexts/store";
 import { useRouter } from "next/router";
 
 const EmailCart: FC<{}> = () => {
-  const { fields, errors, process, updateField, submit, finishProcess } =
+  const { fields, errors, processing, updateField, submit, finishProcess } =
     useForm<emailResetFields>(statesForms.email_reset);
   const { modeTheme } = useAppCtx();
   const router = useRouter();
@@ -29,7 +29,7 @@ const EmailCart: FC<{}> = () => {
 
   return (
     <>
-      {process.loading && <LinearProgress color="primary" />}
+      {processing.loading && <LinearProgress color="primary" />}
       <form onSubmit={(e) => submit(e, "/api/reset/email").then(() => finishProcess())}>
         <CardContent sx={emailCartStyles.cardContent}>
           <Typography
@@ -65,15 +65,15 @@ const EmailCart: FC<{}> = () => {
         </CardContent>
         <CardActions sx={emailCartStyles.actions.container}>
           <Button
-            disabled={process.loading}
+            disabled={processing.loading}
             type="submit"
             variant="contained"
             size="medium"
             sx={emailCartStyles.utils.submitbutton}
-            color={process.loading ? "inherit" : "primary"}
+            color={processing.loading ? "inherit" : "primary"}
           >
             Enviar{" "}
-            {process.loading && (
+            {processing.loading && (
               <CircularProgress
                 size={20}
                 sx={emailCartStyles.utils.circularProgress}
@@ -89,14 +89,14 @@ const EmailCart: FC<{}> = () => {
           </Typography>
         </CardActions>
       </form>
-      {!process.validate && (
+      {!processing.validate && (
         <Grid style={emailCartStyles.utils.errorMessage}>
           <Alert severity="error">
             No encontramos un registro con el correo electronico ingresado.
           </Alert>
         </Grid>
       )}
-      {process.finish && (
+      {processing.finish && (
         <Grid style={emailCartStyles.utils.errorMessage}>
           <Alert severity="success">
             Se envio el correo de verificación exitosamente.
