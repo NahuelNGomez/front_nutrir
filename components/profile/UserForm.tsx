@@ -34,9 +34,9 @@ const UserForm: FC<{}> = () => {
 
   useEffect(() => {
     defaultValues({
-      user: user.firstName,
-      name: user.lastName,
-      phone: user.phone,
+      user: 'Jose',
+      name: 'Fantasia',
+      phone: '+1122334455',
       email: user.email,
       password: "",
     });

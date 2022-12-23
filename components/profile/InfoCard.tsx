@@ -14,7 +14,8 @@ const InfoCard: FC<{}> = () => {
   return (
     <Grid sx={infoCardStyles.container}>
       <Typography sx={infoCardStyles.cardTitle}>
-        {user.lastName + ', ' + user.firstName}
+        {/* {user.lastName + ', ' + user.firstName} */}
+        Jose, Fantasia
       </Typography>
       <Grid
         item

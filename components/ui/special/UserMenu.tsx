@@ -1,6 +1,6 @@
 import { Avatar, Grid, Menu } from "@mui/material";
 import {componentsStyles} from "@styles/index";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import UserOptions from "../contents/UserOptions";
 import PersonIcon from '@mui/icons-material/Person';
@@ -10,6 +10,7 @@ const UserMenu: FC<{}> = () => {
   const { user, modeTheme } = useAppCtx();
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState(null);
+  
 
   const handleClose = () => {
     setOpen(false);
@@ -32,8 +33,8 @@ const UserMenu: FC<{}> = () => {
       
       <Grid sx={userMenuStyles.text_content}>
         <Grid container justifyContent={"center"} flexDirection={"column"}>
-        <span style={userMenuStyles.text}>Manos en Acción TEst Manos en Acción TEst </span>
-        <small style={{textAlign:"end"}}>{user.lastName}, {user.firstName}</small>
+        <span style={userMenuStyles.text}>Centro Cultural El Cole</span>
+        <small style={{textAlign:"end"}}>Jose, Fantasia</small>
         </Grid>
       </Grid>
       <Avatar sx={userMenuStyles.avatar} >
