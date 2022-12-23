@@ -1,6 +1,8 @@
 
 import { Button, Grid, Typography } from '@mui/material'
+import { pagesStyles } from '@styles/index'
 import React, { FC, ReactNode } from 'react'
+import { useAppCtx } from '../../../src/contexts/store'
 
 type Props = {
   title: string,
@@ -12,6 +14,10 @@ type Props = {
 }
 
 const FormPanel: FC<Props> = ({ title, subtitle, children, childContent, backClickHandler, fowardClickHandler }) => {
+
+  const { modeTheme } = useAppCtx();
+  const { surveyStyles: { formPanel } } = pagesStyles(modeTheme);
+
   return (
     <>
       <Grid
@@ -19,17 +25,17 @@ const FormPanel: FC<Props> = ({ title, subtitle, children, childContent, backCli
         justifyContent={'center'}
 
       >
-        <Grid item xs={10} sx={{ mt: 3 }}>
-          <Typography sx={{ fontSize: '1rem' }}>{title}</Typography>
+        <Grid item xs={10} >
+          <Typography sx={formPanel.title}>{title}</Typography>
         </Grid>
-        <Grid item xs={10} sx={{ mt: 1 }}>
+        <Grid item xs={10} sx={formPanel.subtitle}>
           <Typography>{subtitle}</Typography>
         </Grid>
 
         <Grid
           container
           xs={10}
-          sx={{ height: '400px', mt: 3}}
+          sx={{ height: '400px', mt: 2 }}
           justifyContent={'flex-end'}
         >
           <Grid
@@ -41,12 +47,12 @@ const FormPanel: FC<Props> = ({ title, subtitle, children, childContent, backCli
         <Grid
           container xs={10}
           justifyContent={"space-between"}
-          sx={{ pt: 2 }}
+          sx={{ pt: 0 }}
         >
           <Button
             onClick={backClickHandler}
             sx={{
-              width: { xs: "100%", sm: "90%", lg: "80%", xl: "20%" },
+              width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
               borderRadius: "18px",
               textTransform: "none",
               padding: "10px",
@@ -61,7 +67,7 @@ const FormPanel: FC<Props> = ({ title, subtitle, children, childContent, backCli
           <Button
             onClick={fowardClickHandler}
             sx={{
-              width: { xs: "100%", sm: "90%", lg: "80%", xl: "20%" },
+              width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
               borderRadius: "18px",
               textTransform: "none",
               padding: "10px 0",

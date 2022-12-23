@@ -41,15 +41,12 @@ const DataTable: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, setD
   ];
 
   const rows = [
-    { id: 1, date: moment(currentDate).format('L'), meal: 'Snow' },
-    { id: 2, date: moment(currentDate).format('L'), meal: 'Lannister' },
-    { id: 3, date: moment(currentDate).format('L'), meal: 'Lannister' },
-    { id: 4, date: moment(currentDate).format('L'), meal: 'Stark' },
-    { id: 5, date: moment(currentDate).format('L'), meal: 'Targaryen' },
-    { id: 6, date: moment(currentDate).format('L'), meal: 'Melisandre' },
-    { id: 7, date: moment(currentDate).format('L'), meal: 'Clifford' },
-    { id: 8, date: moment(currentDate).format('L'), meal: 'Frances' },
-    { id: 9, date: moment(currentDate).format('L'), meal: 'Roxie' },
+    { id: 1, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
+    { id: 2, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
+    { id: 3, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular'},
+    { id: 4, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
+    { id: 5, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
+    { id: 6, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
   ];
 
 

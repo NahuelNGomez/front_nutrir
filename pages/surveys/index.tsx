@@ -89,14 +89,13 @@ const DailySurvers: NextPage = () => {
           item
           xs={12}
           lg={12}
-          sx={{ marginBottom: '2rem' }}
-        // sx={surveyStyles.container}
         >
           <Typography sx={surveyStyles.title}>
             COMPLETAR ENCUESTAS
           </Typography>
           <Divider />
         </Grid>
+
         <ActiveStepComponent
            handleGoToNextStep={handleGoToNextStep}
            handleGoToPreviousStep={handleGoToPreviousStep}
@@ -111,6 +110,7 @@ const DailySurvers: NextPage = () => {
            setBreakFastMainMealStep={setBreakFastMainMealStep}
            breakFastMainMailStep={breakFastMainMailStep}
         />
+        
       </Grid>
     </LoggedLayout>
   );

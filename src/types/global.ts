@@ -2,12 +2,15 @@ import { Theme } from "@mui/material";
 import { darkTheme, lightTheme } from "../template/theme";
 
 export type userType = {
-  user: string;
+  firstName: string;
+  lastName: string;
   phone: string;
-  name: string;
   email: string;
+  cuil: number; 
   comedor: string;
   logged: boolean;
+  comedorActivo: number;
+  token: string;
 };
 
 export const themes = {
@@ -64,6 +67,7 @@ export type storeType = {
   setSurverModalOpen(): void;
   updateTheme(): void;
   setSurveynfo(): void;
+  setUser(): void,
 };
 
 export type SurveysAvailableType = Array<{

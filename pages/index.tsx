@@ -7,8 +7,9 @@ import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../src/contexts/store";
 
 const Home: NextPage = () => {
-  const {modeTheme} = useAppCtx();
+  const { modeTheme, user } = useAppCtx();
   const { dashboardStyles } = pagesStyles(modeTheme);
+
   return (
     <LoggedLayout>
       <Grid

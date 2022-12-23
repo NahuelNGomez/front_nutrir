@@ -25,7 +25,7 @@ const InfoCard = (theme = "light") => ({
     color: "white",
     pt: { xs: 0, sm: 0, md: 0, lg: 0, xl: 0 },
   },
-  avatar: { width: 60, height: 60, backgroundColor: "grey" },
+  avatar: { width: 40, height: 40, backgroundColor: "grey" },
   userName: { pl: 0, fontWeight: "Bold", fontSize: "18px" },
   userInfo: {
     pl: 1,

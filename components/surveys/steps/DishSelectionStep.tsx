@@ -20,19 +20,7 @@ type Props = {
 const DishSelectionStep: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, dateStep, setMealTypeStep }) => {
 
   const { modeTheme } = useAppCtx();
-  const { surveyStyles } = pagesStyles(modeTheme);
-
-  const backClickHandler = (e: any) => {
-    e.preventDefault()
-    // router.push('/surveys')
-  }
-
-  const fowardClickHandler = (e: any) => {
-    e.preventDefault()
-    // if (surveyInfo.dishes) {
-    // router.push('/surveys/meal-survey/guests-step')
-    // }
-  }
+  const { surveyStyles: { dishSelection} } = pagesStyles(modeTheme);
 
   return (
     <Grid
@@ -43,7 +31,7 @@ const DishSelectionStep: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousSt
       lg={12}
       xl={12}
       justifyContent={"space-around"}
-      sx={surveyStyles.container}
+      sx={dishSelection.container}
     >
       <Grid
         item

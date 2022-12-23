@@ -21,7 +21,7 @@ const UserForm: FC<{}> = () => {
   const {
     fields,
     errors,
-    process,
+    processing,
     updateField,
     submit,
     defaultValues,
@@ -34,8 +34,8 @@ const UserForm: FC<{}> = () => {
 
   useEffect(() => {
     defaultValues({
-      user: user.user,
-      name: user.name,
+      user: user.firstName,
+      name: user.lastName,
       phone: user.phone,
       email: user.email,
       password: "",
@@ -134,14 +134,14 @@ const UserForm: FC<{}> = () => {
         </Grid>
         <Grid sx={formStyles.actions.container}>
           <Button
-            disabled={process.loading}
+            disabled={processing.loading}
             type="submit"
             variant="contained"
             sx={formStyles.submiButton}
-            color={process.loading ? "inherit" : "primary"}
+            color={processing.loading ? "inherit" : "primary"}
           >
             Guardar Cambios{" "}
-            {process.loading && (
+            {processing.loading && (
               <CircularProgress
                 size={20}
                 sx={formStyles.circularProgress}
@@ -150,14 +150,14 @@ const UserForm: FC<{}> = () => {
             )}
           </Button>
         </Grid>
-        {!process.validate && (
+        {!processing.validate && (
           <div style={formStyles.errorMessage}>
             <Alert severity="error" sx={formStyles.alertComponent}>
               Hubo un error!
             </Alert>
           </div>
         )}
-        {process.finish && (
+        {processing.finish && (
           <div style={formStyles.errorMessage}>
             <Alert severity="success" sx={formStyles.alertComponent}>
               Se Modifico con exito tu perfil

@@ -11,7 +11,7 @@ import {
   Grid,
 } from "@mui/material";
 import { NextPage } from "next";
-import React from "react";
+import React, { useEffect } from "react";
 import { pagesStyles } from "@styles/index";
 import useForm from "../src/hooks/useForm";
 import { useRouter } from "next/router";
@@ -19,14 +19,54 @@ import { loginFields } from "../src/types/forms";
 import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import UnloggedLayout from "@components/layouts/UnloggedLayout";
+import Cookies from 'js-cookie'
+import axios from "axios";
+
+
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { modeTheme } = useAppCtx();
-  const { fields, errors, process, updateField, submit } = useForm<loginFields>(
+  const { modeTheme, user, setUser } = useAppCtx();
+  const { fields, errors, processing, updateField, submit } = useForm<loginFields>(
     statesForms.login
   );
   const { loginStyles } = pagesStyles(modeTheme);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+
+    const credentials = {
+      username: e.target[0].value,
+      password: e.target[2].value
+    }
+
+    const loginHandler = async () => {
+
+      const path = process.env.NEXT_PUBLIC_API_BASE_URL
+
+      try {
+        const response = await axios.post(`${path}user/sesion/login/`, credentials)
+        const data = response.data
+        // console.log({ data });
+        const userData = data.user
+        setUser({
+          ...user,
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          cuil: userData.cuil,
+          email: userData.email,
+          logged: true,
+          token: data.refresh_token
+        })
+        Cookies.set("refresh_token", data.refresh_token, { expires: 30 });
+        router.push("/")
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loginHandler()
+  }
 
   return (
     <UnloggedLayout>
@@ -40,11 +80,9 @@ const Login: NextPage = () => {
         sx={{ padding: "10px" }}
       >
         <Card>
-          {process.loading && <LinearProgress color="primary" />}
+          {processing.loading && <LinearProgress color="primary" />}
           <form
-            onSubmit={(e) =>
-              submit(e, "/api/login").then(() => router.push("/"))
-            }
+            onSubmit={handleSubmit}
           >
             <CardContent sx={loginStyles.cardContent}>
               <img
@@ -63,7 +101,7 @@ const Login: NextPage = () => {
                   id="input-with-sx"
                   label="Usuario"
                   variant="outlined"
-                  type="email"
+                  // type="email"
                   name="email"
                   margin="normal"
                   value={fields.email}
@@ -102,14 +140,14 @@ const Login: NextPage = () => {
             <CardActions sx={loginStyles.actions.container}>
               <div style={loginStyles.utils.container}>
                 <Button
-                  disabled={process.loading}
+                  disabled={processing.loading}
                   type="submit"
                   variant="contained"
                   sx={loginStyles.utils.submitButton}
-                  color={process.loading ? "inherit" : "primary"}
+                  color={processing.loading ? "inherit" : "primary"}
                 >
                   Ingresar{" "}
-                  {process.loading && (
+                  {processing.loading && (
                     <CircularProgress
                       size={20}
                       sx={loginStyles.utils.circularProgress}
@@ -131,7 +169,7 @@ const Login: NextPage = () => {
                 </Button>
               </Typography>
             </CardActions>
-            {!process.validate && (
+            {!processing.validate && (
               <div style={loginStyles.utils.errorMessage}>
                 <Alert severity="error" sx={{ justifyContent: "center" }}>
                   Usuario o Contraseña son incorrectas

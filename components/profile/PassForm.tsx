@@ -21,7 +21,7 @@ const PassForm: FC<{}> = () => {
   const {
     fields,
     errors,
-    process,
+    processing,
     updateField,
     submit,
     defaultValues,
@@ -33,13 +33,13 @@ const PassForm: FC<{}> = () => {
   } = pagesStyles(modeTheme);
 
   useEffect(() => {
-    defaultValues({
-      user: user.user,
-      name: user.name,
-      phone: user.phone,
-      email: user.email,
-      password: "",
-    });
+    // defaultValues({
+    //   user: user.user,
+    //   name: user.name,
+    //   phone: user.phone,
+    //   email: user.email,
+    //   password: "",
+    // });
   }, []);
 
   return (
@@ -175,14 +175,14 @@ const PassForm: FC<{}> = () => {
         </Grid>
         <Grid sx={passFormStyles.actions.container}>
           <Button
-            disabled={process.loading}
+            disabled={processing.loading}
             type="submit"
             variant="contained"
             sx={passFormStyles.submiButton}
-            color={process.loading ? "inherit" : "primary"}
+            color={processing.loading ? "inherit" : "primary"}
           >
             Actualizar{" "}
-            {process.loading && (
+            {processing.loading && (
               <CircularProgress
                 size={20}
                 sx={passFormStyles.circularProgress}
@@ -191,14 +191,14 @@ const PassForm: FC<{}> = () => {
             )}
           </Button>
         </Grid>
-        {!process.validate && (
+        {!processing.validate && (
           <div style={passFormStyles.errorMessage}>
             <Alert severity="error" sx={passFormStyles.alertComponent}>
               Hubo un error!
             </Alert>
           </div>
         )}
-        {process.finish && (
+        {processing.finish && (
           <div style={passFormStyles.errorMessage}>
             <Alert severity="success" sx={passFormStyles.alertComponent}>
               Se Modifico con exito tu perfil

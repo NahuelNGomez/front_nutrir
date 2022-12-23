@@ -1,21 +1,47 @@
 import { Card, CardContent, Collapse, Grid, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../src/contexts/store";
 import MerenderoCard from "@components/ui/special/MerenderoCard";
+import axios from "axios";
 
 const merenderos = [
   {
-    name: "Merendero 1",
-    address: "Av. 9 de Julio 34, Buenos Aires",
-  },
-  {
-    name: "Merendero 2",
-    address: "Av. 9 de Julio 34, Buenos Aires",
+    name: "Centro Cultural El Cole",
+    address: "Villa Cordobita, Paraguay 1031",
   },
 ];
 
 const MerenderoCards: FC<{}> = () => {
+
+  const { user } = useAppCtx();
+
+
+  useEffect(() => {
+
+    console.log('user', user);
+  
+
+
+    const getComedores = async ()=>{
+      try {
+        if (user.token) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+        }
+        const response = await axios.get('http://50.116.44.91:3600/comedor')
+        console.log(response);
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+    getComedores()
+  }, [])
+  
+
+
+
   const { modeTheme } = useAppCtx();
   const {
     profileStyles: { merenderosCardsStyles },

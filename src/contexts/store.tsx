@@ -6,24 +6,26 @@ const initialStoreState: storeType = {
   currentTheme: lightTheme,
   modeTheme: "light",
   user: {
-    user: "",
-    phone: "",
-    name: "",
+    firstName: "",
+    lastName: "",
+    cuil: 1,
     email: "",
     comedor: "",
     logged: false,
+    phone: '+151133443355'
   },
   menuOpen: false,
   surveyModalOpen: false,
   modalOpen: false,
   surveyInfo: {},
-  surverOptionsModal:false,
-  setSurverOptionsModal:() => {},
-  setMenuOpen: () => {},
-  setModalOpen: () => {},
-  setSurverModalOpen: () => {},
-  updateTheme: () => {},
-  setSurveynfo: () => {},
+  surverOptionsModal: false,
+  setSurverOptionsModal: () => { },
+  setMenuOpen: () => { },
+  setModalOpen: () => { },
+  setSurverModalOpen: () => { },
+  updateTheme: () => { },
+  setSurveynfo: () => { },
+  setUser: () => { },
 };
 
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
@@ -33,7 +35,18 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
-  const [surverOptionsModal,setSurverOptionsModal] = useState(false);
+  const [surverOptionsModal, setSurverOptionsModal] = useState(false);
+  const [user, setUser] = useState<userType>({
+    firstName: "",
+    lastName: "",
+    cuil: 1,
+    email: "",
+    comedor: "",
+    logged: false,
+    phone: '+1122443344',
+    comedorActivo: 1,
+    token: ''
+  })
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -52,7 +65,7 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     currentTheme,
     surveyInfo,
     modeTheme,
-    user: userLog,
+    user,
     menuOpen,
     surveyModalOpen,
     modalOpen,
@@ -63,6 +76,7 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     updateTheme,
     setMenuOpen,
     setModalOpen,
+    setUser
   };
 };
 

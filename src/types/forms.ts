@@ -1,4 +1,4 @@
-import { statesForms } from "../constants/states";
+  import { statesForms } from "../constants/states";
 
 export enum profileFields {
   user = "required",
@@ -12,7 +12,8 @@ export enum merenderoFields {
   name = "required",
   street = "required",
   number = "required",
-  between_streets = "optional",
+  between_street1 = "optional",
+  between_street2 = "optional",
   province = "required"
 }
 
@@ -45,7 +46,7 @@ export type stateFormBase<T> = {
   fields: T | any;
   errors: T | any;
   rules: T | any; 
-  process: {
+  processing: {
     validate: boolean;
     loading: boolean;
     finish:boolean;

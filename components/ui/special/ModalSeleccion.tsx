@@ -9,12 +9,13 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import { componentsStyles } from "@styles/index";
+
 
 const ModalSeleccion: FC<{}> = () => {
   const { modalOpen, setModalOpen, modeTheme } = useAppCtx();
@@ -23,7 +24,7 @@ const ModalSeleccion: FC<{}> = () => {
   const comedores = [
     {
       name: "comedor 1",
-      address: "9 de Julio y Rivadavia, Buenos Aires",
+      address: "Centro Cultural El Cole",
       selected: true,
     },
     {
@@ -59,6 +60,36 @@ const ModalSeleccion: FC<{}> = () => {
   const {
     uiComponentStyles: { merenderosModalStyles },
   } = componentsStyles(modeTheme);
+
+  // useEffect(() => {
+  //   const options = {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken': '7uS5NTwWX5A6O2Ophrz27oXjWsNdMV1w'
+  //     },
+  //     body: JSON.stringify({
+  //       username: "20276253418",
+  //       password: "Geneos2022"
+  //     })
+  //   };
+
+
+  //   fetch('http://50.116.44.91:3600/user/sesion/login/', options)
+  //     .then(response => {
+  //       const res = response.json()
+  //       console.log(res);
+  //     });
+
+  //   fetch('http://50.116.44.91:3600/comedor')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log({ data });
+
+  //     })
+
+  // }, [])
+
 
   return (
     <Modal open={modalOpen} onClose={() => setModalOpen(false)}>

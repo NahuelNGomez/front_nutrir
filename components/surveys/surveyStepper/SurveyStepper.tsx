@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { FC, useEffect, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import moment from "moment";
+import { pagesStyles } from "@styles/index";
 
 type Props = {
   displayStepper?: boolean
@@ -18,13 +19,10 @@ type Props = {
   guestsStep?: {}
   drinkStep?: {}
   breakFastMainMailStep?: {}
-  backClickHandler:()=>{}
+  backClickHandler?: () => {}
 }
 
 const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTypeStep, guestsStep, drinkStep, breakFastMainMailStep, backClickHandler }) => {
-
-  // console.log(drinkStep);
-
 
   const { surveyInfo } = useAppCtx()
   const [descriptions, setDescriptions] = useState({})
@@ -32,8 +30,8 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
   const drinksDecription = drinkStep ? Object.keys(drinkStep) : []
   const breakFastMainMailDecription = breakFastMainMailStep ? Object.keys(breakFastMainMailStep) : []
 
-  // console.log({drinksDecription});
-
+  const { modeTheme } = useAppCtx();
+  const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
 
   const steps = [
     {
@@ -42,19 +40,19 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
     },
     {
       label: '2. Cantidad de comenzales',
-      description: `${guestsStep} personas`,
+      description: guestsStep ? `${guestsStep} personas` : '',
     },
     {
       label: '3. Bebida',
-      description: drinksDecription.join(', '),
+      description: drinkStep ? drinksDecription.join(', ') : '',
     },
     {
       label: '4. Comida',
-      description: breakFastMainMailDecription.join(', '),
+      description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
     },
     {
       label: '5. Confirmar encuesta',
-      description: `Description.`,
+      description: ``,
     },
   ];
 
@@ -64,15 +62,15 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
     <>
       <Grid
         item
-        xs={11}
-        sx={{ height: '500px', mt: 3, }}
+        xs={12}
         alignContent={'center'}
         justifyContent={'center'}
+        sx={stepper.container}
       >
-        <Card sx={{ height: '100%', borderRadius: '5px' }}>
+        <Card sx={stepper.card}>
           <CardContent>
-            <Typography variant="h1" sx={{ fontSize: '1rem', mb: '1rem' }}>1. ¿Qué comida vas a cargar?</Typography>
-            <Typography variant="h1" sx={{ mb: '1rem' }}>{moment(dateStep).format('LL')}</Typography>
+            <Typography variant="h1" sx={stepper.title}>Resumen de la encuesta</Typography>
+            <Typography variant="h1" sx={stepper.subtitle}>{moment(dateStep).format('LL')}</Typography>
 
             {
               displayStepper || stepActive === 0
@@ -80,9 +78,9 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
                   <Box sx={{ maxWidth: 400 }}>
                     <Stepper activeStep={activeStep} orientation="vertical">
                       {steps.map((step, index) => (
-                        <Step key={step.label}>
+                        <Step key={step.label} expanded={true} >
                           <StepLabel>
-                            {step.label}
+                            <b>{step.label}</b>
                           </StepLabel>
                           <StepContent>
                             <Typography>{step.description}</Typography>
@@ -108,10 +106,10 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
               stepActive === 3
                 ? (
                   <>
-                    <Grid container justifyContent={'space-between'} sx={{ mt: 4 }}>
+                    <Grid container justifyContent={'space-between'} sx={{ mt: 2 }}>
                       <Button
                         sx={{
-                          width: { xs: "100%", sm: "90%", lg: "80%", xl: "20%" },
+                          width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
                           borderRadius: "18px",
                           textTransform: "none",
                           padding: "10px",
@@ -126,7 +124,7 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
                       </Button>
                       <Button
                         sx={{
-                          width: { xs: "100%", sm: "90%", lg: "80%", xl: "20%" },
+                          width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
                           borderRadius: "18px",
                           textTransform: "none",
                           padding: "10px",

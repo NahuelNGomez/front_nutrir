@@ -5,30 +5,66 @@ import { merenderoFields } from '../../../src/types/forms';
 import { statesForms } from '../../../src/constants/states';
 import { useAppCtx } from "../../../src/contexts/store";
 import { pagesStyles } from "@styles/index";
+import { useEffect } from "react";
 
 const DinnerQuarterForm = () => {
 
-  const { modeTheme } = useAppCtx();
+
+  const { modeTheme, user } = useAppCtx();
   const router = useRouter();
 
   const {
     fields,
     errors,
-    process,
+    processing,
     updateField,
     submit,
     finishProcess,
+    defaultValues
   } = useForm<merenderoFields>(statesForms.merendero);
-
-  // const { comedorForm: {editStyles}} = pagesStyles(modeTheme);
 
   const {
     editStyles: { comedorForm },
   } = pagesStyles(modeTheme);
 
+  useEffect(() => {
+
+    // const credentials = {
+    //   username: '20276253418',
+    //   password: 'Geneos2022'
+    // }
+
+    // fetch(`http://50.116.44.91:3600/comedor/${user.comedorActivo}`, {
+    //   headers: {
+    //     method: 'GET',
+    //     'Content-Type': 'application/json',
+    //     'csrftoken': 'U1oq4EBiU0cQ2goH8INf0Bl0RrRzyNHd',
+    //     'sessionid': 'ztcab68lnmf2mh1epakxthoey95wqbd1',
+    //     'refresh_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3MTQ3ODAxNCwiaWF0IjoxNjcxNDc2MjE0LCJqdGkiOiI5OWM1NTc1YmU2ZmQ0YTliYjljYjcxMGQwYmUxMDcyNiIsInVzZXJfaWQiOjF9.tWShk1grPR4VXeHV_9nVysvUB-AfsafeM8lHjiVWWro'
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     console.log(json);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+
+    //   })
+    defaultValues({
+      name: 'Centro Cultural El Cole',
+      street: 'Paraguay',
+      number: 1031,
+      between_street1: 'NSNC',
+      between_street2: 'NSNC',
+      province: 'Buenos Aires'
+    })
+  }, [])
+
+
   return (
     <Card>
-      {process.loading && <LinearProgress color="primary" />}
+      {processing.loading && <LinearProgress color="primary" />}
       <form
         onSubmit={(e) =>
           submit(e, "/api/merendero").then(() => {
@@ -103,6 +139,8 @@ const DinnerQuarterForm = () => {
                 onChange={updateField}
               />
             </Grid>
+
+            {/* Number */}
             <Grid
               item
               xs={12}
@@ -128,6 +166,8 @@ const DinnerQuarterForm = () => {
                 onChange={updateField}
               />
             </Grid>
+
+            {/*Between 1  */}
             <Grid
               item
               xs={12}
@@ -137,20 +177,22 @@ const DinnerQuarterForm = () => {
               sx={comedorForm.form.fields}
             >
               <TextField
-                error={errors.between_streets}
+                error={errors.between_street1}
                 fullWidth
                 id="input-with-sx"
-                label="Entre Calles"
+                label="Entre Calle 1"
                 variant="outlined"
                 type="text"
-                name="between_streets"
+                name="between_street1"
                 margin="normal"
-                value={fields.between_streets}
+                value={fields.between_street1}
                 sx={comedorForm.utils.textInput}
                 onChange={updateField}
               />
             </Grid>
-            <Grid
+
+            {/*Between 2  */}
+            {/* <Grid
               item
               xs={12}
               sm={12}
@@ -159,47 +201,21 @@ const DinnerQuarterForm = () => {
               sx={comedorForm.form.fields}
             >
               <TextField
-                error={errors.province}
+                error={errors.between_street2}
                 fullWidth
                 id="input-with-sx"
-                label="Provincia"
+                label="Entre Calle 2"
                 variant="outlined"
                 type="text"
-                name="province"
+                name="between_street2"
                 margin="normal"
-                value={fields.province}
+                value={fields.between_street2}
                 sx={comedorForm.utils.textInput}
-                helperText={
-                  errors.province ? "Debes ingresar una province" : ""
-                }
                 onChange={updateField}
               />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              lg={12}
-              xl={12}
-              sx={comedorForm.form.fields}
-            >
-              <TextField
-                error={errors.province}
-                fullWidth
-                id="input-with-sx"
-                label="Provincia"
-                variant="outlined"
-                type="text"
-                name="province"
-                margin="normal"
-                value={fields.province}
-                sx={comedorForm.utils.textInput}
-                helperText={
-                  errors.province ? "Debes ingresar una province" : ""
-                }
-                onChange={updateField}
-              />
-            </Grid>
+            </Grid> */}
+            
+            {/* Province */}
             <Grid
               item
               xs={12}
@@ -231,14 +247,14 @@ const DinnerQuarterForm = () => {
           sx={comedorForm.actions.container}
         >
           <Button
-            disabled={process.loading}
+            disabled={processing.loading}
             type="submit"
             variant="contained"
             sx={comedorForm.utils.submitButton}
-            color={process.loading ? "inherit" : "primary"}
+            color={processing.loading ? "inherit" : "primary"}
           >
             Actualizar{" "}
-            {process.loading && (
+            {processing.loading && (
               <CircularProgress
                 size={20}
                 sx={comedorForm.utils.circularProgress}
@@ -247,14 +263,14 @@ const DinnerQuarterForm = () => {
             )}
           </Button>
         </CardActions>
-        {!process.validate && (
+        {!processing.validate && (
           <div style={comedorForm.utils.errorMessage}>
             <Alert severity="error" sx={comedorForm.utils.AlertMessage}>
               Hubo un error!
             </Alert>
           </div>
         )}
-        {process.finish && (
+        {processing.finish && (
           <div style={comedorForm.utils.errorMessage}>
             <Alert severity="success" sx={comedorForm.utils.AlertMessage}>
               Se Modifico con exito el comedor

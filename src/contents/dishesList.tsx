@@ -33,7 +33,7 @@ export const dishesList:SurveysAvailableType = [
   {
     name: "Almuerzo",
     type: "LUNCH",
-    complete: true,
+    complete: false,
     available: true,
   },
   {

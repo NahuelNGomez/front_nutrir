@@ -5,7 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { pagesStyles } from "@styles/index";
 
 const InfoCard: FC<{}> = () => {
-  const { modeTheme } = useAppCtx();
+  const { modeTheme, user } = useAppCtx();
 
   const {
     profileStyles: { infoCardStyles },
@@ -14,7 +14,7 @@ const InfoCard: FC<{}> = () => {
   return (
     <Grid sx={infoCardStyles.container}>
       <Typography sx={infoCardStyles.cardTitle}>
-        Isaias Diaz
+        {user.lastName + ', ' + user.firstName}
       </Typography>
       <Grid
         item

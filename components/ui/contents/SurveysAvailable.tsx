@@ -24,14 +24,14 @@ const SurveysAvailable: FC<Props> = ({
 
   // console.log({ surveyInfo });
 
-  const dishHandleClick = (type: keyof typeof dishesOptionsType, name: string) => {
+  const dishHandleClick = (type: keyof typeof dishesOptionsType, name: string) => {   
     setMealTypeStep(name)
     setSelectedDish(type);
     setSurveynfo({
       dishes: [
         {
           type,
-          name: 'Desayuno',
+          name,
           ingredients: []
         }
       ]
@@ -43,7 +43,7 @@ const SurveysAvailable: FC<Props> = ({
     <>
       <Grid
         container
-        xs={8}
+        xs={7}
         sx={{ margin: '0 auto', height: '350px', gap: '2rem 2rem' }}
         justifyContent={'space-around'}
       >
@@ -58,10 +58,10 @@ const SurveysAvailable: FC<Props> = ({
               background={
                 modeTheme == "dark" ? "rgba(255, 255, 255, 0.09)" : "white"
               }
-              width={120}
-              height={120}
+              width={100}
+              height={100}
               type={type}
-              color={modeTheme == "dark" ? "white" : "#474747"}
+              color={modeTheme == "dark" ? "white" : "#6fc2c1"}
               active={type === selectedDish || complete}
               complete={complete}
               dishHandleClick={() => {

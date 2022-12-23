@@ -27,7 +27,7 @@ export function initialFormState<T>(Fields:T):stateFormBase<T> {
     fields: field_values,
     errors: error_fields,
     rules: field_rules,
-    process: { validate: true, loading: false,finish:false },
+    processing: { validate: true, loading: false,finish:false },
   };
  
 }

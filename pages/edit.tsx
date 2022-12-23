@@ -13,8 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import { pagesStyles } from "@styles/index";
+import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import DaysForm from "../components/edit/DaysForm/DaysForm";
 import DinnerQuarterForm from "../components/edit/DinnerQuerterForm/DinnerQuarterForm";
 import { statesForms } from "../src/constants/states";
@@ -37,6 +39,31 @@ const Edit: NextPage = () => {
   } = useForm<merenderoFields>(statesForms.merendero);
 
   const { editStyles } = pagesStyles(modeTheme);
+
+  useEffect(() => {
+    // fetch('https://pokeapi.co/api/v2/ability/1')
+    //   .then(json => {
+    //     console.log(json);
+    //   })
+    // fetch('http://50.116.44.91:3600/comedor')
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err =>{
+    //     console.log(err);
+        
+    //   })
+    // axios('https://pokeapi.co/api/v2/ability/1')
+    //   .then(res => {
+    //     console.log(res.data);
+    //   })
+    //   .catch(err =>{
+    //     console.log(err);
+        
+    //   })
+
+    
+  }, [])
 
   return (
     <LoggedLayout>

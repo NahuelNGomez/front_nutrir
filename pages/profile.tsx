@@ -25,7 +25,7 @@ const Profile: NextPage = () => {
       >
         <Grid item xs={12} lg={12}>
           <Typography variant={"h6"} sx={profileStyles.title}>
-            EDITAR COMEDOR
+            PERFIIL DE USUARIO
           </Typography>
           <Divider />
         </Grid>

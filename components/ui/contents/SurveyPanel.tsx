@@ -21,7 +21,7 @@ type Props = {
 const SurveyPanel: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, setDateStep }) => {
 
   const { modeTheme } = useAppCtx();
-  const { surveyStyles } = pagesStyles(modeTheme);
+  const { surveyStyles: { dataTable } } = pagesStyles(modeTheme);
 
   return (
 
@@ -32,6 +32,7 @@ const SurveyPanel: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, se
       lg={11}
       flexDirection={"row"}
       justifyContent={"center"}
+      sx={dataTable.container}
     >
       <Grid item xs={12}>
         <Card>
