@@ -10,12 +10,22 @@ type Props = {
   handleGoToNextStep?: any;
   handleGoToPreviousStep?: any;
   setDateStep: () => {}
+  suerveyInfo: {},
+  setSurveyInfo: () => {},
 }
 
-const SurveyAnswerBtn: FC<Props> = ({ setDateStep, columnData, handleGoToNextStep, handleGoToPreviousStep }) => {
+const SurveyAnswerBtn: FC<Props> = ({
+  setDateStep,
+  columnData,
+  handleGoToNextStep,
+  handleGoToPreviousStep,
+  suerveyInfo,
+  setSurveyInfo
+}) => {
 
   const { modeTheme } = useAppCtx();
   const { surveyStyles } = pagesStyles(modeTheme);
+
 
   return (
     <>
@@ -27,19 +37,25 @@ const SurveyAnswerBtn: FC<Props> = ({ setDateStep, columnData, handleGoToNextSte
       >
         <Grid item xs={5} >
           <SubmitBtn
+            surveyData={columnData.row.data}
             setDateStep={setDateStep}
             columData={columnData}
             type={'uncomplete'}
             text="No se sirvió"
+            suerveyInfo={suerveyInfo}
+            setSurveyInfo={setSurveyInfo}
           />
         </Grid>
         <Grid item xs={5}>
           <SubmitBtn
+            surveyData={columnData.row.data}
             setDateStep={setDateStep}
             handleGoToNextStep={handleGoToNextStep}
             columData={columnData}
             type={'complete'}
             text="Responder"
+            suerveyInfo={suerveyInfo}
+            setSurveyInfo={setSurveyInfo}
           />
         </Grid>
       </Grid>

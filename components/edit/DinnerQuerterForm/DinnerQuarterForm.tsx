@@ -5,10 +5,14 @@ import { merenderoFields } from '../../../src/types/forms';
 import { statesForms } from '../../../src/constants/states';
 import { useAppCtx } from "../../../src/contexts/store";
 import { pagesStyles } from "@styles/index";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+import { comedorInfoType } from "../../../src/types/global";
 
-const DinnerQuarterForm = () => {
+interface Props {
+  comedorData: Array<comedorInfoType>
+}
 
+const DinnerQuarterForm: FC<Props> = ({ comedorData }) => {
 
   const { modeTheme, user } = useAppCtx();
   const router = useRouter();
@@ -23,43 +27,23 @@ const DinnerQuarterForm = () => {
     defaultValues
   } = useForm<merenderoFields>(statesForms.merendero);
 
+  const comedorInfo = comedorData[0]
+
   const {
     editStyles: { comedorForm },
   } = pagesStyles(modeTheme);
 
   useEffect(() => {
-
-    // const credentials = {
-    //   username: '20276253418',
-    //   password: 'Geneos2022'
-    // }
-
-    // fetch(`http://50.116.44.91:3600/comedor/${user.comedorActivo}`, {
-    //   headers: {
-    //     method: 'GET',
-    //     'Content-Type': 'application/json',
-    //     'csrftoken': 'U1oq4EBiU0cQ2goH8INf0Bl0RrRzyNHd',
-    //     'sessionid': 'ztcab68lnmf2mh1epakxthoey95wqbd1',
-    //     'refresh_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3MTQ3ODAxNCwiaWF0IjoxNjcxNDc2MjE0LCJqdGkiOiI5OWM1NTc1YmU2ZmQ0YTliYjljYjcxMGQwYmUxMDcyNiIsInVzZXJfaWQiOjF9.tWShk1grPR4VXeHV_9nVysvUB-AfsafeM8lHjiVWWro'
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     console.log(json);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-
-    //   })
     defaultValues({
-      name: 'Centro Cultural El Cole',
-      street: 'Paraguay',
-      number: 1031,
-      between_street1: 'NSNC',
-      between_street2: 'NSNC',
+      name: comedorInfo.descripcion,
+      street: comedorInfo.calle,
+      number: comedorInfo.numero,
+      between_street1: comedorInfo.entre_calles,
+      // between_street2: 'NSNC',
       province: 'Buenos Aires'
     })
-  }, [])
+  }, [comedorInfo])
+
 
 
   return (
@@ -214,7 +198,7 @@ const DinnerQuarterForm = () => {
                 onChange={updateField}
               />
             </Grid> */}
-            
+
             {/* Province */}
             <Grid
               item

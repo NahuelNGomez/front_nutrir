@@ -2,6 +2,8 @@ import { Button, Card, CardContent, Grid, Typography } from "@mui/material"
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
 import DayAccordion from "../DayAccordion/DayAccordion";
+import { FC } from "react";
+import { serviciosType } from "../../../src/types/global";
 
 const daysName = [
   {
@@ -27,13 +29,20 @@ const daysName = [
   },
 ]
 
-const DaysForm = () => {
+interface Props {
+  serviciosData: Array<serviciosType>
+}
+
+const DaysForm: FC<Props> = ({ serviciosData }) => {
 
   const { modeTheme } = useAppCtx();
 
   const {
     editStyles: { daysForm },
   } = pagesStyles(modeTheme);
+
+  console.log({serviciosData});
+  
 
   return (
     <Card>
@@ -60,12 +69,12 @@ const DaysForm = () => {
         </Grid>
       </CardContent>
       <Grid container xs={12} justifyContent={'center'}>
-          <Button
-            sx={daysForm.utils.daysButton}
-          // onClick={() => router.push("/days")}
-          >
-            Guardar cambios
-          </Button>
+        <Button
+          sx={daysForm.utils.daysButton}
+        // onClick={() => router.push("/days")}
+        >
+          Guardar cambios
+        </Button>
       </Grid>
     </Card>
   )

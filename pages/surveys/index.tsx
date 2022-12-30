@@ -17,10 +17,6 @@ import DrinksStep from "../../components/surveys/steps/DrinksStep";
 import BreakFastMailStep from "../../components/surveys/steps/BreakFastMailStep";
 import SubmitStep from "../../components/surveys/steps/SubmitStep";
 
-// type stepType = {
-//   label: string;
-//   content: FC<Props:any>
-// }
 
 const stepsBreakfast: Array<any> = [
   { label: '¿Qué día vas a cargar?', content: SurveyPanel },
@@ -48,6 +44,7 @@ const DailySurvers: NextPage = () => {
   const [activeStep, setActiveStep] = useState(0)
 
   const [dateStep, setDateStep] = useState<string>()
+  const [suerveyInfo, setSurveyInfo] = useState<{ comedor: number, fecha: string, funcionamiento: string }>()
   const [mealTypeStep, setMealTypeStep] = useState<string>()
   const [guestsStep, setGuestStep] = useState<{}>({
     childs: 0,
@@ -59,18 +56,13 @@ const DailySurvers: NextPage = () => {
   const [breakFastMainMailStep, setBreakFastMainMealStep] = useState<string>()
   const [firstDishStep, setFirstDishStep] = useState<string>()
   const [midDishStep, setMidDishStep] = useState<string>()
-  const [thirdDishStep, setThirdDishStep] = useState<string>()  
-
-  // console.log([drinkStep]);
-  console.log({breakFastMainMailStep});
-  
-  
+  const [thirdDishStep, setThirdDishStep] = useState<string>()
 
   const ActiveStepComponent = stepsBreakfast[activeStep].content
 
   const handleGoToNextStep = () => {
     setActiveStep(Math.min(activeStep + 1, Object.values(stepsBreakfast).length - 1))
-    
+
   }
   const handleGoToPreviousStep = () => {
     setActiveStep(Math.max(activeStep - 1, 0))
@@ -97,20 +89,22 @@ const DailySurvers: NextPage = () => {
         </Grid>
 
         <ActiveStepComponent
-           handleGoToNextStep={handleGoToNextStep}
-           handleGoToPreviousStep={handleGoToPreviousStep}
-           setDateStep={setDateStep}
-           dateStep={dateStep}
-           setMealTypeStep={setMealTypeStep}
-           mealTypeStep={mealTypeStep}
-           setGuestStep={setGuestStep}
-           guestsStep={guestsStep}
-           setDrinkStep={setDrinkStep}
-           drinkStep={drinkStep}
-           setBreakFastMainMealStep={setBreakFastMainMealStep}
-           breakFastMainMailStep={breakFastMainMailStep}
+          handleGoToNextStep={handleGoToNextStep}
+          handleGoToPreviousStep={handleGoToPreviousStep}
+          setDateStep={setDateStep}
+          dateStep={dateStep}
+          suerveyInfo={suerveyInfo}
+          setSurveyInfo={setSurveyInfo}
+          setMealTypeStep={setMealTypeStep}
+          mealTypeStep={mealTypeStep}
+          setGuestStep={setGuestStep}
+          guestsStep={guestsStep}
+          setDrinkStep={setDrinkStep}
+          drinkStep={drinkStep}
+          setBreakFastMainMealStep={setBreakFastMainMealStep}
+          breakFastMainMailStep={breakFastMainMailStep}
         />
-        
+
       </Grid>
     </LoggedLayout>
   );

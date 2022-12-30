@@ -8,9 +8,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       ctx.res,
       sessionOptions
     );
-
-    console.log(ironSession,"ss session");
-  
+      
     return {
       props: {
         user: ironSession.user ?? { logged: false },

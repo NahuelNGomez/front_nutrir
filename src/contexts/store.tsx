@@ -1,33 +1,69 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme } from "../template/theme";
-import { storeType, themes, userType, invoiceInfoType } from "../types/global";
+import { storeType, themes, userType, invoiceInfoType, comedorInfoType } from "../types/global";
+
+const comedorInit = {
+  nombre: '',
+  numero: 1,
+  organizacion_regional: 1,
+  actividades: [1],
+  activo: false,
+  asistentes_diarios: 1,
+  barrio: '',
+  calle: '',
+  cantidad_trabajadores: 0,
+  departamento: 0,
+  descripcion: '',
+  entre_calles: '',
+  fecha_inicio_actividad: '',
+  fuente_agua: 0,
+  fuente_agua_potable: false,
+  gobierno_local: 0,
+  id: 0,
+  latitud: '',
+  localidad: 0,
+  longitud: '',
+  provincia: 0,
+  responsable_comedor: 0,
+  servicio_comedor: 0,
+  tipos_energia: 0,
+  ubicacion_georreferencial: '',
+  selected: false
+}
+
 
 const initialStoreState: storeType = {
   currentTheme: lightTheme,
   modeTheme: "light",
   user: {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     cuil: 1,
     email: "",
     comedor: "",
     logged: false,
-    phone: '+151133443355',
-    token: '',
-    comedorActivo: 1
+    telefono: '',
+    access_token: '',
+    refresh_token: '',
+    groups: []
   },
   menuOpen: false,
   surveyModalOpen: false,
   modalOpen: false,
+  modalLogin: false,
   surveyInfo: {},
   surverOptionsModal: false,
+  comedoresDisponibles: [],
+  comedorSeleccionado: comedorInit,
   setSurverOptionsModal: () => { },
   setMenuOpen: () => { },
   setModalOpen: () => { },
+  setModalLogin: ()=>{},
   setSurverModalOpen: () => { },
   updateTheme: () => { },
   setSurveynfo: () => { },
-  setUser: () => { },
+  setComedoresDisponibles: () => { },
+  setComedorSeleccionado: () => { },
 };
 
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
@@ -35,10 +71,12 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [modeTheme, setModeTheme] = useState("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalLogin, setModalLogin] = useState(false);
+  const [comedoresDisponibles, setComedoresDisponibles] = useState<Array<any>>([])
+  const [comedorSeleccionado, setComedorSeleccionado] = useState<comedorInfoType>()
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal, setSurverOptionsModal] = useState(false);
-  const [user, setUser] = useState<userType>(userLog);
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -54,21 +92,27 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   }, []);
 
   return {
+    comedoresDisponibles,
+    comedorSeleccionado,
     currentTheme,
-    surveyInfo,
     modeTheme,
-    user,
+    user: userLog,
     menuOpen,
-    surveyModalOpen,
     modalOpen,
+    modalLogin,
+    surveyInfo,
     surverOptionsModal,
+    surveyModalOpen,
+
     setSurverOptionsModal,
-    setSurveynfo,
-    setSurverModalOpen,
-    updateTheme,
     setMenuOpen,
     setModalOpen,
-    setUser
+    setModalLogin,
+    setSurveynfo,
+    setSurverModalOpen,
+    setComedoresDisponibles,
+    setComedorSeleccionado,
+    updateTheme,
   };
 };
 

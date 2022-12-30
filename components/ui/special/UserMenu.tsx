@@ -7,7 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { ArrowDropDown } from "@mui/icons-material";
 
 const UserMenu: FC<{}> = () => {
-  const { user, modeTheme } = useAppCtx();
+  const { user, modeTheme, comedorSeleccionado } = useAppCtx();
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState(null);
   
@@ -33,8 +33,8 @@ const UserMenu: FC<{}> = () => {
       
       <Grid sx={userMenuStyles.text_content}>
         <Grid container justifyContent={"center"} flexDirection={"column"}>
-        <span style={userMenuStyles.text}>Centro Cultural El Cole</span>
-        <small style={{textAlign:"end"}}>Jose, Fantasia</small>
+        <span style={userMenuStyles.text}>{comedorSeleccionado?.nombre}</span>
+        <small style={{textAlign:"end"}}>{user.first_name}, {user.last_name}</small>
         </Grid>
       </Grid>
       <Avatar sx={userMenuStyles.avatar} >

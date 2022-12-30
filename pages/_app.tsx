@@ -6,6 +6,7 @@ import Layout from "./_layout";
 import {  AppCtxProvider } from "../src/contexts/store";
 import { userType } from "../src/types/global";
 import ModalSeleccion from "@components/ui/special/ModalSeleccion";
+import ModalLogin from "@components/ui/special/ModalLogin";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -29,6 +30,7 @@ function MyApp({
         </Head>
         <Layout>
           <ModalSeleccion />
+          <ModalLogin />
           <Component {...pageProps} />
         </Layout>
       </CacheProvider>

@@ -7,31 +7,49 @@ import { useAppCtx } from "../../../../src/contexts/store"
 
 
 interface Props {
+  surveyData: { comedor: number, fecha: string, funcionamiento: string }
   text: string,
   type: string,
   columData: any,
   handleGoToNextStep?: any,
   setDateStep: (date: string) => {},
+  suerveyInfo: {},
+  setSurveyInfo: (surveyData: {}) => {},
 }
 
 
-const SubmitBtn: FC<Props> = ({ setDateStep, text, type = 'complete', columData, handleGoToNextStep }) => {
+const SubmitBtn: FC<Props> = ({
+  setDateStep,
+  text,
+  type = 'complete',
+  columData,
+  handleGoToNextStep,
+  surveyData,
+  suerveyInfo,
+  setSurveyInfo
+}) => {
 
   const { modeTheme } = useAppCtx();
   const { surveyStyles } = pagesStyles(modeTheme);
 
-  const router = useRouter()
+  
+  
 
   const completeHandleClick = (e: any, data: any) => {
     e.preventDefault()
     const date = data.row.date
+
+    console.log('data to fetch', surveyData);
+    
+
     setDateStep(date)
+    setSurveyInfo(surveyData)
   }
 
   const uncompleteHandleClick = (e: any) => {
     e.preventDefault()
     alert('La opción fue marcada como no servida')
-  }
+  } 
 
   return (
     <>

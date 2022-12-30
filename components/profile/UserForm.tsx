@@ -30,15 +30,14 @@ const UserForm: FC<{}> = () => {
 
   const {
     profileStyles: { formStyles },
-  } = pagesStyles(modeTheme);
+  } = pagesStyles(modeTheme);   
 
   useEffect(() => {
     defaultValues({
-      user: 'Jose',
-      name: 'Fantasia',
-      phone: '+1122334455',
+      user: user.cuil,
+      name: user.first_name,
+      phone: user.telefono,
       email: user.email,
-      password: "",
     });
   }, []);
 

@@ -13,6 +13,7 @@ const AuthorizedToolBar: FC<props> = ({ changeOpen }) => {
   const {modeTheme,menuOpen} = useAppCtx();
 
   const {navigationStyles} = componentsStyles(modeTheme)
+  
   return (
     <Toolbar>
       <Grid container direction="row">

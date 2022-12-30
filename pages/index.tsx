@@ -6,14 +6,38 @@ export { getServerSideProps } from "../src/serverSideProps";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../src/contexts/store";
 import { useEffect } from "react";
+import axios from "axios";
 
 const Home: NextPage = () => {
-  const { modeTheme, user } = useAppCtx();
-  const { dashboardStyles } = pagesStyles(modeTheme);
+  const { modeTheme, user, setModalLogin, setComedoresDisponibles, comedoresDisponibles, setModalOpen } = useAppCtx();
+  const { dashboardStyles } = pagesStyles(modeTheme);  
 
   useEffect(() => {
-  console.log(user);
-  });
+    axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/responsable/`,
+      { headers: { Authorization: `Bearer ${user.access_token}` } })
+      .then(res => {
+        console.log('comedores', res.data);
+        setComedoresDisponibles(res.data)
+        if (res.status === 401) {
+          setModalLogin(true)
+        }
+      })
+      .catch(err => {
+        // console.log('err', err.response)
+        if (err.response.status === 401) {
+          setModalLogin(true)
+        }
+      })
+  }, [])
+
+  useEffect(() => {
+    if(comedoresDisponibles?.length > 0){
+      setModalOpen(true)
+    }
+  }, [comedoresDisponibles])
+  
+
   return (
     <LoggedLayout>
       <Grid

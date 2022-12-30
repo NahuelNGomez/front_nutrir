@@ -8,6 +8,7 @@ import {
   TextField,
   Grid,
   Typography,
+  Button,
 } from "@mui/material";
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
@@ -15,50 +16,66 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import { componentsStyles } from "@styles/index";
+import { useRouter } from "next/router";
 
 
-const ModalSeleccion: FC<{}> = () => {
-  const { modalOpen, setModalOpen, modeTheme, comedoresDisponibles, setComedorSeleccionado } = useAppCtx();
+const ModalLogin: FC<{}> = () => {
+  const { modalLogin, setModalLogin, modeTheme } = useAppCtx();
   const [search, setSearch] = useState("");
 
-  // const comedores = [
-  //   {
-  //     name: "comedor 1",
-  //     address: "Centro Cultural El Cole",
-  //     selected: true,
-  //   },
-  // ];
-
-  const results = useMemo(() => {
-    if (search.length === 0) {
-      return comedoresDisponibles;
-    }
-
-    return comedoresDisponibles.filter((comedor) => comedor.nombre.includes(search));
-  }, [search, comedoresDisponibles]);
-
   const {
-    uiComponentStyles: { merenderosModalStyles },
+    uiComponentStyles: { loginModalStyles },
   } = componentsStyles(modeTheme);
 
+  const router = useRouter()
+
+  const onLogoutHandler = () => {
+    setModalLogin(false)
+    fetch('api/logout')
+      .then(() => router.push("/"))
+      .catch(err => {
+        console.log('client side err', { err });
+      })
+  }
 
   return (
-    <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-      <Box sx={merenderosModalStyles.modal}>
+    <Modal open={modalLogin} onClose={() => setModalLogin(false)}>
+      <Box
+        sx={loginModalStyles.modal}
+      >
         <Grid
           container
           justifyContent={"space-between"}
-          sx={merenderosModalStyles.headerContainer}
+          sx={loginModalStyles.headerContainer}
         >
-          <Typography sx={{ fontSize: "18px", fontWeight: "600" }}>
-            Elija un Comedor
+          <Typography sx={{ fontSize: "18px", fontWeight: "600", mb: 1.5 }}>
+            Su sesión ha expirado
           </Typography>
-          <CloseIcon
+          <Typography sx={{ fontSize: "16px" }}>
+            Por favor, vuelva a iniciar sesión
+          </Typography>
+          {/* <CloseIcon
             sx={merenderosModalStyles.closeIcon}
-            onClick={() => setModalOpen(false)}
-          />
+            onClick={() => setModalLogin(false)}
+          /> */}
+          <Grid
+            container
+            xs={12}
+            sx={{ mt: 4}}
+            justifyContent={'center'}
+          >
+            <Grid
+              item
+              xs={4}
+            >
+              <Button onClick={onLogoutHandler} sx={loginModalStyles.utils.completeButton}>
+                Iniciar sesion
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
-        <TextField
+
+        {/* <TextField
           sx={merenderosModalStyles.searchInput}
           id="outlined-basic"
           label="Buscar Comedor"
@@ -79,11 +96,6 @@ const ModalSeleccion: FC<{}> = () => {
                   ? merenderosModalStyles.colorSelected
                   : "",
                 ...merenderosModalStyles.item,
-              }}
-              onClick={()=>{
-                comedor.selected = true;
-                setComedorSeleccionado(comedor)
-                setModalOpen(false)
               }}
             >
               <ListItemIcon>
@@ -106,17 +118,17 @@ const ModalSeleccion: FC<{}> = () => {
                     variant="h3"
                     sx={merenderosModalStyles.primaryText}
                   >
-                    {comedor.nombre}
+                    {comedor.name}
                   </Typography>
                 }
-                secondary={comedor.calle  + ' ' + comedor.numero + ', ' + 'Buenos Aires'}
+                secondary={comedor.address}
               />
             </ListItemButton>
           ))}
-        </List>
+        </List> */}
       </Box>
     </Modal>
   );
 };
 
-export default ModalSeleccion;
+export default ModalLogin;

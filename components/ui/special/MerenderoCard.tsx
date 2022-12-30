@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
 
-const MerenderoCard: FC<{ name: string; address: string }> = ({
+const MerenderoCard: FC<{ name?: string; address?: string }> = ({
   name,
   address,
 }) => {
@@ -31,7 +31,9 @@ const MerenderoCard: FC<{ name: string; address: string }> = ({
             xl={6}
             sx={merenderosCardsStyles.actions}
           >
-            <Typography sx={merenderosCardsStyles.button}>Editar</Typography>
+            <div onClick={() => { }}>
+              <Typography sx={merenderosCardsStyles.button}>Editar</Typography>
+            </div>
             <Typography sx={merenderosCardsStyles.button}>
               Seleccionar
             </Typography>

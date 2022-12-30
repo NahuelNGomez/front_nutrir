@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Button, CircularProgress, Grid } from '@mui/material';
 import moment from 'moment';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import SubmitBtn from '../SubmitBtn/SubmitBtn';
@@ -6,19 +6,50 @@ import { FC, useEffect, useState } from 'react';
 import SurveyAnswerBtn from './SurveyAnswerBtn';
 import { useAppCtx } from '../../../../src/contexts/store';
 import { pagesStyles } from '@styles/index';
+import { surveyType } from '../../../../src/types/global';
 
 
 interface Props {
   columns?: Array<{}>,
-  rows?: Array<{}>
-  handleGoToNextStep?: () => {}
-  handleGoToPreviousStep?: () => {}
-  setDateStep: ()=>{}
+  rows?: Array<{}>,
+  handleGoToNextStep?: () => {},
+  handleGoToPreviousStep?: () => {},
+  setDateStep: () => {},
+  encuestasAdeudadas: Array<surveyType>,
+  suerveyInfo: {},
+  setSurveyInfo: () => {},
 }
 
-const DataTable: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, setDateStep }) => {
+const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: string }>) => {
+  const servicioFormatter = (servicio: string) => {
+    if (servicio) {
+      const servicioFomatted = servicio.replace('_', ' ')
+      return servicioFomatted
+    }
+  }
 
-  const currentDate = new Date()
+  const rows = encuestas?.map((e, index) => {
+    return (
+      {
+        id: index + 1,
+        date: moment(e.fecha).format('DD MM YYYY').replaceAll(' ', '/'),
+        meal: servicioFormatter(e.funcionamiento),
+        data: e
+      }
+    )
+  })
+  return rows
+}
+
+
+const DataTable: FC<Props> = ({
+  handleGoToNextStep,
+  handleGoToPreviousStep,
+  setDateStep,
+  encuestasAdeudadas,
+  suerveyInfo,
+  setSurveyInfo
+}) => {
 
   const columns: GridColDef[] = [
     { field: 'date', headerName: 'Día', width: 100 },
@@ -33,6 +64,8 @@ const DataTable: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, setD
             handleGoToPreviousStep={handleGoToPreviousStep}
             columnData={params}
             setDateStep={setDateStep}
+            suerveyInfo={suerveyInfo}
+            setSurveyInfo={setSurveyInfo}
           />
         )
       },
@@ -40,34 +73,35 @@ const DataTable: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousStep, setD
     },
   ];
 
-  const rows = [
-    { id: 1, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
-    { id: 2, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
-    { id: 3, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular'},
-    { id: 4, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
-    { id: 5, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
-    { id: 6, date: moment(currentDate).format('L'), meal: 'Desayuno, Almuerzo, Cena, Olla Popular' },
-  ];
-
-
-  const handleFunctions = {
-    handleGoToNextStep,
-    handleGoToPreviousStep
-  }
-
   return (
     <Grid
       item
       xs={12}
       sx={{ height: 400 }}
     >
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-      // checkboxSelection
-      />
+      {
+        encuestasAdeudadas 
+          ? (
+            <DataGrid
+              rows={row(encuestasAdeudadas)}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              sx={{ textTransform: 'capitalize' }}
+            />
+          )
+          : (
+            <CircularProgress
+              size={20}
+              // sx={loginStyles.utils.circularProgress}
+              sx={{
+                ml: "50%",
+                mt: '15%',
+              }}
+              color="inherit"
+            />
+          )
+      }
     </Grid>
   );
 }

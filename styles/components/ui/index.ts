@@ -89,7 +89,61 @@ const MerenderosModal = (theme = "light") => ({
   primaryText: { fontWeight: "bold", textTransform: "uppercase", mb: 1 },
 });
 
+const LoginModal = (theme = "light") => ({
+  modal: {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: { xs: "100%", sm: "100%", lg: "30%", xl: "30%" },
+    height: { xs: "100%", sm: "100%", lg: "30%", xl: "30%" },
+    maxHeight: { xs: "100%", sm: "100%", lg: "80%", xl: "60%" },
+    overflow: "auto",
+    overflowX: "hidden",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: { xs: 2, sm: 2, lg: 4, xl: 4 },
+    borderRadius: { xs: 0, sm: 0, lg: 2, xl: 2 },
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+  headerContainer: { mb: 4 },
+  closeIcon: { cursor: "pointer", fontSize: "20px", fontWeight: "600" },
+  searchInput: { width: "100%" },
+  borderSelected: `1px solid ${colors(theme).offset_primary}`,
+  borderUnselected: "1px rgba(0, 0, 0, 0.4) solid",
+  item: {
+    borderRadius: 1,
+    mt: 1,
+    p: 1,
+    ":hover": {
+      backgroundColor: "transparent",
+      borderRadius: "3px",
+      border: `1px solid ${colors(theme).offset_primary}`,
+      boxShadow: "none",
+      color: `${colors(theme).offset_primary}`,
+    },
+  },
+  colorSelected: `${colors(theme).offset_primary}`,
+  colorUnselected: "#000000DE",
+  itemIcon: { ml: 1 },
+  primaryText: { fontWeight: "bold", textTransform: "uppercase", mb: 1 },
+  utils: {
+    completeButton: {
+      width: { xs: "100%" },
+      borderRadius: "18px",
+      textTransform: "none",
+      padding: "10px",
+      fontSize: "14px",
+      border: '1px solid #40a39b',
+      color: "#ffffff",
+    }
+  }
+});
+
 const ui = (theme = "light") => ({
+  loginModalStyles: LoginModal(theme),
   merenderosModalStyles: MerenderosModal(theme),
   switchThemeStyles: SwitchTheme(theme),
 });

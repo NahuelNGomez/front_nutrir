@@ -5,7 +5,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const body = JSON.parse(req.body);
   if (body.cuil && body.password) {
 
-    const response = await fetch("http://50.116.44.91:3600/user/sesion/login/", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}user/sesion/login/`, {
       method: "POST",
       body: JSON.stringify({ cuil: "20276253418", password: "Geneos2022" }),
       headers: {

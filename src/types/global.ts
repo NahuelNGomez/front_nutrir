@@ -2,15 +2,16 @@ import { Theme } from "@mui/material";
 import { darkTheme, lightTheme } from "../template/theme";
 
 export type userType = {
-  firstName: string;
-  lastName: string;
-  phone: string;
+  first_name: string;
+  last_name: string;
+  telefono: string;
   email: string;
-  cuil: number; 
+  cuil: number;
   comedor: string;
   logged: boolean;
-  comedorActivo: number;
-  token: string;
+  access_token: string;
+  refresh_token: string;
+  groups: [];
 };
 
 export const themes = {
@@ -39,10 +40,17 @@ export type dishestype = {
   ingredients: Array<{ name: string; description: string }>;
 };
 
+export type dishesCardType = {
+  name: string;
+  type: "BREAKFAST" | "LUNCH" | "DINNER" | "MERIENDA" | "OLLAPOPULAR";
+  complete: boolean;
+  available: boolean;
+}
+
 export type guestType = {
   childs?: number;
   kids?: number;
-  teens?: number; 
+  teens?: number;
   adults?: number
 }
 
@@ -52,22 +60,70 @@ export type invoiceInfoType = {
   adults?: Array<guestType>;
 };
 
+export type surveyType = {
+  comedor: number;
+  funcionamiento: string;
+  fecha: string;
+}
+
+export type serviciosType = {
+  descripcion: string;
+  calle: string;
+  numero: string;
+  entre_calles: string;
+}
+
+export type comedorInfoType = {
+  actividades?: Array<number>;
+  activo?: boolean;
+  asistentes_diarios?: number;
+  barrio?: string;
+  calle?: string;
+  cantidad_trabajadores?: number;
+  departamento?: number;
+  descripcion?: string;
+  entre_calles?: string;
+  fecha_inicio_actividad?: string;
+  fuente_agua?: number;
+  fuente_agua_potable?: boolean;
+  gobierno_local?: number;
+  id?: number;
+  localidad?: number;
+  latitud?: string;
+  longitud?: string;
+  nombre: string;
+  numero?: number;
+  organizacion_regional?: number;
+  provincia?: number;
+  responsable_comedor?: number;
+  servicio_comedor?: number;
+  tipos_energia?: number;
+  ubicacion_georreferencial?: string;
+  selected?: boolean;
+}
+
 export type storeType = {
+  comedoresDisponibles: Array<any>;
+  comedorSeleccionado: comedorInfoType;
   currentTheme: Theme;
   modeTheme: keyof typeof themes;
   user: userType;
   menuOpen: boolean;
   modalOpen: boolean;
-  surveyModalOpen: boolean;
+  modalLogin: boolean;
   surveyInfo: invoiceInfoType;
   surverOptionsModal: boolean;
+  surveyModalOpen: boolean;
+
   setSurverOptionsModal(): void;
-  setModalOpen(): void;
   setMenuOpen(): void;
-  setSurverModalOpen(): void;
-  updateTheme(): void;
+  setModalOpen(): void;
+  setModalLogin(): void;
   setSurveynfo(): void;
-  setUser(): void,
+  setSurverModalOpen(): void;
+  setComedoresDisponibles(): void,
+  setComedorSeleccionado(): void,
+  updateTheme(): void;
 };
 
 export type SurveysAvailableType = Array<{
@@ -76,3 +132,9 @@ export type SurveysAvailableType = Array<{
   complete: boolean;
   available: boolean;
 }>;
+
+export type suerveyInfoType = {
+  comedor: number,
+  fecha: string,
+  funcionamiento: string
+}

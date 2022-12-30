@@ -1,17 +1,23 @@
 import { Grid, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import {
+  dishesCardType,
   dishesOptionsType,
+  dishestype,
+  suerveyInfoType,
   SurveysAvailableType,
 } from "../../../src/types/global";
 import { invoiceInfoType } from "../../../src/types/global";
 import DishIcon from "../special/DishIcon";
+import { dishesList } from "../../../src/contents/dishesList";
+
 
 type Props = {
-  surveys: SurveysAvailableType
-  setMealTypeStep: (name:string) => {}
+  surveys: Array<suerveyInfoType>
+  setMealTypeStep: (name: string) => {}
 }
+
 
 const SurveysAvailable: FC<Props> = ({
   surveys, setMealTypeStep
@@ -21,10 +27,9 @@ const SurveysAvailable: FC<Props> = ({
   const [selectedDish, setSelectedDish] = useState<
     keyof typeof dishesOptionsType | null
   >(null);
+  const [cardList, setCardList] = useState<Array<dishesCardType>>([])
 
-  // console.log({ surveyInfo });
-
-  const dishHandleClick = (type: keyof typeof dishesOptionsType, name: string) => {   
+  const dishHandleClick = (type: keyof typeof dishesOptionsType, name: string) => {
     setMealTypeStep(name)
     setSelectedDish(type);
     setSurveynfo({
@@ -39,6 +44,36 @@ const SurveysAvailable: FC<Props> = ({
 
   }
 
+  const dishesListed = [...dishesList]
+
+  const dishesAvailables = (dish: suerveyInfoType) => {
+    const dishCards = dishesListed.map(element => {
+      const name = element.name.toLowerCase()
+      const funcionamiento = dish.funcionamiento.replace('_', ' ')
+
+      if (funcionamiento == name) {
+        element.available = true
+      } else {
+        element.available = false
+      }
+      return element
+    })
+    // console.log({ dishCards });
+    return dishCards
+  }
+
+  console.log({ surveys });
+
+
+  useEffect(() => {
+    if (surveys[0]) {
+      const list = dishesAvailables(surveys[0])
+      // console.log('list', list);
+      setCardList(list)
+    }
+  }, [surveys])
+
+
   return (
     <>
       <Grid
@@ -47,7 +82,8 @@ const SurveysAvailable: FC<Props> = ({
         sx={{ margin: '0 auto', height: '350px', gap: '2rem 2rem' }}
         justifyContent={'space-around'}
       >
-        {surveys.map(({ name, type, complete, available }) => (
+
+        {cardList?.map(({ name, type, complete, available }) => (
           <Grid
             item
             justifyContent={"center"}
@@ -75,6 +111,7 @@ const SurveysAvailable: FC<Props> = ({
             </Typography>
           </Grid>
         ))}
+
       </Grid>
     </>
   );

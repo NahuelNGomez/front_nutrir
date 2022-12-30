@@ -16,33 +16,17 @@ import { useRouter } from "next/router";
 
 
 const UserOptions: FC<{}> = () => {
-  const { setModalOpen, modeTheme, updateTheme, setUser } = useAppCtx();
+  const { setModalOpen, modeTheme, updateTheme } = useAppCtx();
   const { contentStyles: { userMenuStyles } } = componentsStyles(modeTheme);
 
   const router = useRouter()
-  
-  const onLogoutHandler = ()=>{   
 
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}user/sesion/logout/`)
-    .then(res => res.json())
-    .then(json => {
-      console.log('logout response', json);
-      setUser({
-        firstName: "",
-        lastName: "",
-        cuil: 1,
-        email: "",
-        comedor: "",
-        comedorActivo: 1,
-        logged: false,
-        phone: '+151133443355',
-        token: ''
+  const onLogoutHandler = () => {
+    fetch('api/logout')
+      .then(() => router.push("/"))
+      .catch(err => {
+        console.log('client side err', { err });
       })
-      router.push("/login")
-    })
-    .catch(err => {
-      console.log('error logout', err);
-    })
   }
 
   return (

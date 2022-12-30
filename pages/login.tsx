@@ -28,48 +28,12 @@ import axios from "axios";
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { modeTheme, user, setUser } = useAppCtx();
+  const { modeTheme, user } = useAppCtx();
   const { fields, errors, processing, updateField, submit } = useForm<loginFields>(
     statesForms.login
   );
   const { loginStyles } = pagesStyles(modeTheme);
 
-  /*
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-
-    const credentials = {
-      username: e.target[0].value,
-      password: e.target[2].value
-    }
-
-    const loginHandler = async () => {
-
-      const path = process.env.NEXT_PUBLIC_API_BASE_URL
-
-      try {
-        const response = await axios.post(`${path}user/sesion/login/`, credentials)
-        const data = response.data
-        // console.log({ data });
-        const userData = data.user
-        setUser({
-          ...user,
-          firstName: userData.first_name,
-          lastName: userData.last_name,
-          cuil: userData.cuil,
-          email: userData.email,
-          logged: true,
-          token: data.refresh_token
-        })
-        Cookies.set("refresh_token", data.refresh_token, { expires: 30 });
-        router.push("/")
-        
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    loginHandler()
-  }*/
 
   return (
     <UnloggedLayout>
