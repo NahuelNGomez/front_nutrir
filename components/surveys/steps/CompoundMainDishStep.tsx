@@ -10,7 +10,7 @@ import IngredientsPanel from '../mealCompositionPanel/customAccordion/Ingredient
 const defaultMeals = [
   {
     compound: true,
-    name: 'Postre: Comida compuesta',
+    name: 'Plato Principal: Comida compuesta',
     composition: [
       {
         ingredienteName: 'Pan',
@@ -28,7 +28,7 @@ const defaultMeals = [
   },
   {
     compound: false,
-    name: 'Postre: Comida Simple'
+    name: 'Plato Principal: Comida simple'
   },
 ]
 
@@ -53,7 +53,7 @@ type Props = {
   breakFastMainMailStep: {}
 }
 
-const DessertDishStep: FC<Props> = ({
+const CompoundMainDishStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
   setDateStep,
@@ -131,4 +131,4 @@ const DessertDishStep: FC<Props> = ({
   )
 }
 
-export default DessertDishStep
+export default CompoundMainDishStep

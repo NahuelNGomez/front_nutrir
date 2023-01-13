@@ -8,17 +8,22 @@ import { useAppCtx } from '../../../../src/contexts/store';
 import { pagesStyles } from '@styles/index';
 import { surveyType } from '../../../../src/types/global';
 
+const currentDate = new Date()
 
-interface Props {
-  columns?: Array<{}>,
-  rows?: Array<{}>,
-  handleGoToNextStep?: () => {},
-  handleGoToPreviousStep?: () => {},
-  setDateStep: () => {},
-  encuestasAdeudadas: Array<surveyType>,
-  suerveyInfo: {},
-  setSurveyInfo: () => {},
-}
+const rows2 = [
+  { id: 1, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+  { id: 2, date: moment(currentDate).format('L'), meal: 'Almuerzo' },
+  { id: 3, date: moment(currentDate).format('L'), meal: 'Merienda' },
+  { id: 4, date: moment(currentDate).format('L'), meal: 'Cena' },
+  { id: 5, date: moment(currentDate).format('L'), meal: 'Olla Popular' },
+  { id: 6, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+  { id: 7, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+  { id: 8, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+  { id: 9, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+  { id: 10, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+];
+
+
 
 const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: string }>) => {
   const servicioFormatter = (servicio: string) => {
@@ -41,32 +46,57 @@ const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: 
   return rows
 }
 
+interface Props {
+  // columns?: Array<{}>,
+  // rows?: Array<{}>,
+  // handleGoToNextStep?: () => void,
+  // handleGoToPreviousStep?: () => void,
+  // setDateStep: () => {},
+  encuestasAdeudadas: Array<surveyType>,
+  // suerveyInfo: {},
+  // setSurveyInfo: () => {},
+}
+
+
 
 const DataTable: FC<Props> = ({
-  handleGoToNextStep,
-  handleGoToPreviousStep,
-  setDateStep,
+  // handleGoToNextStep,
   encuestasAdeudadas,
-  suerveyInfo,
-  setSurveyInfo
+  // handleGoToPreviousStep,
+  // setDateStep,
+  // suerveyInfo,
+  // setSurveyInfo
 }) => {
 
   const columns: GridColDef[] = [
-    { field: 'date', headerName: 'Día', width: 100 },
-    { field: 'meal', headerName: 'Falta responder', width: 500 },
+    { field: 'date', headerName: 'Día' },
+    { field: 'meal', headerName: 'Falta responder', minWidth: 100, flex: 1 },
     {
       field: 'actions',
       headerName: 'Acciones',
       renderCell: (params) => {
         return (
-          <SurveyAnswerBtn
-            handleGoToNextStep={handleGoToNextStep}
-            handleGoToPreviousStep={handleGoToPreviousStep}
-            columnData={params}
-            setDateStep={setDateStep}
-            suerveyInfo={suerveyInfo}
-            setSurveyInfo={setSurveyInfo}
-          />
+          <Grid
+            container
+            spacing={2}
+            alignItems={'center'}
+            justifyContent={'center'}
+          >
+            <Grid item xs={5} >
+              <SubmitBtn
+                columData={params}
+                type={'uncomplete'}
+                text="No se sirvió"
+              />
+            </Grid>
+            <Grid item xs={5}>
+              <SubmitBtn
+                columData={params}
+                type={'complete'}
+                text="Responder"
+              />
+            </Grid>
+          </Grid>
         )
       },
       width: 300
@@ -80,10 +110,11 @@ const DataTable: FC<Props> = ({
       sx={{ height: 400 }}
     >
       {
-        encuestasAdeudadas 
+        encuestasAdeudadas
           ? (
             <DataGrid
-              rows={row(encuestasAdeudadas)}
+              // rows={row(encuestasAdeudadas)}
+              rows={rows2}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}

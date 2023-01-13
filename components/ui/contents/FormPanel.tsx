@@ -8,12 +8,12 @@ type Props = {
   title: string,
   subtitle?: string
   children: ReactNode,
-  childContent?: any,
-  backClickHandler: (e: any) => void,
-  fowardClickHandler: (e: any) => void,
+  // childContent?: any,
+  // backClickHandler: (e: any) => void,
+  // fowardClickHandler: (e: any) => void,
 }
 
-const FormPanel: FC<Props> = ({ title, subtitle, children, childContent, backClickHandler, fowardClickHandler }) => {
+const FormPanel: FC<Props> = ({ title, subtitle, children }) => {
 
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { formPanel } } = pagesStyles(modeTheme);
@@ -42,43 +42,6 @@ const FormPanel: FC<Props> = ({ title, subtitle, children, childContent, backCli
             item xs={12} >
             {children}
           </Grid>
-        </Grid>
-
-        <Grid
-          container xs={10}
-          justifyContent={"space-between"}
-          sx={{ pt: 0 }}
-        >
-          <Button
-            onClick={backClickHandler}
-            sx={{
-              width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-              borderRadius: "18px",
-              textTransform: "none",
-              padding: "10px",
-              fontSize: "14px",
-              backgroundColor: 'transparent',
-              border: '1px solid #40a39b',
-              color: "#40a39b",
-            }}
-          >
-            Volver
-          </Button>
-          <Button
-            onClick={fowardClickHandler}
-            sx={{
-              width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-              borderRadius: "18px",
-              textTransform: "none",
-              padding: "10px 0",
-              fontSize: "14px",
-              backgroundColor: 'transparent',
-              border: '1px solid #40a39b',
-              color: "#40a39b",
-            }}
-          >
-            Siguiente
-          </Button>
         </Grid>
       </Grid>
     </>

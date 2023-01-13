@@ -9,22 +9,21 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const Home: NextPage = () => {
-  const { modeTheme, user, setModalLogin, setComedoresDisponibles, comedoresDisponibles, setModalOpen } = useAppCtx();
-  const { dashboardStyles } = pagesStyles(modeTheme);  
+  const { modeTheme, user, setModalLogin, setComedoresDisponibles, comedoresDisponibles, comedorSeleccionado, setModalOpen } = useAppCtx();
+  const { dashboardStyles } = pagesStyles(modeTheme); 
+  
 
   useEffect(() => {
     axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/responsable/`,
       { headers: { Authorization: `Bearer ${user.access_token}` } })
       .then(res => {
-        console.log('comedores', res.data);
         setComedoresDisponibles(res.data)
         if (res.status === 401) {
           setModalLogin(true)
         }
       })
       .catch(err => {
-        // console.log('err', err.response)
         if (err.response.status === 401) {
           setModalLogin(true)
         }

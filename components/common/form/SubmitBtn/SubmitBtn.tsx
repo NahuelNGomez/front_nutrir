@@ -7,43 +7,34 @@ import { useAppCtx } from "../../../../src/contexts/store"
 
 
 interface Props {
-  surveyData: { comedor: number, fecha: string, funcionamiento: string }
   text: string,
   type: string,
   columData: any,
-  handleGoToNextStep?: any,
-  setDateStep: (date: string) => {},
-  suerveyInfo: {},
-  setSurveyInfo: (surveyData: {}) => {},
 }
 
 
 const SubmitBtn: FC<Props> = ({
-  setDateStep,
   text,
   type = 'complete',
   columData,
-  handleGoToNextStep,
-  surveyData,
-  suerveyInfo,
-  setSurveyInfo
 }) => {
 
-  const { modeTheme } = useAppCtx();
+  const { modeTheme, setSelectedSurvey } = useAppCtx();
   const { surveyStyles } = pagesStyles(modeTheme);
 
-  
   
 
   const completeHandleClick = (e: any, data: any) => {
     e.preventDefault()
-    const date = data.row.date
+    const date = data.row.date 
+    const service = data.row.meal
 
-    console.log('data to fetch', surveyData);
-    
-
-    setDateStep(date)
-    setSurveyInfo(surveyData)
+    setSelectedSurvey({
+      date,
+      service
+    })
+    // setDateStep(date)
+    // setSurveyInfo(surveyData)
   }
 
   const uncompleteHandleClick = (e: any) => {
@@ -61,7 +52,6 @@ const SubmitBtn: FC<Props> = ({
               onClick={(e) => {
                 const data = columData
                 completeHandleClick(e, data)
-                handleGoToNextStep()
               }}
             >
               {text}

@@ -1,3 +1,4 @@
+
 import FormPanel from '@components/ui/contents/FormPanel'
 import { Button, Grid } from '@mui/material'
 import React, { FC, useState } from 'react'
@@ -10,7 +11,7 @@ import IngredientsPanel from '../mealCompositionPanel/customAccordion/Ingredient
 const defaultMeals = [
   {
     compound: true,
-    name: 'Postre: Comida compuesta',
+    name: 'Pan con adheresos',
     composition: [
       {
         ingredienteName: 'Pan',
@@ -28,7 +29,7 @@ const defaultMeals = [
   },
   {
     compound: false,
-    name: 'Postre: Comida Simple'
+    name: 'Torta'
   },
 ]
 
@@ -53,7 +54,7 @@ type Props = {
   breakFastMainMailStep: {}
 }
 
-const DessertDishStep: FC<Props> = ({
+const SimpleMainDishStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
   setDateStep,
@@ -131,4 +132,4 @@ const DessertDishStep: FC<Props> = ({
   )
 }
 
-export default DessertDishStep
+export default SimpleMainDishStep

@@ -7,7 +7,7 @@ const SurveyStep = (theme = 'light') => ({
 const Stepper = (theme = 'light') => ({
   container: {
     padding: "20px",
-    height: '600px',
+    minHeight: '600px',
   },
   card: {
     height: '100%',
@@ -50,7 +50,8 @@ const DishSelection = (theme = 'ligh') => ({
 
 const DateTable = (theme = 'light') => ({
   container: {
-    padding: "20px",
+    p: { xs: 0, sm: 0, md: 2, lg: 2, xl: 2 },
+    mt: {xs: 2, sm: 2}
   },
   utils: {
     completeButton: {

@@ -1,3 +1,4 @@
+import { textAlign } from "@mui/system";
 import colors from "@styles/colors";
 
 const SwitchTheme = (theme = "light") => ({
@@ -108,7 +109,22 @@ const LoginModal = (theme = "light") => ({
       display: "none",
     },
   },
-  headerContainer: { mb: 4 },
+  headerContainer: {
+    mt: { xs: "50%", sm: "50%", lg: "0", xl: "0" },
+    mb: 4,
+    textAlign: { xs: "center", sm: "center", lg: "left", xl: "left" },
+
+  },
+  headerTitle: {
+    fontSize: "18px", 
+    fontWeight: "600", 
+    mb: 1.5, 
+    width: '100%'
+  },
+  headerSubTitle: {
+    fontSize: "16px",
+    width: '100%'
+  },
   closeIcon: { cursor: "pointer", fontSize: "20px", fontWeight: "600" },
   searchInput: { width: "100%" },
   borderSelected: `1px solid ${colors(theme).offset_primary}`,

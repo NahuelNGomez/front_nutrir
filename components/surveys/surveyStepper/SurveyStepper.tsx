@@ -10,6 +10,7 @@ import { FC, useEffect, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import moment from "moment";
 import { pagesStyles } from "@styles/index";
+import stepsFormatter from "./utils/stepsFormatter";
 
 type Props = {
   displayStepper?: boolean
@@ -24,7 +25,7 @@ type Props = {
 
 const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTypeStep, guestsStep, drinkStep, breakFastMainMailStep, backClickHandler }) => {
 
-  const { surveyInfo } = useAppCtx()
+  const { surveyInfo, selectedSurvey } = useAppCtx()
   const [descriptions, setDescriptions] = useState({})
 
   const drinksDecription = drinkStep ? Object.keys(drinkStep) : []
@@ -33,28 +34,30 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
 
-  const steps = [
-    {
-      label: '1. Tipo de comida',
-      description: mealTypeStep,
-    },
-    {
-      label: '2. Cantidad de comenzales',
-      description: guestsStep ? `${guestsStep} personas` : '',
-    },
-    {
-      label: '3. Bebida',
-      description: drinkStep ? drinksDecription.join(', ') : '',
-    },
-    {
-      label: '4. Comida',
-      description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
-    },
-    {
-      label: '5. Confirmar encuesta',
-      description: ``,
-    },
-  ];
+  // const steps = [
+  //   {
+  //     label: '1. Tipo de comida',
+  //     description: selectedSurvey?.service,
+  //   },
+  //   {
+  //     label: '2. Cantidad de comenzales',
+  //     description: guestsStep ? `${guestsStep} personas` : '',
+  //   },
+  //   {
+  //     label: '3. Bebida',
+  //     description: drinkStep ? drinksDecription.join(', ') : '',
+  //   },
+  //   {
+  //     label: '4. Comida',
+  //     description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
+  //   },
+  //   {
+  //     label: '5. Confirmar encuesta',
+  //     description: ``,
+  //   },
+  // ];
+
+  const steps = stepsFormatter(selectedSurvey?.service, guestsStep)
 
   const [activeStep, setActiveStep] = useState(stepActive);
 
@@ -70,7 +73,7 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
         <Card sx={stepper.card}>
           <CardContent>
             <Typography variant="h1" sx={stepper.title}>Resumen de la encuesta</Typography>
-            <Typography variant="h1" sx={stepper.subtitle}>{moment(dateStep).format('LL')}</Typography>
+            <Typography variant="h1" sx={stepper.subtitle}>{moment(selectedSurvey?.date).format('LL')}</Typography>
 
             {
               displayStepper || stepActive === 0

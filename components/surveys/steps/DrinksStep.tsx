@@ -1,10 +1,11 @@
 
 import FormPanel from '@components/ui/contents/FormPanel'
-import { Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import React, { FC, useState } from 'react'
-import GuestsPanel from '../GuestsPanel/GuestsPanel'
-import CustomAccordion from '../mealCompositionPanel/customAccordion/CustomAccordion'
+import GuestsPanel from './GuestsStep'
+import CustomAccordion from './IngredientsSteps'
 import SurveyStepper from '../surveyStepper/SurveyStepper'
+import IngredientsPanel from '../mealCompositionPanel/customAccordion/IngredientsPanel'
 
 
 const defaultMeals = [
@@ -78,7 +79,7 @@ const DrinksStep: FC<Props> = ({
   guestsStep,
   setGuestStep,
   drinkStep,
-  setDrinkStep
+  setDrinkStep,
 }) => {
 
   const [displayStepper, setDisplayStepper] = useState(true)
@@ -90,46 +91,57 @@ const DrinksStep: FC<Props> = ({
   const adultsN = parseInt(adults)
   const add = childsN + kidsN + teensN + adultsN
 
+  const handleNextBtn = () => {
+    handleGoToNextStep()
+  }
 
+  const handleBackBtn = () => {
+    handleGoToPreviousStep()
+  }
 
   return (
-    <Grid
-      container
-      xs={12}
-      sm={12}
-      md={12}
-      lg={12}
-      xl={12}
-      justifyContent={"space-around"}
-    >
+    <>
+      <IngredientsPanel meals={defaultMeals} drinkStep={drinkStep} setDrinkStep={setDrinkStep} />
       <Grid
-        item
-        xs={8}
+        container xs={12}
+        justifyContent={"space-between"}
+        sx={{ pt: 0 }}
       >
-        <FormPanel
-          title="2. ¿Cuántos comenzales tienes?"
-          subtitle="Indica según el rango etáreo la cantidad de comenzales que tienes."
-          backClickHandler={handleGoToPreviousStep}
-          fowardClickHandler={handleGoToNextStep}
+        <Button
+          onClick={handleBackBtn}
+          sx={{
+            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+            borderRadius: "18px",
+            textTransform: "none",
+            padding: "10px",
+            fontSize: "14px",
+            backgroundColor: 'transparent',
+            border: '1px solid #40a39b',
+            color: "#40a39b",
+            mt: 4
+          }}
         >
-          <CustomAccordion meals={defaultMeals} drinkStep={drinkStep} setDrinkStep={setDrinkStep} />
-        </FormPanel>
+          Volver
+        </Button>
+        <Button
+          onClick={handleNextBtn}
+          sx={{
+            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+            borderRadius: "18px",
+            textTransform: "none",
+            padding: "10px 0",
+            fontSize: "14px",
+            backgroundColor: 'transparent',
+            border: '1px solid #40a39b',
+            color: "#40a39b",
+            mt: 4
+          }}
+        >
+          Siguiente
+        </Button>
       </Grid>
+    </>
 
-      <Grid
-        item
-        xs={4}
-      >
-        <SurveyStepper
-          dateStep={dateStep}
-          displayStepper={displayStepper}
-          mealTypeStep={mealTypeStep}
-          guestsStep={add}
-          stepActive={1}
-        />
-      </Grid>
-
-    </Grid>
   )
 }
 

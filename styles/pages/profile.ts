@@ -3,9 +3,9 @@ import colors from "@styles/colors";
 const InfoCard = (theme = "light") => ({
   container: {
     mb: 1,
-    p: { xs: 3, sm: 3, md: 3, lg: 2.7, xl: 2.7 },
+    p: { xs: 3, sm: 3, md: 3, lg: 1.5, xl: 1.5 },
     borderRadius: "10px",
-    height: { xs: "100%", sm: "100%", md: "55%", lg: "18%", xl: "23%" },
+    height: { xs: "25%", sm: "25%", md: "55%", lg: "18%", xl: "23%" },
     backgroundImage:
       theme === "light"
         ? "-webkit-linear-gradient(71deg, #7ec8c7 50%, #6fc2c1 50%)"
@@ -156,7 +156,7 @@ const PassForm = (theme = "light") => ({
 });
 
 const profile = (theme = "light") => ({
-  container: { padding: "20px" },
+  container: { padding: "20px"},
   title: { paddingBottom: "15px", fontSize: "22px", fontWeight: "700" },
   firstContainer: { display: "flex", flexDirection: "column"},
   secondContainer: {

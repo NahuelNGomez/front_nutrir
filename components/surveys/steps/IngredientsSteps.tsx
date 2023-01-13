@@ -4,9 +4,54 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Card, CardContent, Checkbox, Grid } from '@mui/material';
+import { Button, Card, CardContent, Checkbox, Grid } from '@mui/material';
 
-import MealIngredientCard from './MealIngredientCard';
+import MealIngredientCard from '../mealCompositionPanel/customAccordion/MealIngredientCard';
+
+
+
+const defaultMeals = [
+  {
+    compound: true,
+    name: 'Leche chocolatada',
+    composition: [
+      {
+        ingredienteName: 'Leche',
+        picture: '/images/ui/mock/milk.jpg'
+      },
+      {
+        ingredienteName: 'Cacao',
+        picture: '/images/ui/mock/cacao.jpg'
+      },
+      {
+        ingredienteName: 'Azucar',
+        picture: '/images/ui/mock/sugar.jpg'
+      },
+    ]
+  },
+  {
+    compound: true,
+    name: 'Leche chocolatada',
+    composition: [
+      {
+        ingredienteName: 'Leche',
+        picture: '/images/ui/mock/milk.jpg'
+      },
+      {
+        ingredienteName: 'Cacao',
+        picture: '/images/ui/mock/cacao.jpg'
+      },
+      {
+        ingredienteName: 'Azucar',
+        picture: '/images/ui/mock/sugar.jpg'
+      },
+    ]
+  },
+  {
+    compound: false,
+    name: 'Yogurt'
+  },
+]
 
 type compositionType = {
   ingredienteName: string,
@@ -22,9 +67,17 @@ type Props = {
   meals: Array<mealsType>
   setDrinkStep: any
   drinkStep: any
+  handleGoToNextStep: () => {}
+  handleGoToPreviousStep: () => {}
 }
 
-const CustomAccordion: React.FC<Props> = ({ meals, setDrinkStep, drinkStep }) => {
+const IngredientsSteps: React.FC<Props> = ({
+  meals = defaultMeals,
+  setDrinkStep,
+  drinkStep,
+  handleGoToNextStep,
+  handleGoToPreviousStep
+}) => {
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -46,7 +99,13 @@ const CustomAccordion: React.FC<Props> = ({ meals, setDrinkStep, drinkStep }) =>
     }
   }
 
+  const handleNextBtn = () => {
+    handleGoToNextStep()
+  }
 
+  const handleBackBtn = () => {
+    handleGoToPreviousStep()
+  }
 
   return (
     <div style={{ gap: '1rem' }}>
@@ -117,8 +176,47 @@ const CustomAccordion: React.FC<Props> = ({ meals, setDrinkStep, drinkStep }) =>
           )
         })
       }
+
+      <Grid
+        container xs={12}
+        justifyContent={"space-between"}
+        sx={{ pt: 0 }}
+      >
+        <Button
+          onClick={handleBackBtn}
+          sx={{
+            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+            borderRadius: "18px",
+            textTransform: "none",
+            padding: "10px",
+            fontSize: "14px",
+            backgroundColor: 'transparent',
+            border: '1px solid #40a39b',
+            color: "#40a39b",
+            mt: 4
+          }}
+        >
+          Volver
+        </Button>
+        <Button
+          onClick={handleNextBtn}
+          sx={{
+            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+            borderRadius: "18px",
+            textTransform: "none",
+            padding: "10px 0",
+            fontSize: "14px",
+            backgroundColor: 'transparent',
+            border: '1px solid #40a39b',
+            color: "#40a39b",
+            mt: 4
+          }}
+        >
+          Siguiente
+        </Button>
+      </Grid>
     </div>
   );
 }
 
-export default CustomAccordion
+export default IngredientsSteps

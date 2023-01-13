@@ -4,6 +4,7 @@ import { useAppCtx } from "../../../src/contexts/store";
 import DayAccordion from "../DayAccordion/DayAccordion";
 import { FC } from "react";
 import { serviciosType } from "../../../src/types/global";
+import serviciosMock from "./mock/serviciosMock";
 
 const daysName = [
   {
@@ -29,6 +30,9 @@ const daysName = [
   },
 ]
 
+
+
+
 interface Props {
   serviciosData: Array<serviciosType>
 }
@@ -37,12 +41,10 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
 
   const { modeTheme } = useAppCtx();
 
+
   const {
     editStyles: { daysForm },
-  } = pagesStyles(modeTheme);
-
-  console.log({serviciosData});
-  
+  } = pagesStyles(modeTheme);  
 
   return (
     <Card>

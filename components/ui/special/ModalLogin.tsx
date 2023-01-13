@@ -34,7 +34,7 @@ const ModalLogin: FC<{}> = () => {
     fetch('api/logout')
       .then(() => router.push("/"))
       .catch(err => {
-        console.log('client side err', { err });
+        // console.log('client side err', { err });
       })
   }
 
@@ -48,10 +48,10 @@ const ModalLogin: FC<{}> = () => {
           justifyContent={"space-between"}
           sx={loginModalStyles.headerContainer}
         >
-          <Typography sx={{ fontSize: "18px", fontWeight: "600", mb: 1.5 }}>
+          <Typography sx={loginModalStyles.headerTitle}>
             Su sesión ha expirado
           </Typography>
-          <Typography sx={{ fontSize: "16px" }}>
+          <Typography sx={loginModalStyles.headerSubTitle}>
             Por favor, vuelva a iniciar sesión
           </Typography>
           {/* <CloseIcon

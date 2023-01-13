@@ -25,15 +25,10 @@ const DishSelectionStep: FC<Props> = ({ handleGoToNextStep, handleGoToPreviousSt
   const [dailySurvey, setDailySurvey] = useState([])
 
   useEffect(() => {
-
-    console.log('surveyInfo', { suerveyInfo });
-
-
     axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/incompletas_dia/${suerveyInfo.comedor}/${suerveyInfo.fecha}`,
       { headers: { Authorization: `Bearer ${user.access_token}` } })
       .then(res => {
-        console.log('response del fetch', res.data);
         if (res.status === 401) {
           setModalLogin(true)
         } else {

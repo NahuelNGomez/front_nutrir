@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useAppCtx } from "../../src/contexts/store";
 import PersonIcon from "@mui/icons-material/Person";
 import { pagesStyles } from "@styles/index";
+import userTypeConverter from "./utils/userTypeConverter";
 
 const InfoCard: FC<{}> = () => {
   const { modeTheme, user } = useAppCtx();
@@ -30,7 +31,7 @@ const InfoCard: FC<{}> = () => {
         </Avatar>
         <Grid>
           <Typography sx={infoCardStyles.userInfo}>
-            Tipo de Perfil: Admin
+            Tipo de Perfil: {userTypeConverter(user.groups[0])}
           </Typography>
           <Typography sx={infoCardStyles.userInfo}>
             Te uniste el : 10 de diciembre del 2022

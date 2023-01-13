@@ -1,23 +1,42 @@
-import { Card, CardContent, Grid, TextField } from "@mui/material"
+import { Button, Card, CardContent, Grid, TextField } from "@mui/material"
 import { FC, useState } from "react"
 import { guestType } from "../../../src/types/global"
+import { useAppCtx } from "../../../src/contexts/store"
 
 type Props = {
-  guestsStep: {}
-  setGuestStep: any
+  guestsStep?: {}
+  setGuestStep?: any
+  handleGoToNextStep: () => {}
+  handleGoToPreviousStep: () => {}
 }
 
 
-const GuestsPanel: FC<Props> = ({ guestsStep, setGuestStep }) => {
+const GuestsStep: FC<Props> = ({
+  guestsStep,
+  setGuestStep,
+  handleGoToNextStep,
+  handleGoToPreviousStep
+}) => {
 
-  const [guests, setGuests] = useState<guestType>()
+  const { setSelectedSurvey } = useAppCtx();
+  const [ disableBtn, setDisableBtn ] = useState(true)
 
   const handleChange = (e: any) => {
     e.preventDefault()
+    setDisableBtn(false)
     setGuestStep({
       ...guestsStep,
-      [e.target.name]: e.target.value
+      [e.target.name]: parseInt(e.target.value) || 0
     })
+  }
+
+  const handleNextBtn = () => {
+    handleGoToNextStep()
+  }
+
+  const handleBackBtn = () => {
+    setSelectedSurvey({})
+    handleGoToPreviousStep()
   }
 
   return (
@@ -92,10 +111,52 @@ const GuestsPanel: FC<Props> = ({ guestsStep, setGuestStep }) => {
 
             </Grid>
           </Grid>
+
         </CardContent>
       </Card>
+
+      <Grid
+        container xs={12}
+        justifyContent={"space-between"}
+        sx={{ pt: 0 }}
+      >
+        <Button
+          onClick={handleBackBtn}
+          sx={{
+            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+            borderRadius: "18px",
+            textTransform: "none",
+            padding: "10px",
+            fontSize: "14px",
+            backgroundColor: 'transparent',
+            border: '1px solid #40a39b',
+            color: "#40a39b",
+            mt: 4
+          }}
+        >
+          Volver
+        </Button>
+        <Button
+          onClick={handleNextBtn}
+          sx={{
+            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+            borderRadius: "18px",
+            textTransform: "none",
+            padding: "10px 0",
+            fontSize: "14px",
+            backgroundColor: 'transparent',
+            border: '1px solid #40a39b',
+            color: "#40a39b",
+            mt: 4
+          }}
+          disabled={disableBtn}
+        >
+          Siguiente
+        </Button>
+      </Grid>
+
     </div>
   )
 }
 
-export default GuestsPanel
+export default GuestsStep

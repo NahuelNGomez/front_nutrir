@@ -6,7 +6,8 @@ import { pagesStyles } from "@styles/index";
 
 type Props = {
   index: number,
-  dayName: string
+  dayName: string,
+  funcionamiento?: string
 }
 
 const DayAccordion: React.FC<Props> = ({ dayName, index }) => {

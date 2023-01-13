@@ -2,17 +2,19 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { withSessionRoute } from "../../src/utils/withIronSession";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const body = JSON.parse(req.body);
-  if (body.cuil && body.password) {
+  const {cuil, password} = JSON.parse(req.body);
+  // console.log({body});
+  
+  if (cuil && password) {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}user/sesion/login/`, {
       method: "POST",
-      body: JSON.stringify({ cuil: "20276253418", password: "Geneos2022" }),
+      body: JSON.stringify({ cuil, password }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    });
+    });    
 
     const resParsed = await response.json();
     if (!resParsed.user) {

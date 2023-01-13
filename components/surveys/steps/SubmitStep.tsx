@@ -1,8 +1,8 @@
 import FormPanel from '@components/ui/contents/FormPanel'
 import { Grid } from '@mui/material'
 import React, { FC, useState } from 'react'
-import GuestsPanel from '../GuestsPanel/GuestsPanel'
-import CustomAccordion from '../mealCompositionPanel/customAccordion/CustomAccordion'
+import GuestsPanel from './GuestsStep'
+import CustomAccordion from './IngredientsSteps'
 import SurveyStepper from '../surveyStepper/SurveyStepper'
 
 

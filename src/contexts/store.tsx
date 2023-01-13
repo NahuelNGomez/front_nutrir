@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme } from "../template/theme";
-import { storeType, themes, userType, invoiceInfoType, comedorInfoType } from "../types/global";
+import { storeType, themes, userType, invoiceInfoType, comedorInfoType, selectedSurveyType } from "../types/global";
 
 const comedorInit = {
   nombre: '',
@@ -55,15 +55,22 @@ const initialStoreState: storeType = {
   surverOptionsModal: false,
   comedoresDisponibles: [],
   comedorSeleccionado: comedorInit,
+  // Steps
+  selectedSurvey: { date: '', service: '' },
+
+
   setSurverOptionsModal: () => { },
   setMenuOpen: () => { },
   setModalOpen: () => { },
-  setModalLogin: ()=>{},
+  setModalLogin: () => { },
   setSurverModalOpen: () => { },
   updateTheme: () => { },
   setSurveynfo: () => { },
   setComedoresDisponibles: () => { },
   setComedorSeleccionado: () => { },
+
+  // Steps
+  setSelectedSurvey: () => { }
 };
 
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
@@ -77,6 +84,8 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal, setSurverOptionsModal] = useState(false);
+  // Steps
+  const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>()
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -103,6 +112,8 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     surveyInfo,
     surverOptionsModal,
     surveyModalOpen,
+    // Step
+    selectedSurvey,
 
     setSurverOptionsModal,
     setMenuOpen,
@@ -113,6 +124,8 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     setComedoresDisponibles,
     setComedorSeleccionado,
     updateTheme,
+    // Step
+    setSelectedSurvey,
   };
 };
 

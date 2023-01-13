@@ -102,6 +102,26 @@ export type comedorInfoType = {
   selected?: boolean;
 }
 
+// Steps
+
+// Step 0: date & service type - selected survey to complete
+
+export type selectedSurveyType = {
+  date?: string;
+  service?: string;
+}
+
+// Step 1: guests
+
+export type guestsStepsType = {
+  childs: number;
+  kids: number;
+  teens: number;
+  adults: number;
+}
+
+
+
 export type storeType = {
   comedoresDisponibles: Array<any>;
   comedorSeleccionado: comedorInfoType;
@@ -114,6 +134,9 @@ export type storeType = {
   surveyInfo: invoiceInfoType;
   surverOptionsModal: boolean;
   surveyModalOpen: boolean;
+  // Steps
+  selectedSurvey: selectedSurveyType;
+
 
   setSurverOptionsModal(): void;
   setMenuOpen(): void;
@@ -124,6 +147,9 @@ export type storeType = {
   setComedoresDisponibles(): void,
   setComedorSeleccionado(): void,
   updateTheme(): void;
+
+  // Steps
+  setSelectedSurvey(): void;
 };
 
 export type SurveysAvailableType = Array<{
