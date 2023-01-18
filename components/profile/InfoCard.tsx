@@ -31,7 +31,9 @@ const InfoCard: FC<{}> = () => {
         </Avatar>
         <Grid>
           <Typography sx={infoCardStyles.userInfo}>
-            Tipo de Perfil: {userTypeConverter(user.groups[0])}
+            {/* Tipo de Perfil: {user.groups.length > 0 ? userTypeConverter(user.groups[0]) : ''}
+             */}
+            Tipo de Perfil: Completar
           </Typography>
           <Typography sx={infoCardStyles.userInfo}>
             Te uniste el : 10 de diciembre del 2022

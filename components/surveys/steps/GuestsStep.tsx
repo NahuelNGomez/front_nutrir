@@ -34,7 +34,7 @@ const GuestsStep: FC<Props> = ({
   })
 
   const handleBackBtn = () => {
-    setSelectedSurvey({})
+    setSelectedSurvey({ date: '', service: '' })
     setGuestsAmount({
       childs: 0,
       kids: 0,
