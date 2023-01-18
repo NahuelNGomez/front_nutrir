@@ -1,9 +1,10 @@
 import FormPanel from '@components/ui/contents/FormPanel'
 import { Grid } from '@mui/material'
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import GuestsPanel from './GuestsStep'
 import CustomAccordion from './IngredientsSteps'
 import SurveyStepper from '../surveyStepper/SurveyStepper'
+import { useAppCtx } from '../../../src/contexts/store'
 
 
 const defaultMeals = [
@@ -48,7 +49,7 @@ type Props = {
   }
   drinkStep: {}
   setDrinkStep: () => {}
-  setBreakFastMainMealStep: ()=>{}
+  setBreakFastMainMealStep: () => {}
   breakFastMainMailStep: {}
 }
 
@@ -66,6 +67,7 @@ const SubmitStep: FC<Props> = ({
   breakFastMainMailStep
 }) => {
 
+  const { setDisplaySideStepper } = useAppCtx()
   const [displayStepper, setDisplayStepper] = useState(true)
 
   const { childs, kids, teens, adults } = guestsStep
@@ -76,48 +78,17 @@ const SubmitStep: FC<Props> = ({
   const add = childsN + kidsN + teensN + adultsN
 
 
+  useEffect(() => {
+    setDisplaySideStepper(false)
+    // return () => {
+    //   setDisplaySideStepper(true)
+    // }
+  }, [])
+
 
   return (
-    <Grid
-      container
-      xs={12}
-      sm={12}
-      md={12}
-      lg={12}
-      xl={12}
-      justifyContent={"space-around"}
-    >
-      {/* <Grid
-        item
-        xs={8}
-      >
-        <FormPanel
-          title="2. ¿Cuántos comenzales tienes?"
-          subtitle="Indica según el rango etáreo la cantidad de comenzales que tienes."
-          backClickHandler={handleGoToPreviousStep}
-          fowardClickHandler={handleGoToNextStep}
-        >
-          <CustomAccordion meals={defaultMeals} drinkStep={breakFastMainMailStep} setDrinkStep={setBreakFastMainMealStep} />
-        </FormPanel>
-      </Grid> */}
-
-      <Grid
-        item
-        xs={8}
-      >
-        <SurveyStepper
-          dateStep={dateStep}
-          displayStepper={displayStepper}
-          mealTypeStep={mealTypeStep}
-          guestsStep={add}
-          stepActive={3}
-          drinkStep={drinkStep}
-          breakFastMainMailStep={breakFastMainMailStep}
-          backClickHandler={handleGoToPreviousStep}
-        />
-      </Grid>
-
-    </Grid>
+    <>
+    </>
   )
 }
 

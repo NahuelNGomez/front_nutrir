@@ -10,7 +10,7 @@ import EntryDishStep from "../EntryDishStep"
 import CompoundMainDishStep from "../CompoundMainDishStep"
 import DessertDishStep from "../DessertDishStep"
 
-const breakfastSteps: Array<any> = [
+const simpleDish = [
   {
     title: '2. ¿Cuántos comenzales tienes?',
     subtitle: 'Indica según el rango etáreo la cantidad de comenzales que tienes.',
@@ -27,155 +27,72 @@ const breakfastSteps: Array<any> = [
     content: BreakFastMailStep
   },
   {
-    title: 'Resumen de la encuesta',
+    title: '',
     subtitle: '',
     content: SubmitStep
   },
 ]
 
-const lunchSteps: Array<any> = [
+const compoundDish = [
   {
     title: '2. ¿Cuántos comenzales tienes?',
     subtitle: 'Indica según el rango etáreo la cantidad de comenzales que tienes.',
     content: GuestsStep
   },
   {
-    title: '3. ¿Qué bebida sirvieron?',
-    subtitle: 'Selecciona el tipo de bebida y los componentes que la integran.',
-    content: DrinksStep
-  },
-  {
-    title: '4. ¿Qué entrada sirvieron?',
+    title: '3. ¿Qué entrada sirvieron?',
     subtitle: 'Selecciona el tipo de entrada y los componentes que la integran si es que se necesitan.',
     content: EntryDishStep
   },
   {
-    title: '5. ¿Qué plato principal sirvieron?',
+    title: '4. ¿Qué plato principal sirvieron?',
     subtitle: 'Selecciona el tipo de plato principal y los componentes que la integran si es que se necesitan.',
     content: CompoundMainDishStep
   },
   {
-    title: '6. ¿Qué postre sirvieron?',
+    title: '5. ¿Qué postre sirvieron?',
     subtitle: 'Selecciona el tipo de postre y los componentes que la integran si es que se necesitan.',
     content: DessertDishStep
   },
   {
-    title: 'Resumen de la encuesta',
-    subtitle: '',
-    content: SubmitStep
-  },
-]
-
-const meriendaSteps: Array<any> = [
-  {
-    title: '2. ¿Cuántos comenzales tienes?',
-    subtitle: 'Indica según el rango etáreo la cantidad de comenzales que tienes.',
-    content: GuestsStep
-  },
-  {
-    title: '3. ¿Qué bebida sirvieron?',
-    subtitle: 'Selecciona el tipo de bebida y los componentes que la integran.',
-    content: DrinksStep
-  },
-  {
-    title: '4. ¿Qué comida sirvieron?',
-    subtitle: 'Selecciona el tipo de comida y los componentes que la integran si es que se necesitan.',
-    content: SimpleMainDishStep
-  },
-  {
-    title: 'Resumen de la encuesta',
-    subtitle: '',
-    content: SubmitStep
-  },
-]
-
-const dinnerSteps: Array<any> = [
-  {
-    title: '2. ¿Cuántos comenzales tienes?',
-    subtitle: 'Indica según el rango etáreo la cantidad de comenzales que tienes.',
-    content: GuestsStep
-  },
-  {
-    title: '3. ¿Qué bebida sirvieron?',
-    subtitle: 'Selecciona el tipo de bebida y los componentes que la integran.',
-    content: DrinksStep
-  },
-  {
-    title: '4. ¿Qué entrada sirvieron?',
-    subtitle: 'Selecciona el tipo de entrada y los componentes que la integran si es que se necesitan.',
-    content: EntryDishStep
-  },
-  {
-    title: '5. ¿Qué plato principal sirvieron?',
-    subtitle: 'Selecciona el tipo de plato principal y los componentes que la integran si es que se necesitan.',
-    content: CompoundMainDishStep
-  },
-  {
-    title: '6. ¿Qué postre sirvieron?',
-    subtitle: 'Selecciona el tipo de postre y los componentes que la integran si es que se necesitan.',
-    content: DessertDishStep
-  },
-  {
-    title: 'Resumen de la encuesta',
-    subtitle: '',
-    content: SubmitStep
-  },
-]
-
-const ollaPopularSteps: Array<any> = [
-  {
-    title: '2. ¿Cuántos comenzales tienes?',
-    subtitle: 'Indica según el rango etáreo la cantidad de comenzales que tienes.',
-    content: GuestsStep
-  },
-  {
-    title: '3. ¿Qué bebida sirvieron?',
-    subtitle: 'Selecciona el tipo de bebida y los componentes que la integran.',
-    content: DrinksStep
-  },
-  {
-    title: '4. ¿Qué entrada sirvieron?',
-    subtitle: 'Selecciona el tipo de entrada y los componentes que la integran si es que se necesitan.',
-    content: EntryDishStep
-  },
-  {
-    title: '5. ¿Qué plato principal sirvieron?',
-    subtitle: 'Selecciona el tipo de plato principal y los componentes que la integran si es que se necesitan.',
-    content: CompoundMainDishStep
-  },
-  {
-    title: '6. ¿Qué postre sirvieron?',
-    subtitle: 'Selecciona el tipo de postre y los componentes que la integran si es que se necesitan.',
-    content: DessertDishStep
-  },
-  {
-    title: 'Resumen de la encuesta',
+    title: '',
     subtitle: '',
     content: SubmitStep
   },
 ]
 
 
-const servicesType = (surveyType?: string): Array<any> => {
+const breakfastSteps: Array<any> = simpleDish
+
+const lunchSteps: Array<any> = compoundDish
+
+const meriendaSteps: Array<any> = simpleDish
+
+const dinnerSteps: Array<any> = compoundDish
+
+const ollaPopularSteps: Array<any> = compoundDish
+
+
+const servicesType = (surveyType: string): Array<any> => {
 
   switch (surveyType) {
-    case 'Desayuno':
+    case 'desayuno':
       return breakfastSteps
       break;
-    case 'Almuerzo':
+    case 'almuerzo':
       return lunchSteps
       break;
-    case 'Merienda':
+    case 'merienda':
       return meriendaSteps
       break;
-    case 'Cena':
+    case 'cena':
       return dinnerSteps
       break;
     case 'Olla Popular':
       return ollaPopularSteps
       break;
     default:
-      return breakfastSteps
+      return lunchSteps
       break;
   }
 }

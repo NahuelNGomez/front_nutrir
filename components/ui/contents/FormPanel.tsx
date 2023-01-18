@@ -8,9 +8,6 @@ type Props = {
   title: string,
   subtitle?: string
   children: ReactNode,
-  // childContent?: any,
-  // backClickHandler: (e: any) => void,
-  // fowardClickHandler: (e: any) => void,
 }
 
 const FormPanel: FC<Props> = ({ title, subtitle, children }) => {

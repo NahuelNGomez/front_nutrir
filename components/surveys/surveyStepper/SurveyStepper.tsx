@@ -13,26 +13,26 @@ import { pagesStyles } from "@styles/index";
 import stepsFormatter from "./utils/stepsFormatter";
 
 type Props = {
-  displayStepper?: boolean
-  stepActive?: number
-  dateStep?: string
-  mealTypeStep?: string
-  guestsStep?: {}
-  drinkStep?: {}
   breakFastMainMailStep?: {}
-  backClickHandler?: () => {}
+  backClickHandler: () => void
 }
 
-const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTypeStep, guestsStep, drinkStep, breakFastMainMailStep, backClickHandler }) => {
-
-  const { surveyInfo, selectedSurvey } = useAppCtx()
-  const [descriptions, setDescriptions] = useState({})
-
-  const drinksDecription = drinkStep ? Object.keys(drinkStep) : []
-  const breakFastMainMailDecription = breakFastMainMailStep ? Object.keys(breakFastMainMailStep) : []
+const SurveyStepper: FC<Props> = ({
+  breakFastMainMailStep,
+  backClickHandler
+}) => {
 
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
+
+  const { selectedSurvey, displaySideStepper, setDisplaySideStepper, guestsAmount, stepActive, drinkStep } = useAppCtx()
+
+  const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''
+  const drinksDecription = drinkStep ? Object.keys(drinkStep) : []
+  const breakFastMainMailDecription = breakFastMainMailStep ? Object.keys(breakFastMainMailStep) : []
+
+  // console.log({drinkStep});
+  
 
   // const steps = [
   //   {
@@ -57,9 +57,15 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
   //   },
   // ];
 
-  const steps = stepsFormatter(selectedSurvey?.service, guestsStep)
+  const steps = stepsFormatter(selectedService, guestsAmount, drinksDecription)
 
-  const [activeStep, setActiveStep] = useState(stepActive);
+  // const [activeStep, setActiveStep] = useState(stepActive);
+
+
+  const handlerBackClick = (e: any) => {
+    backClickHandler()
+    setDisplaySideStepper(true)
+  }
 
   return (
     <>
@@ -75,23 +81,21 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
             <Typography variant="h1" sx={stepper.title}>Resumen de la encuesta</Typography>
             <Typography variant="h1" sx={stepper.subtitle}>{moment(selectedSurvey?.date).format('LL')}</Typography>
 
-            {
-              displayStepper || stepActive === 0
-                ? (
-                  <Box sx={{ maxWidth: 400 }}>
-                    <Stepper activeStep={activeStep} orientation="vertical">
-                      {steps.map((step, index) => (
-                        <Step key={step.label} expanded={true} >
-                          <StepLabel>
-                            <b>{step.label}</b>
-                          </StepLabel>
-                          <StepContent>
-                            <Typography>{step.description}</Typography>
-                          </StepContent>
-                        </Step>
-                      ))}
-                    </Stepper>
-                    {/* {activeStep === steps.length && (
+
+            <Box sx={{ maxWidth: 400 }}>
+              <Stepper activeStep={stepActive} orientation="vertical">
+                {steps.map((step, index) => (
+                  <Step key={step.label} expanded={true} >
+                    <StepLabel >
+                      <b>{step.label}</b>
+                    </StepLabel>
+                    <StepContent sx={{ textTransform: 'capitalize' }}>
+                      <Typography>{step.description}</Typography>
+                    </StepContent>
+                  </Step>
+                ))}
+              </Stepper>
+              {/* {activeStep === steps.length && (
                       <Paper square elevation={0} sx={{ p: 3 }}>
                         <Typography>All steps completed - you&apos;re finished</Typography>
                         <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
@@ -99,43 +103,21 @@ const SurveyStepper: FC<Props> = ({ displayStepper, stepActive, dateStep, mealTy
                         </Button>
                       </Paper>
                     )} */}
-                  </Box>
-                )
-                : (
-                  null
-                )
-            }
+            </Box>
+
             {
-              stepActive === 3
+              displaySideStepper === false
                 ? (
                   <>
                     <Grid container justifyContent={'space-between'} sx={{ mt: 2 }}>
                       <Button
-                        sx={{
-                          width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-                          borderRadius: "18px",
-                          textTransform: "none",
-                          padding: "10px",
-                          fontSize: "14px",
-                          backgroundColor: 'transparent',
-                          border: '1px solid #40a39b',
-                          color: "#40a39b",
-                        }}
-                        onClick={backClickHandler}
+                        sx={stepper.buttons}
+                        onClick={handlerBackClick}
                       >
                         Volver
                       </Button>
                       <Button
-                        sx={{
-                          width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-                          borderRadius: "18px",
-                          textTransform: "none",
-                          padding: "10px",
-                          fontSize: "14px",
-                          backgroundColor: 'transparent',
-                          border: '1px solid #40a39b',
-                          color: "#40a39b",
-                        }}
+                        sx={stepper.buttons}
                       >
                         Enviar
                       </Button>

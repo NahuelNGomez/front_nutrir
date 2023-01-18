@@ -17,30 +17,34 @@ import { surveyType } from "../../../src/types/global";
 
 const SelectSurveyStep = () => {
 
-  const { modeTheme, user, setModalLogin } = useAppCtx();
+  const { modeTheme, user, setModalLogin, comedorSeleccionado } = useAppCtx();
   const { surveyStyles: { dataTable } } = pagesStyles(modeTheme);
   
   const [encuestasAdeudadas, setEncuestasAdeudadas] = useState<Array<surveyType>>([])
 
-  // useEffect(() => {
-  //   axios.get(
-  //     `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/incompletas/1/${currentDay('YYYY-MM-DD')}`,
-  //     { headers: { Authorization: `Bearer ${user.access_token}` } })
-  //     .then(res => {
-  //       if (res.status === 401) {
-  //         setModalLogin(true)
-  //       } else {
-  //         const data = res.data.encuestas
-  //         setEncuestasAdeudadas([...data])
-  //       }
-  //     })
-  //     .catch(err => {
-  //       // console.log('err', err.response)
-  //       if (err.response.status === 401) {
-  //         setModalLogin(true)
-  //       }
-  //     })
-  // }, [user.access_token])
+  useEffect(() => {
+
+    const id = comedorSeleccionado?.id
+
+    axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/incompletas/${id}/${currentDay('YYYY-MM-DD')}`,
+      { headers: { Authorization: `Bearer ${user.access_token}` } })
+      .then(res => {
+        if (res.status === 401) {
+          setModalLogin(true)
+        } else {
+          const data = res.data.encuestas
+          // console.log('respuesta date', data);
+          setEncuestasAdeudadas([...data])
+        }
+      })
+      .catch(err => {
+        // console.log('err', err.response)
+        if (err.response.status === 401) {
+          setModalLogin(true)
+        }
+      })
+  }, [user.access_token])
 
 
   return (

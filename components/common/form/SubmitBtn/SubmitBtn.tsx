@@ -20,15 +20,13 @@ const SubmitBtn: FC<Props> = ({
 }) => {
 
   const { modeTheme, setSelectedSurvey } = useAppCtx();
-  const { surveyStyles } = pagesStyles(modeTheme);
-
-  
+  const { surveyStyles } = pagesStyles(modeTheme);  
 
   const completeHandleClick = (e: any, data: any) => {
     e.preventDefault()
     const date = data.row.date 
-    const service = data.row.meal
-
+    const service = data.row.meal    
+    
     setSelectedSurvey({
       date,
       service

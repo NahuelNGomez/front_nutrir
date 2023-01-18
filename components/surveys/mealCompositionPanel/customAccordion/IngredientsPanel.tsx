@@ -4,103 +4,61 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Button, Card, CardContent, Checkbox, Grid } from '@mui/material';
+import { Card, Checkbox, Grid } from '@mui/material';
 
 import MealIngredientCard from './MealIngredientCard';
-
-const defaultMeals = [
-  {
-    compound: true,
-    name: 'Leche chocolatada',
-    composition: [
-      {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
-      },
-      {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
-      },
-      {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
-      },
-    ]
-  },
-  {
-    compound: true,
-    name: 'Leche chocolatada',
-    composition: [
-      {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
-      },
-      {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
-      },
-      {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
-      },
-    ]
-  },
-  {
-    compound: false,
-    name: 'Yogurt'
-  },
-]
-
-type compositionType = {
-  ingredienteName: string,
-  picture: string
-}
-type mealsType = {
-  compound: boolean;
-  name: string;
-  composition?: Array<compositionType>
-}
+import { useAppCtx } from '../../../../src/contexts/store';
+import { FormikProps } from 'formik';
+import { foodDataType, foodStepType, mealDataType } from '../../../../src/types/global';
+import { pagesStyles } from '@styles/index';
 
 type Props = {
-  meals: Array<mealsType>
-  setDrinkStep: any
-  drinkStep: any
+  formikProps: FormikProps<any>;
+  meals: Array<mealDataType>
 }
 
 const IngredientsPanel: React.FC<Props> = ({
-  meals = defaultMeals,
-  setDrinkStep,
-  drinkStep,
+  formikProps,
+  meals
 }) => {
 
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
+  const { modeTheme } = useAppCtx();
+  const { surveyStyles: { ingredientsPanel } } = pagesStyles(modeTheme);
   const [expanded, setExpanded] = React.useState<string | false>(false);
+  const { setFieldValue } = formikProps
+
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
-  const ingredientHandleChange = (e: any) => {
-    if (e.target.checked === true) {
-      setDrinkStep({
-        ...drinkStep,
-        [e.target.name]: e.target.checked
-      })
-    } else {
-      delete drinkStep[e.target.name]
+  const simpleMealHandleChange = (e: any, id: number, nombre: string, alimento: Array<foodDataType>) => {
+
+    if (e.target.checked) {
+      setFieldValue('comida', id)
+      setFieldValue('nombre', nombre.toLocaleLowerCase())
+      setFieldValue('alimento', [])
+    }
+
+    if (e.target.checked === false) {
+      setFieldValue('comida', null)
+      setFieldValue('nombre', '')
+      setFieldValue('alimento', [])
     }
   }
 
   return (
     <div style={{ gap: '1rem' }}>
       {
-        meals.map((e, index) => {
+        meals.map((meal, index) => {
+
+          const { nombre, alimento, id } = meal
+
           return (
-            e.compound
+            alimento.length > 0
               ? (
-                <div key={`key+${e.name}`} style={{ marginBottom: '0.5rem' }}>
+                <div key={`key+${nombre}`} style={{ marginBottom: '0.5rem' }}>
                   <Accordion sx={{ pt: 1, pb: 1 }} expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
@@ -108,22 +66,22 @@ const IngredientsPanel: React.FC<Props> = ({
                       id="panel1bh-header"
                     >
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                        {e.name}
+                        {nombre}
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Grid container xs={12} justifyContent={'space-between'}>
                         {
-                          e.composition
-                            ? e.composition.map(({ ingredienteName, picture }) => {
+                          alimento
+                            ? alimento.map(({ nombre, foto, id }) => {
                               return (
                                 <MealIngredientCard
-                                  setDrinkStep={setDrinkStep}
-                                  drinkStep={drinkStep}
-                                  ingredienteName={ingredienteName}
-                                  picture={picture}
-                                  key={`${ingredienteName}_key`}
-                                // ingredientHandleChange={ingredientHandleChange}
+                                  meal={meal}
+                                  ingredientId={id}
+                                  ingredienteName={nombre}
+                                  picture={foto}
+                                  formikProps={formikProps}
+                                  key={`${nombre}_key`}
                                 />
                               )
                             })
@@ -139,21 +97,15 @@ const IngredientsPanel: React.FC<Props> = ({
                     item xs={12}
                   >
                     <Card
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        p: 1.5,
-                        borderRadius: '5px',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                      }}
+                      sx={ingredientsPanel.simpleCard.container}
                     >
-                      <Typography sx={{ paddingLeft: 1.5 }}>
-                        {e.name}
+                      <Typography sx={ingredientsPanel.simpleCard.title}>
+                        {nombre}
                       </Typography>
                       <Checkbox
-                        name={e.name}
-                        onClick={(e) => ingredientHandleChange(e)}
+                        name={nombre}
+                        // disabled={true}
+                        onClick={(e) => simpleMealHandleChange(e, id, nombre, alimento)}
                       />
                     </Card>
                   </Grid>
@@ -162,9 +114,9 @@ const IngredientsPanel: React.FC<Props> = ({
           )
         })
       }
-
     </div>
   );
 }
+
 
 export default IngredientsPanel

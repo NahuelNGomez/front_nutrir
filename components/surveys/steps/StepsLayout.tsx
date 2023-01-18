@@ -9,7 +9,7 @@ import { guestsStepsType } from '../../../src/types/global';
 
 const StepsLayout = () => {
 
-  const { selectedSurvey } = useAppCtx();
+  const { selectedSurvey, displaySideStepper } = useAppCtx();
 
   const [activeStep, setActiveStep] = useState(0)
 
@@ -24,12 +24,12 @@ const StepsLayout = () => {
   })
   const [drinkStep, setDrinkStep] = useState<string>()
   const [breakFastMainMailStep, setBreakFastMainMealStep] = useState<string>()
-  const [displayStepper, setDisplayStepper] = useState(false)
 
-  const steps = servicesType(selectedSurvey?.service)
+  const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''  
+
+  const steps = servicesType(selectedService)
   const ActiveStepComponent = steps[activeStep].content
 
-  const guestsAdded = guestsStep.childs + guestsStep.kids + guestsStep.teens + guestsStep.adults 
 
   const handleGoToNextStep = () => {
     setActiveStep(Math.min(activeStep + 1, Object.values(steps).length - 1))
@@ -43,52 +43,55 @@ const StepsLayout = () => {
       container
       xs={12}
       sm={12}
-      md={12}
+      md={12} 
       lg={12}
       xl={12}
       justifyContent={"space-around"}
     >
-      <Grid
-        item
-        xs={8}
-      >
-        <FormPanel
-          title={`${steps[activeStep].title}`}
-          subtitle={`${steps[activeStep].subtitle}`}
-          // backClickHandler={handleGoToPreviousStep}
-          // fowardClickHandler={handleGoToNextStep}
-        >
-          <ActiveStepComponent
-            handleGoToNextStep={handleGoToNextStep}
-            handleGoToPreviousStep={handleGoToPreviousStep}
-            setDateStep={setDateStep}
-            dateStep={dateStep}
-            suerveyInfo={suerveyInfo}
-            setSurveyInfo={setSurveyInfo}
-            setMealTypeStep={setMealTypeStep}
-            mealTypeStep={mealTypeStep}
-            setGuestStep={setGuestStep}
-            guestsStep={guestsStep}
-            setDrinkStep={setDrinkStep}
-            drinkStep={drinkStep}
-            setBreakFastMainMealStep={setBreakFastMainMealStep}
-            breakFastMainMailStep={breakFastMainMailStep}
-          />
-        </FormPanel>
-      </Grid>
-
+      {
+        displaySideStepper
+          ? <>
+            <Grid
+              item
+              xs={8}
+            >
+              <FormPanel
+                title={`${steps[activeStep].title}`}
+                subtitle={`${steps[activeStep].subtitle}`}
+              // backClickHandler={handleGoToPreviousStep}
+              // fowardClickHandler={handleGoToNextStep}
+              >
+                <ActiveStepComponent
+                  handleGoToNextStep={handleGoToNextStep}
+                  handleGoToPreviousStep={handleGoToPreviousStep}
+                  setDateStep={setDateStep}
+                  dateStep={dateStep}
+                  suerveyInfo={suerveyInfo}
+                  setSurveyInfo={setSurveyInfo}
+                  setMealTypeStep={setMealTypeStep}
+                  mealTypeStep={mealTypeStep}
+                  setGuestStep={setGuestStep}
+                  guestsStep={guestsStep}
+                  setDrinkStep={setDrinkStep}
+                  drinkStep={drinkStep}
+                  setBreakFastMainMealStep={setBreakFastMainMealStep}
+                  breakFastMainMailStep={breakFastMainMailStep}
+                />
+              </FormPanel>
+            </Grid>
+          </>
+          : null
+      }
+  
       <Grid
         item
         xs={4}
       >
         <SurveyStepper
-          dateStep={dateStep}
-          displayStepper={displayStepper}
-          mealTypeStep={mealTypeStep}
-          stepActive={0}
-          guestsStep={guestsAdded}
+          backClickHandler={handleGoToPreviousStep}
         />
       </Grid>
+
 
     </Grid>
   )

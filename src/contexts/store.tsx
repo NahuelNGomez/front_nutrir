@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme } from "../template/theme";
-import { storeType, themes, userType, invoiceInfoType, comedorInfoType, selectedSurveyType } from "../types/global";
+import { storeType, themes, userType, invoiceInfoType, comedorInfoType, selectedSurveyType, guestsStepsType, mealStepType } from "../types/global";
 
 const comedorInit = {
   nombre: '',
@@ -56,8 +56,22 @@ const initialStoreState: storeType = {
   comedoresDisponibles: [],
   comedorSeleccionado: comedorInit,
   // Steps
-  selectedSurvey: { date: '', service: '' },
 
+  // Step 0
+  selectedSurvey: { date: '', service: '' },
+  // Step 1: guest Amount
+  guestsAmount: {
+    childs: 0,
+    kids: 0,
+    teens: 0,
+    adults: 0,
+  },
+  // Step 2: Drink
+  drinkStep: {},
+  // Last step
+  displaySideStepper: true,
+  // Step active
+  stepActive: 0,
 
   setSurverOptionsModal: () => { },
   setMenuOpen: () => { },
@@ -70,7 +84,15 @@ const initialStoreState: storeType = {
   setComedorSeleccionado: () => { },
 
   // Steps
-  setSelectedSurvey: () => { }
+  setSelectedSurvey: () => { },
+  // Step 1: guest Amount
+  setGuestsAmount: () => { },
+  // Step 2: drink Step
+  setDrinkStep: () => { },
+  // Last Step
+  setDisplaySideStepper: () => { },
+  // Step Active
+  setStepActive: () => { }
 };
 
 export const useStoreController = ({ userLog }: { userLog: userType }) => {
@@ -85,7 +107,20 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal, setSurverOptionsModal] = useState(false);
   // Steps
-  const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>()
+  const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>();
+  const [guestsAmount, setGuestsAmount] = useState<guestsStepsType>({
+    childs: 0,
+    kids: 0,
+    teens: 0,
+    adults: 0
+  });
+  const [drinkStep, setDrinkStep] = useState<mealStepType>({
+    comida: null,
+    nombre: '',
+    alimento: []
+  })
+  const [displaySideStepper, setDisplaySideStepper] = useState(true);
+  const [stepActive, setStepActive] = useState<number>();
 
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
@@ -114,6 +149,14 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     surveyModalOpen,
     // Step
     selectedSurvey,
+    // Step 1: guest amount
+    guestsAmount,
+    // Step 2: drink
+    drinkStep,
+    // Last step
+    displaySideStepper,
+    // Step active
+    stepActive,
 
     setSurverOptionsModal,
     setMenuOpen,
@@ -126,6 +169,14 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     updateTheme,
     // Step
     setSelectedSurvey,
+    // Step 1: guest amount
+    setGuestsAmount,
+    // Step 2: drink
+    setDrinkStep,
+    // Last step
+    setDisplaySideStepper,
+    // Step Active
+    setStepActive,
   };
 };
 

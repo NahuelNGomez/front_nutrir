@@ -1,145 +1,141 @@
-
-import FormPanel from '@components/ui/contents/FormPanel'
 import { Button, Grid } from '@mui/material'
-import React, { FC, useState } from 'react'
-import GuestsPanel from './GuestsStep'
-import CustomAccordion from './IngredientsSteps'
-import SurveyStepper from '../surveyStepper/SurveyStepper'
+import React, { FC } from 'react'
 import IngredientsPanel from '../mealCompositionPanel/customAccordion/IngredientsPanel'
+import { useAppCtx } from '../../../src/contexts/store'
+import { pagesStyles } from '@styles/index'
+import { Formik, FormikProps } from 'formik'
+import { mealStepType } from '../../../src/types/global'
 
-
-const defaultMeals = [
+const mockMeals = [
   {
-    compound: true,
-    name: 'Leche chocolatada',
-    composition: [
+    id: 2,
+    nombre: "Leche Chocolatada",
+    foto: "http://50.116.44.91:3600/media/images/pastel.jpeg",
+    horario: "almuerzo_cena_plato_principal",
+    cantidad_porcion: "1.00",
+    hidratos_carbono: "1.00",
+    proteinas: "1.00",
+    grasas: "1.00",
+    energia: "1.00",
+    alimento: [
       {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
+        id: 2,
+        nombre: "Leche",
+        foto: "http://50.116.44.91:3600/media/images/carne.jpeg",
+        cantidad_porcion: "2.00",
+        hidratos_carbono: "2.00",
+        proteinas: "2.00",
+        grasas: "2.00",
+        energia: "2.00"
       },
       {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
+        id: 1,
+        nombre: "Cacao",
+        foto: "http://50.116.44.91:3600/media/images/papas.jpeg",
+        cantidad_porcion: "1.00",
+        hidratos_carbono: "1.00",
+        proteinas: "1.00",
+        grasas: "0.92",
+        energia: "1.00"
       },
       {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
-      },
+        id: 1,
+        nombre: "Azucar",
+        foto: "http://50.116.44.91:3600/media/images/papas.jpeg",
+        cantidad_porcion: "1.00",
+        hidratos_carbono: "1.00",
+        proteinas: "1.00",
+        grasas: "0.92",
+        energia: "1.00"
+      }
     ]
   },
   {
-    compound: true,
-    name: 'Leche chocolatada',
-    composition: [
-      {
-        ingredienteName: 'Leche',
-        picture: '/images/ui/mock/milk.jpg'
-      },
-      {
-        ingredienteName: 'Cacao',
-        picture: '/images/ui/mock/cacao.jpg'
-      },
-      {
-        ingredienteName: 'Azucar',
-        picture: '/images/ui/mock/sugar.jpg'
-      },
-    ]
-  },
-  {
-    compound: false,
-    name: 'Yogurt'
-  },
+    id: 2,
+    nombre: "Yogurt",
+    foto: "http://50.116.44.91:3600/media/images/pastel.jpeg",
+    horario: "almuerzo_cena_plato_principal",
+    cantidad_porcion: "1.00",
+    hidratos_carbono: "1.00",
+    proteinas: "1.00",
+    grasas: "1.00",
+    energia: "1.00",
+    alimento: []
+  }
 ]
 
 
 type Props = {
   handleGoToNextStep: () => {}
   handleGoToPreviousStep: () => {}
-  setDateStep: () => {}
-  dateStep: string
-  setMealTypeStep: () => {}
-  mealTypeStep: string
-  setGuestStep: () => {}
-  guestsStep: {
-    childs: string
-    kids: string
-    teens: string
-    adults: string
-  }
-  drinkStep: {}
-  setDrinkStep: () => {}
 }
 
 const DrinksStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
-  setDateStep,
-  dateStep,
-  mealTypeStep,
-  guestsStep,
-  setGuestStep,
-  drinkStep,
-  setDrinkStep,
 }) => {
 
-  const [displayStepper, setDisplayStepper] = useState(true)
+  const { modeTheme, setDrinkStep, drinkStep, setStepActive } = useAppCtx();
+  const { surveyStyles: { drinks } } = pagesStyles(modeTheme);
 
-  const { childs, kids, teens, adults } = guestsStep
-  const childsN = parseInt(childs)
-  const kidsN = parseInt(kids)
-  const teensN = parseInt(teens)
-  const adultsN = parseInt(adults)
-  const add = childsN + kidsN + teensN + adultsN
-
-  const handleNextBtn = () => {
-    handleGoToNextStep()
+  const initialValues: mealStepType = {
+    comida: null,
+    nombre: '',
+    alimento: []
   }
 
   const handleBackBtn = () => {
     handleGoToPreviousStep()
+    setDrinkStep(initialValues)
+    setStepActive(1)
   }
 
   return (
     <>
-      <IngredientsPanel meals={defaultMeals} drinkStep={drinkStep} setDrinkStep={setDrinkStep} />
-      <Grid
-        container xs={12}
-        justifyContent={"space-between"}
-        sx={{ pt: 0 }}
+      <Formik
+        initialValues={drinkStep}
+        onSubmit={(values) => {
+          // console.log({values});
+          setDrinkStep(values)
+          setStepActive(2)          
+          handleGoToNextStep()
+
+        }}
+      // validationSchema={validationSchema}
       >
-        <Button
-          onClick={handleBackBtn}
-          sx={{
-            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-            borderRadius: "18px",
-            textTransform: "none",
-            padding: "10px",
-            fontSize: "14px",
-            backgroundColor: 'transparent',
-            border: '1px solid #40a39b',
-            color: "#40a39b",
-            mt: 4
-          }}
-        >
-          Volver
-        </Button>
-        <Button
-          onClick={handleNextBtn}
-          sx={{
-            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-            borderRadius: "18px",
-            textTransform: "none",
-            padding: "10px 0",
-            fontSize: "14px",
-            backgroundColor: 'transparent',
-            border: '1px solid #40a39b',
-            color: "#40a39b",
-            mt: 4
-          }}
-        >
-          Siguiente
-        </Button>
-      </Grid>
+        {(props: FormikProps<any>) => {
+
+          console.log('values', props.values);
+
+          return (<>
+            <form onSubmit={props.handleSubmit}>
+              <IngredientsPanel
+                formikProps={props}
+                meals={mockMeals}
+              />
+              <Grid
+                container xs={12}
+                justifyContent={"space-between"}
+                sx={{ pt: 0 }}
+              >
+                <Button
+                  onClick={handleBackBtn}
+                  sx={drinks.button}
+                >
+                  Volver
+                </Button>
+                <Button
+                  sx={drinks.button}
+                  type='submit'
+                >
+                  Siguiente
+                </Button>
+              </Grid>
+            </form>
+          </>)
+        }
+        }
+      </Formik>
     </>
 
   )

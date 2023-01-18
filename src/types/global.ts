@@ -48,10 +48,10 @@ export type dishesCardType = {
 }
 
 export type guestType = {
-  childs?: number;
-  kids?: number;
-  teens?: number;
-  adults?: number
+  childs: number;
+  kids: number;
+  teens: number;
+  adults: number
 }
 
 export type invoiceInfoType = {
@@ -120,6 +120,50 @@ export type guestsStepsType = {
   adults: number;
 }
 
+// Step 2: drink
+
+export type foodDataType = {
+  id: number;
+  nombre: string;
+  foto: string;
+  cantidad_porcion?: string;
+  hidratos_carbono?: string;
+  proteinas?: string;
+  grasas?: string;
+  energia?: string;
+}
+
+export type mealDataType = {
+  id: number;
+  nombre: string;
+  foto: string;
+  horario?: string;
+  cantidad_porcion?: string;
+  hidratos_carbono?: string;
+  proteinas?: string;
+  grasas?: string;
+  energia?: string;
+  alimento: Array<foodDataType>;
+}
+
+export type mealInfoType = {
+  comida: any;
+  alimento: Array<{
+    id: number;
+    nombre: string;
+  }>
+}
+
+export type foodStepType = {
+  id: number;
+  nombre: string;
+}
+
+export type mealStepType = {
+  comida: number | null;
+  nombre: string;
+  alimento: Array<foodStepType>;
+}
 
 
 export type storeType = {
@@ -134,9 +178,20 @@ export type storeType = {
   surveyInfo: invoiceInfoType;
   surverOptionsModal: boolean;
   surveyModalOpen: boolean;
-  // Steps
-  selectedSurvey: selectedSurveyType;
 
+  // Steps
+
+  // Step 0: selected survey
+  selectedSurvey: selectedSurveyType;
+  // Step 1: guests amount
+  guestsAmount: guestsStepsType;
+  // Step 2: drink
+  drinkStep: {};
+
+  // Last Step: submit
+  displaySideStepper: boolean;
+  // Step active
+  stepActive: number;
 
   setSurverOptionsModal(): void;
   setMenuOpen(): void;
@@ -149,7 +204,17 @@ export type storeType = {
   updateTheme(): void;
 
   // Steps
+
+  // Step 0: selected survey
   setSelectedSurvey(): void;
+  // Step 1: guest amount
+  setGuestsAmount(): void;
+  // Step 2: drink
+  setDrinkStep(): void;
+  // Last Step: submit
+  setDisplaySideStepper(): void;
+  // Step active
+  setStepActive(): void;
 };
 
 export type SurveysAvailableType = Array<{

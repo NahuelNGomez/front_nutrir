@@ -8,22 +8,20 @@ import { useAppCtx } from '../../../../src/contexts/store';
 import { pagesStyles } from '@styles/index';
 import { surveyType } from '../../../../src/types/global';
 
-const currentDate = new Date()
+// const currentDate = new Date()
 
-const rows2 = [
-  { id: 1, date: moment(currentDate).format('L'), meal: 'Desayuno' },
-  { id: 2, date: moment(currentDate).format('L'), meal: 'Almuerzo' },
-  { id: 3, date: moment(currentDate).format('L'), meal: 'Merienda' },
-  { id: 4, date: moment(currentDate).format('L'), meal: 'Cena' },
-  { id: 5, date: moment(currentDate).format('L'), meal: 'Olla Popular' },
-  { id: 6, date: moment(currentDate).format('L'), meal: 'Desayuno' },
-  { id: 7, date: moment(currentDate).format('L'), meal: 'Desayuno' },
-  { id: 8, date: moment(currentDate).format('L'), meal: 'Desayuno' },
-  { id: 9, date: moment(currentDate).format('L'), meal: 'Desayuno' },
-  { id: 10, date: moment(currentDate).format('L'), meal: 'Desayuno' },
-];
-
-
+// const rows2 = [
+//   { id: 1, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+//   { id: 2, date: moment(currentDate).format('L'), meal: 'Almuerzo' },
+//   { id: 3, date: moment(currentDate).format('L'), meal: 'Merienda' },
+//   { id: 4, date: moment(currentDate).format('L'), meal: 'Cena' },
+//   { id: 5, date: moment(currentDate).format('L'), meal: 'Olla Popular' },
+//   { id: 6, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+//   { id: 7, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+//   { id: 8, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+//   { id: 9, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+//   { id: 10, date: moment(currentDate).format('L'), meal: 'Desayuno' },
+// ];
 
 const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: string }>) => {
   const servicioFormatter = (servicio: string) => {
@@ -47,26 +45,10 @@ const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: 
 }
 
 interface Props {
-  // columns?: Array<{}>,
-  // rows?: Array<{}>,
-  // handleGoToNextStep?: () => void,
-  // handleGoToPreviousStep?: () => void,
-  // setDateStep: () => {},
   encuestasAdeudadas: Array<surveyType>,
-  // suerveyInfo: {},
-  // setSurveyInfo: () => {},
 }
 
-
-
-const DataTable: FC<Props> = ({
-  // handleGoToNextStep,
-  encuestasAdeudadas,
-  // handleGoToPreviousStep,
-  // setDateStep,
-  // suerveyInfo,
-  // setSurveyInfo
-}) => {
+const DataTable: FC<Props> = ({encuestasAdeudadas}) => {
 
   const columns: GridColDef[] = [
     { field: 'date', headerName: 'Día' },
@@ -113,8 +95,8 @@ const DataTable: FC<Props> = ({
         encuestasAdeudadas
           ? (
             <DataGrid
-              // rows={row(encuestasAdeudadas)}
-              rows={rows2}
+              rows={row(encuestasAdeudadas)}
+              // rows={rows2}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}

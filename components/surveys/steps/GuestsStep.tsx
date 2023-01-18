@@ -1,160 +1,175 @@
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material"
-import { FC, useState } from "react"
+import { FC, useState, useEffect } from "react"
 import { guestType } from "../../../src/types/global"
 import { useAppCtx } from "../../../src/contexts/store"
+import { useFormik } from "formik"
+import validationSchema from "../../common/form/schema/schema"
+import { pagesStyles } from "@styles/index"
+import survey from "@styles/pages/survey"
 
 type Props = {
-  guestsStep?: {}
-  setGuestStep?: any
   handleGoToNextStep: () => {}
   handleGoToPreviousStep: () => {}
 }
 
 
 const GuestsStep: FC<Props> = ({
-  guestsStep,
-  setGuestStep,
   handleGoToNextStep,
   handleGoToPreviousStep
 }) => {
 
-  const { setSelectedSurvey } = useAppCtx();
-  const [ disableBtn, setDisableBtn ] = useState(true)
+  const { modeTheme, setSelectedSurvey, guestsAmount, setGuestsAmount, setStepActive } = useAppCtx();
+  const { surveyStyles: { guests } } = pagesStyles(modeTheme);
+  const [disableBtn, setDisableBtn] = useState(true)
 
-  const handleChange = (e: any) => {
-    e.preventDefault()
-    setDisableBtn(false)
-    setGuestStep({
-      ...guestsStep,
-      [e.target.name]: parseInt(e.target.value) || 0
-    })
-  }
-
-  const handleNextBtn = () => {
-    handleGoToNextStep()
-  }
+  const formik = useFormik<guestType>({
+    initialValues: guestsAmount,
+    validationSchema: validationSchema,
+    onSubmit: (values: guestType) => {
+      // alert(JSON.stringify(values, null, 2));
+      handleGoToNextStep()
+      setStepActive(1)
+      setGuestsAmount(values)
+    },
+  })
 
   const handleBackBtn = () => {
     setSelectedSurvey({})
+    setGuestsAmount({
+      childs: 0,
+      kids: 0,
+      teens: 0,
+      adults: 0
+    })
+    setStepActive(0)
     handleGoToPreviousStep()
   }
 
+  useEffect(() => {
+    const guestsAdd = formik.values.childs + formik.values.kids + formik.values.teens + formik.values.adults
+    if (guestsAdd > 0) setDisableBtn(false)
+    if (guestsAdd <= 0) setDisableBtn(true)
+  }, [formik.values.childs, formik.values.kids, formik.values.teens, formik.values.adults])
+
+
+
   return (
     <div>
-      <Card sx={{ pt: 3, pb: 2 }}>
-        <CardContent >
-          <Grid
-            container
-            sx={{
-              gap: '1.5rem',
-              borderRadius: '5px'
-            }}
-            boxShadow={'inherit'}
-            alignItems='center'
-            justifyContent={'center'}
+      <form onSubmit={formik.handleSubmit}>
+        <Card sx={{ pt: 3, pb: 2 }}>
+          <CardContent >
+            <Grid
+              container
+              sx={{
+                gap: '1.5rem',
+                borderRadius: '5px'
+              }}
+              boxShadow={'inherit'}
+              alignItems='center'
+              justifyContent={'center'}
+            >
+              <Grid item xs={11}>
+                <TextField
+                  name='childs'
+                  id="childs"
+                  label="Infantes de 0 a 5 años"
+                  type="number"
+                  fullWidth
+                  placeholder="Infantes de 0 a 5 años"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  // onChange={handleChange}
+                  value={formik.values.childs}
+                  onChange={formik.handleChange}
+                  error={formik.touched.childs && Boolean(formik.errors.childs)}
+                  helperText={formik.touched.childs && formik.errors.childs}
+                />
+              </Grid>
+              <Grid item xs={11}>
+                <TextField
+                  name='kids'
+                  // id="outlined-number"
+                  id="kids"
+                  label="Niñxs de 5 a 10 años"
+                  type="number"
+                  placeholder="Niñxs de 5 a 10 años"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  // onChange={handleChange}
+                  value={formik.values.kids}
+                  onChange={formik.handleChange}
+                  error={formik.touched.kids && Boolean(formik.errors.kids)}
+                  helperText={formik.touched.kids && formik.errors.kids}
+                />
+              </Grid>
+              <Grid item xs={11}>
+                <TextField
+                  name='teens'
+                  // id="outlined-number"
+                  id="teens"
+                  label="Adolescentes de 10 a 18 años"
+                  type="number"
+                  placeholder="Adolescentes de 10 a 18 años"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  // onChange={handleChange}
+                  value={formik.values.teens}
+                  onChange={formik.handleChange}
+                  error={formik.touched.teens && Boolean(formik.errors.teens)}
+                  helperText={formik.touched.teens && formik.errors.teens}
+                />
+              </Grid>
+              <Grid item xs={11}>
+                <TextField
+                  name='adults'
+                  // id="outlined-number"
+                  id="adults"
+                  label="Adultos más de 18 años"
+                  type="number"
+                  placeholder="Adultos más de 18 años"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  // onChange={handleChange}
+                  value={formik.values.adults}
+                  onChange={formik.handleChange}
+                  error={formik.touched.adults && Boolean(formik.errors.adults)}
+                  helperText={formik.touched.adults && formik.errors.adults}
+                />
+
+              </Grid>
+            </Grid>
+
+          </CardContent>
+        </Card>
+
+        <Grid
+          container xs={12}
+          justifyContent={"space-between"}
+          sx={{ pt: 0 }}
+        >
+          <Button
+            onClick={handleBackBtn}
+            sx={guests.button}
           >
-            <Grid item xs={11}>
-              <TextField
-                name='childs'
-                id="outlined-number"
-                label="Infantes de 0 a 5 años"
-                type="number"
-                fullWidth
-                placeholder="Infantes de 0 a 5 años"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={11}>
-              <TextField
-                name='kids'
-                id="outlined-number"
-                label="Niñxs de 5 a 10 años"
-                type="number"
-                placeholder="Niñxs de 5 a 10 años"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={11}>
-              <TextField
-                name='teens'
-                id="outlined-number"
-                label="Adolescentes de 10 a 18 años"
-                type="number"
-                placeholder="Adolescentes de 10 a 18 años"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={11}>
-              <TextField
-                name='adults'
-                id="outlined-number"
-                label="Adultos más de 18 años"
-                type="number"
-                placeholder="Adultos más de 18 años"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleChange}
-              />
-
-            </Grid>
-          </Grid>
-
-        </CardContent>
-      </Card>
-
-      <Grid
-        container xs={12}
-        justifyContent={"space-between"}
-        sx={{ pt: 0 }}
-      >
-        <Button
-          onClick={handleBackBtn}
-          sx={{
-            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-            borderRadius: "18px",
-            textTransform: "none",
-            padding: "10px",
-            fontSize: "14px",
-            backgroundColor: 'transparent',
-            border: '1px solid #40a39b',
-            color: "#40a39b",
-            mt: 4
-          }}
-        >
-          Volver
-        </Button>
-        <Button
-          onClick={handleNextBtn}
-          sx={{
-            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-            borderRadius: "18px",
-            textTransform: "none",
-            padding: "10px 0",
-            fontSize: "14px",
-            backgroundColor: 'transparent',
-            border: '1px solid #40a39b',
-            color: "#40a39b",
-            mt: 4
-          }}
-          disabled={disableBtn}
-        >
-          Siguiente
-        </Button>
-      </Grid>
-
+            Volver
+          </Button>
+          <Button
+            type="submit"
+            // onClick={handleNextBtn}
+            sx={guests.button}
+            disabled={disableBtn}
+          >
+            Siguiente
+          </Button>
+        </Grid>
+      </form>
     </div>
   )
 }

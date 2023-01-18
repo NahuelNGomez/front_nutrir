@@ -1,6 +1,10 @@
 import { guestsStepsType, selectedSurveyType } from "../../../../src/types/global"
 
-const breakfastSteps = (selectedSurveyService?: string, guestsStep?: number, drinkStep?: string, breakFastMainMailDecription?: []) => {
+const breakfastSteps = (
+  selectedSurveyService?: string, 
+  guestsStep?: number, 
+  drinksDecription?: Array<string>, 
+  breakFastMainMailDecription?: []) => {
   return (
     [
       {
@@ -10,13 +14,11 @@ const breakfastSteps = (selectedSurveyService?: string, guestsStep?: number, dri
       },
       {
         label: '2. Cantidad de comenzales',
-        // description: guestsStep ? `${guestsStep} personas` : '',
         description: `${guestsStep === 0 ? '' : guestsStep}`
       },
       {
         label: '3. Bebida',
-        // description: drinkStep ? drinksDecription.join(', ') : '',
-        description: 'test desayuno'
+        description: drinksDecription ? drinksDecription.join(', ') : '',
       },
       {
         label: '4. Comida',
@@ -45,27 +47,22 @@ const lunchSteps = (selectedSurveyService?: string, guestsStep?: number, drinkSt
         description: `${guestsStep === 0 ? '' : guestsStep}`
       },
       {
-        label: '3. Bebida',
-        // description: drinkStep ? drinksDecription.join(', ') : '',
-        description: 'Test almuerzo'
-      },
-      {
-        label: '4. Entrada',
+        label: '3. Entrada',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test almuerzo'
       },
       {
-        label: '5. Plato Principal',
+        label: '4. Plato Principal',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test almuerzo'
       },
       {
-        label: '6. Postre',
+        label: '5. Postre',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test almuerzo'
       },
       {
-        label: '7. Confirmar encuesta',
+        label: '6. Confirmar encuesta',
         description: ``,
       },
     ]
@@ -82,27 +79,17 @@ const meriendaSteps = (selectedSurveyService?: string, guestsStep?: number) => {
     {
       label: '2. Cantidad de comenzales',
       // description: guestsStep ? `${guestsStep} personas` : '',
-        description: `${guestsStep === 0 ? '' : guestsStep}`
+      description: `${guestsStep === 0 ? '' : guestsStep}`
     },
     {
       label: '3. Bebida',
       // description: drinkStep ? drinksDecription.join(', ') : '',
-      description: 'TEST BEBIDA'
+      description: 'test desayuno'
     },
     {
-      label: '4. Entrada',
+      label: '4. Comida',
       // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
-      description: 'Test almuerzo'
-    },
-    {
-      label: '4. Plato Principal',
-      // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
-      description: 'Test almuerzo'
-    },
-    {
-      label: '4. Postre',
-      // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
-      description: 'Test almuerzo'
+      description: 'test desayuno'
     },
     {
       label: '5. Confirmar encuesta',
@@ -124,12 +111,7 @@ const dinnerSteps = (selectedSurveyService?: string, guestsStep?: number) => {
         description: `${guestsStep === 0 ? '' : guestsStep}`
       },
       {
-        label: '3. Bebida',
-        // description: drinkStep ? drinksDecription.join(', ') : '',
-        description: 'Test Cena'
-      },
-      {
-        label: '4. Entrada',
+        label: '3. Entrada',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test Cena'
       },
@@ -139,12 +121,12 @@ const dinnerSteps = (selectedSurveyService?: string, guestsStep?: number) => {
         description: 'Test Cena'
       },
       {
-        label: '4. Postre',
+        label: '5. Postre',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test Cena'
       },
       {
-        label: '5. Confirmar encuesta',
+        label: '6. Confirmar encuesta',
         description: ``,
       },
     ]
@@ -165,12 +147,7 @@ const ollaPopularSteps = (selectedSurveyService?: string, guestsStep?: number) =
         description: `${guestsStep === 0 ? '' : guestsStep}`
       },
       {
-        label: '3. Bebida',
-        // description: drinkStep ? drinksDecription.join(', ') : '',
-        description: 'Test Olla Popular'
-      },
-      {
-        label: '4. Entrada',
+        label: '3. Entrada',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test Olla Popular'
       },
@@ -180,35 +157,42 @@ const ollaPopularSteps = (selectedSurveyService?: string, guestsStep?: number) =
         description: 'Test Olla Popular'
       },
       {
-        label: '4. Postre',
+        label: '5. Postre',
         // description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
         description: 'Test Olla Popular'
       },
       {
-        label: '5. Confirmar encuesta',
+        label: '6. Confirmar encuesta',
         description: ``,
       },
     ]
   )
 }
 
-const stepsFormatter = (selectedSurveyService?: string, guestsStep?: number): Array<{ label: string, description: string }> => {
+const stepsFormatter = (
+  selectedSurveyService: string, 
+  guestsStep: guestsStepsType,
+  drinksDecription: Array<string>,
+  )
+  : Array<{ label: string, description: string }> => {
+
+  const guestsAmount = guestsStep.childs + guestsStep.kids + guestsStep.teens + guestsStep.adults
 
   switch (selectedSurveyService) {
-    case 'Desayuno':
-      return breakfastSteps(selectedSurveyService, guestsStep)
+    case 'desayuno':
+      return breakfastSteps(selectedSurveyService, guestsAmount, drinksDecription)
       break;
-    case 'Almuerzo':
-      return lunchSteps(selectedSurveyService, guestsStep)
+    case 'almuerzo':
+      return lunchSteps(selectedSurveyService, guestsAmount)
       break;
-    case 'Merienda':
-      return meriendaSteps(selectedSurveyService, guestsStep)
+    case 'merienda':
+      return meriendaSteps(selectedSurveyService, guestsAmount)
       break;
-    case 'Cena':
-      return dinnerSteps(selectedSurveyService, guestsStep)
+    case 'cena':
+      return dinnerSteps(selectedSurveyService, guestsAmount)
       break;
     case 'Olla Popular':
-      return ollaPopularSteps(selectedSurveyService, guestsStep)
+      return ollaPopularSteps(selectedSurveyService, guestsAmount)
       break;
     default:
       return breakfastSteps()
