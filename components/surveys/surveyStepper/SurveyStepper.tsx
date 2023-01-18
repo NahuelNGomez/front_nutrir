@@ -5,12 +5,12 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import moment from "moment";
 import { pagesStyles } from "@styles/index";
-import stepsFormatter from "./utils/stepsFormatter";
+import stepsProvider from "./utils/stepsProvider";
+import mealDescriptionFormatter from "./utils/mealDescriptionFormatter";
 
 type Props = {
   breakFastMainMailStep?: {}
@@ -25,42 +25,16 @@ const SurveyStepper: FC<Props> = ({
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
 
-  const { selectedSurvey, displaySideStepper, setDisplaySideStepper, guestsAmount, stepActive, drinkStep } = useAppCtx()
+  const { selectedSurvey, displaySideStepper, setDisplaySideStepper, guestsAmount, stepActive, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep } = useAppCtx()
 
   const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''
-  const drinksDecription = drinkStep ? Object.keys(drinkStep) : []
-  const breakFastMainMailDecription = breakFastMainMailStep ? Object.keys(breakFastMainMailStep) : []
+  const drinksDecription = mealDescriptionFormatter(drinkStep)
+  const simpleMainMealDescription = mealDescriptionFormatter(simpleMainMealStep)
+  const entryDescription = mealDescriptionFormatter(entryStep)
+  const compoundMainMealDescription = mealDescriptionFormatter(compoundMainMealStep)
+  const dessertDescription = mealDescriptionFormatter(dessertStep)
 
-  // console.log({drinkStep});
-  
-
-  // const steps = [
-  //   {
-  //     label: '1. Tipo de comida',
-  //     description: selectedSurvey?.service,
-  //   },
-  //   {
-  //     label: '2. Cantidad de comenzales',
-  //     description: guestsStep ? `${guestsStep} personas` : '',
-  //   },
-  //   {
-  //     label: '3. Bebida',
-  //     description: drinkStep ? drinksDecription.join(', ') : '',
-  //   },
-  //   {
-  //     label: '4. Comida',
-  //     description: breakFastMainMailDecription ? breakFastMainMailDecription.join(', ') : '',
-  //   },
-  //   {
-  //     label: '5. Confirmar encuesta',
-  //     description: ``,
-  //   },
-  // ];
-
-  const steps = stepsFormatter(selectedService, guestsAmount, drinksDecription)
-
-  // const [activeStep, setActiveStep] = useState(stepActive);
-
+  const steps = stepsProvider(selectedService, guestsAmount, drinksDecription, simpleMainMealDescription, entryDescription, compoundMainMealDescription, dessertDescription)
 
   const handlerBackClick = (e: any) => {
     backClickHandler()

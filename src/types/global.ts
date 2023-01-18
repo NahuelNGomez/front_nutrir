@@ -122,36 +122,28 @@ export type guestsStepsType = {
 
 // Step 2: drink
 
-export type foodDataType = {
-  id: number;
-  nombre: string;
-  foto: string;
-  cantidad_porcion?: string;
-  hidratos_carbono?: string;
-  proteinas?: string;
-  grasas?: string;
-  energia?: string;
-}
-
 export type mealDataType = {
   id: number;
   nombre: string;
   foto: string;
   horario?: string;
-  cantidad_porcion?: string;
-  hidratos_carbono?: string;
-  proteinas?: string;
-  grasas?: string;
-  energia?: string;
+  cantidad_porcion?: string | number;
+  hidratos_carbono?: string | number;
+  proteinas?: string | number;
+  grasas?: string | number;
+  energia?: string | number;
   alimento: Array<foodDataType>;
 }
 
-export type mealInfoType = {
-  comida: any;
-  alimento: Array<{
-    id: number;
-    nombre: string;
-  }>
+export type foodDataType = {
+  id: number;
+  nombre: string;
+  foto: string;
+  cantidad_porcion?: string | number;
+  hidratos_carbono?: string | number;
+  proteinas?: string | number;
+  grasas?: string | number;
+  energia?: string | number;
 }
 
 export type foodStepType = {
@@ -180,14 +172,20 @@ export type storeType = {
   surveyModalOpen: boolean;
 
   // Steps
-
-  // Step 0: selected survey
+  // 0: selected survey
   selectedSurvey: selectedSurveyType;
-  // Step 1: guests amount
+  // 1: guests amount
   guestsAmount: guestsStepsType;
-  // Step 2: drink
-  drinkStep: {};
-
+  // 2: drink
+  drinkStep: mealStepType;
+  // 3a: simpleMainMealStep Breakfast
+  simpleMainMealStep: mealStepType;
+  // 3b: entry Step
+  entryStep: mealStepType;
+  // 4 main dish
+  compoundMainMealStep: mealStepType;
+  // 5 dessert
+  dessertStep: mealStepType;
   // Last Step: submit
   displaySideStepper: boolean;
   // Step active
@@ -207,10 +205,18 @@ export type storeType = {
 
   // Step 0: selected survey
   setSelectedSurvey(): void;
-  // Step 1: guest amount
+  // 1: guest amount
   setGuestsAmount(): void;
-  // Step 2: drink
+  // 2: drink
   setDrinkStep(): void;
+  // 3a: simpleMainMealStep Breakfast
+  setSimpleMainMealStep(): void;
+  // 3b: entry
+  setEntryStep(): void;
+  // 4
+  setCompoundMainMailStep(): void;
+  // 5
+  setDessertStep(): void;
   // Last Step: submit
   setDisplaySideStepper(): void;
   // Step active

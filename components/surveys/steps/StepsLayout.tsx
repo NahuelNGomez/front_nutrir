@@ -1,7 +1,7 @@
 import FormPanel from '@components/ui/contents/FormPanel'
 import { Grid } from '@mui/material'
 import React from 'react'
-import servicesType from './utils/servicesTypes'
+import servicesStepsProvider from './utils/servicesStepsProvider'
 import { FC, useState } from "react";
 import SurveyStepper from '../surveyStepper/SurveyStepper';
 import { useAppCtx } from '../../../src/contexts/store';
@@ -27,7 +27,7 @@ const StepsLayout = () => {
 
   const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''  
 
-  const steps = servicesType(selectedService)
+  const steps = servicesStepsProvider(selectedService)
   const ActiveStepComponent = steps[activeStep].content
 
 

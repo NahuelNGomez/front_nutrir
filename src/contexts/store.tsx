@@ -56,7 +56,6 @@ const initialStoreState: storeType = {
   comedoresDisponibles: [],
   comedorSeleccionado: comedorInit,
   // Steps
-
   // Step 0
   selectedSurvey: { date: '', service: '' },
   // Step 1: guest Amount
@@ -67,7 +66,34 @@ const initialStoreState: storeType = {
     adults: 0,
   },
   // Step 2: Drink
-  drinkStep: {},
+  drinkStep: {
+    comida: null,
+    nombre: '',
+    alimento: []
+  },
+  // Step 3a: simpleMainMealStep Breakfast
+  simpleMainMealStep: {
+    comida: null,
+    nombre: '',
+    alimento: []
+  },
+  // 3b
+  entryStep: {
+    comida: null,
+    nombre: '',
+    alimento: []
+  },
+  // 4
+  compoundMainMealStep: {
+    comida: null,
+    nombre: '',
+    alimento: []
+  },
+  dessertStep: {
+    comida: null,
+    nombre: '',
+    alimento: []
+  },
   // Last step
   displaySideStepper: true,
   // Step active
@@ -89,6 +115,14 @@ const initialStoreState: storeType = {
   setGuestsAmount: () => { },
   // Step 2: drink Step
   setDrinkStep: () => { },
+  // Step 3: simpleMainMealStep Breakfast
+  setSimpleMainMealStep: () => { },
+  // Step 3b: entry
+  setEntryStep: () => { },
+  // 4
+  setCompoundMainMailStep: () => { },
+  // 5
+  setDessertStep: () => { },
   // Last Step
   setDisplaySideStepper: () => { },
   // Step Active
@@ -115,6 +149,26 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     adults: 0
   });
   const [drinkStep, setDrinkStep] = useState<mealStepType>({
+    comida: null,
+    nombre: '',
+    alimento: []
+  })
+  const [simpleMainMealStep, setSimpleMainMealStep] = useState<mealStepType>({
+    comida: null,
+    nombre: '',
+    alimento: []
+  })
+  const [entryStep, setEntryStep] = useState<mealStepType>({
+    comida: null,
+    nombre: '',
+    alimento: []
+  })
+  const [compoundMainMealStep, setCompoundMainMailStep] = useState<mealStepType>({
+    comida: null,
+    nombre: '',
+    alimento: []
+  })
+  const [dessertStep, setDessertStep] = useState<mealStepType>({
     comida: null,
     nombre: '',
     alimento: []
@@ -153,6 +207,14 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     guestsAmount,
     // Step 2: drink
     drinkStep,
+    // Step 3
+    simpleMainMealStep,
+    // 3b Entry
+    entryStep,
+    // 4
+    compoundMainMealStep,
+    // 5
+    dessertStep,
     // Last step
     displaySideStepper,
     // Step active
@@ -173,6 +235,14 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     setGuestsAmount,
     // Step 2: drink
     setDrinkStep,
+    // Step 3
+    setSimpleMainMealStep,
+    // 3b,
+    setEntryStep,
+    // 4
+    setCompoundMainMailStep,
+    // 5
+    setDessertStep,
     // Last step
     setDisplaySideStepper,
     // Step Active

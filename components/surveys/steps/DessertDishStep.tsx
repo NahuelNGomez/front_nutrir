@@ -5,129 +5,205 @@ import GuestsPanel from './GuestsStep'
 import CustomAccordion from './IngredientsSteps'
 import SurveyStepper from '../surveyStepper/SurveyStepper'
 import IngredientsPanel from '../mealCompositionPanel/customAccordion/IngredientsPanel'
+import { useAppCtx } from '../../../src/contexts/store'
+import { pagesStyles } from '@styles/index'
+import { mealStepType } from '../../../src/types/global'
+import { Formik, FormikProps } from 'formik'
 
 
-const defaultMeals = [
+const mockMeals = [
   {
-    compound: true,
-    name: 'Postre: Comida compuesta',
-    composition: [
+    id: 2,
+    nombre: "Pastel de Papa",
+    foto: "http://50.116.44.91:3600/media/images/pastel.jpeg",
+    horario: "almuerzo_cena_plato_principal",
+    cantidad_porcion: "1.00",
+    hidratos_carbono: "1.00",
+    proteinas: "1.00",
+    grasas: "1.00",
+    energia: "1.00",
+    alimento: [
       {
-        ingredienteName: 'Pan',
-        picture: '/images/ui/mock/bread.jpg'
+        id: 1,
+        nombre: "Papa",
+        cantidad_porcion: 1,
+        hidratos_carbono: 1,
+        proteinas: 1,
+        grasas: 0.92,
+        energia: 1,
+        foto: "http://50.116.44.91:3600/media/images/papas.jpeg"
       },
       {
-        ingredienteName: 'Queso Crema',
-        picture: '/images/ui/mock/cheese.jpg'
-      },
-      {
-        ingredienteName: 'Mermelada',
-        picture: '/images/ui/mock/jam.jpg'
-      },
+        id: 2,
+        nombre: "Carne",
+        cantidad_porcion: 2,
+        hidratos_carbono: 2,
+        proteinas: 2,
+        grasas: 2,
+        energia: 2,
+        foto: "http://50.116.44.91:3600/media/images/carne.jpeg"
+      }
     ]
   },
   {
-    compound: false,
-    name: 'Postre: Comida Simple'
+    id: 3,
+    nombre: "Guiso de Prueba",
+    foto: "http://50.116.44.91:3600/media/images/Guiso_de_Prueba.jpeg",
+    horario: "almuerzo_cena_plato_principal",
+    cantidad_porcion: "280.00",
+    hidratos_carbono: "65.60",
+    proteinas: "31.00",
+    grasas: "2.20",
+    energia: "406.20",
+    alimento: [
+      {
+        id: 8,
+        nombre: "Huevo",
+        cantidad_porcion: 50,
+        hidratos_carbono: 0,
+        proteinas: 6,
+        grasas: 6,
+        energia: 78,
+        foto: "http://50.116.44.91:3600/media/images/Huevo.jpeg"
+      },
+      {
+        id: 10,
+        nombre: "Arvejas",
+        cantidad_porcion: 50,
+        hidratos_carbono: 4,
+        proteinas: 0,
+        grasas: 1,
+        energia: 20,
+        foto: "http://50.116.44.91:3600/media/images/Arvejas.jpeg"
+      },
+      {
+        id: 7,
+        nombre: "Arroz - Fideos",
+        cantidad_porcion: 60,
+        hidratos_carbono: 42,
+        proteinas: 7.2,
+        grasas: 0,
+        energia: 196.8,
+        foto: "http://50.116.44.91:3600/media/images/Arroz_-_Fideos.jpeg"
+      }
+    ]
   },
+  {
+    id: 4,
+    nombre: "Arroz con Vegetales Prueba",
+    foto: "http://50.116.44.91:3600/media/images/Arroz_con_Vegetales.jpeg",
+    horario: "almuerzo_cena_plato_principal",
+    cantidad_porcion: "150.00",
+    hidratos_carbono: "60.00",
+    proteinas: "6.00",
+    grasas: "5.00",
+    energia: "10.00",
+    alimento: [
+      {
+        id: 4,
+        nombre: "Vegetales",
+        cantidad_porcion: 50,
+        hidratos_carbono: 4,
+        proteinas: 0.5,
+        grasas: 0,
+        energia: 18,
+        foto: "http://50.116.44.91:3600/media/images/Vegetales.jpeg"
+      },
+      {
+        id: 10,
+        nombre: "Arvejas",
+        cantidad_porcion: 50,
+        hidratos_carbono: 4,
+        proteinas: 0,
+        grasas: 1,
+        energia: 20,
+        foto: "http://50.116.44.91:3600/media/images/Arvejas.jpeg"
+      },
+      {
+        id: 7,
+        nombre: "Arroz - Fideos",
+        cantidad_porcion: 60,
+        hidratos_carbono: 42,
+        proteinas: 7.2,
+        grasas: 0,
+        energia: 196.8,
+        foto: "http://50.116.44.91:3600/media/images/Arroz_-_Fideos.jpeg"
+      }
+    ]
+  }
 ]
 
 
 type Props = {
   handleGoToNextStep: () => {}
   handleGoToPreviousStep: () => {}
-  setDateStep: () => {}
-  dateStep: string
-  setMealTypeStep: () => {}
-  mealTypeStep: string
-  setGuestStep: () => {}
-  guestsStep: {
-    childs: string
-    kids: string
-    teens: string
-    adults: string
-  }
-  drinkStep: {}
-  setDrinkStep: () => {}
-  setBreakFastMainMealStep: () => {}
-  breakFastMainMailStep: {}
 }
 
 const DessertDishStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
-  setDateStep,
-  dateStep,
-  mealTypeStep,
-  guestsStep,
-  setGuestStep,
-  drinkStep,
-  setDrinkStep,
-  setBreakFastMainMealStep,
-  breakFastMainMailStep
 }) => {
 
-  const [displayStepper, setDisplayStepper] = useState(true)
+  const { modeTheme, setStepActive, setDessertStep } = useAppCtx();
+  const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
 
-  const { childs, kids, teens, adults } = guestsStep
-  const childsN = parseInt(childs)
-  const kidsN = parseInt(kids)
-  const teensN = parseInt(teens)
-  const adultsN = parseInt(adults)
-  const add = childsN + kidsN + teensN + adultsN
-
-  const handleNextBtn = () => {
-    handleGoToNextStep()
+  const initialValues: mealStepType = {
+    comida: null,
+    nombre: '',
+    alimento: []
   }
 
   const handleBackBtn = () => {
     handleGoToPreviousStep()
+    setDessertStep(initialValues)
+    setStepActive(4)
   }
-
 
   return (
     <>
-      <IngredientsPanel meals={defaultMeals} drinkStep={breakFastMainMailStep} setDrinkStep={setBreakFastMainMealStep} />
-      <Grid
-        container xs={12}
-        justifyContent={"space-between"}
-        sx={{ pt: 0 }}
-      >
-        <Button
-          onClick={handleBackBtn}
-          sx={{
-            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-            borderRadius: "18px",
-            textTransform: "none",
-            padding: "10px",
-            fontSize: "14px",
-            backgroundColor: 'transparent',
-            border: '1px solid #40a39b',
-            color: "#40a39b",
-            mt: 4
-          }}
-        >
-          Volver
-        </Button>
-        <Button
-          onClick={handleNextBtn}
-          sx={{
-            width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
-            borderRadius: "18px",
-            textTransform: "none",
-            padding: "10px 0",
-            fontSize: "14px",
-            backgroundColor: 'transparent',
-            border: '1px solid #40a39b',
-            color: "#40a39b",
-            mt: 4
-          }}
-        >
-          Siguiente
-        </Button>
-      </Grid>
-    </>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          // console.log({values});
 
+          setDessertStep(values)
+          setStepActive(4)
+          handleGoToNextStep()
+        }}
+      // validationSchema={validationSchema}
+      >
+        {(props: FormikProps<any>) => {
+          return (
+            <>
+              <form onSubmit={props.handleSubmit}>
+                <IngredientsPanel
+                  formikProps={props}
+                  meals={mockMeals}
+                />
+                <Grid
+                  container xs={12}
+                  justifyContent={"space-between"}
+                  sx={{ pt: 0 }}
+                >
+                  <Button
+                    onClick={handleBackBtn}
+                    sx={mealStep.button}
+                  >
+                    Volver
+                  </Button>
+                  <Button
+                    sx={mealStep.button}
+                    type='submit'
+                  >
+                    Siguiente
+                  </Button>
+                </Grid>
+              </form>
+            </>)
+        }
+        }
+      </Formik>
+    </>
   )
 }
 

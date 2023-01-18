@@ -1,11 +1,7 @@
-import { ReactComponentElement } from "react"
-import BreakFastMailStep from "../BreakFastMailStep"
-import DishSelectionStep from "../DishSelectionStep"
-import DrinksStep from "../DrinksStep"
-import SelectSurveyStep from "../SelectSurveyStep"
-import SubmitStep from "../SubmitStep"
 import GuestsStep from "../GuestsStep"
-import SimpleMainDishStep from "../SimpleMainDishStep"
+import DrinksStep from "../DrinksStep"
+import SimpleMainMealStep from "../SimpleMainMealStep"
+import SubmitStep from "../SubmitStep"
 import EntryDishStep from "../EntryDishStep"
 import CompoundMainDishStep from "../CompoundMainDishStep"
 import DessertDishStep from "../DessertDishStep"
@@ -24,7 +20,7 @@ const simpleDish = [
   {
     title: '4. ¿Qué comida sirvieron?',
     subtitle: 'Selecciona el tipo de comida y los componentes que la integran si es que se necesitan.',
-    content: BreakFastMailStep
+    content: SimpleMainMealStep
   },
   {
     title: '',
@@ -73,7 +69,7 @@ const dinnerSteps: Array<any> = compoundDish
 const ollaPopularSteps: Array<any> = compoundDish
 
 
-const servicesType = (surveyType: string): Array<any> => {
+const servicesStepsProvider = (surveyType: string): Array<any> => {
 
   switch (surveyType) {
     case 'desayuno':
@@ -98,4 +94,4 @@ const servicesType = (surveyType: string): Array<any> => {
 }
 
 
-export default servicesType
+export default servicesStepsProvider

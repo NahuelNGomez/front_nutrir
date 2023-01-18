@@ -95,7 +95,6 @@ const DrinksStep: FC<Props> = ({
       <Formik
         initialValues={drinkStep}
         onSubmit={(values) => {
-          // console.log({values});
           setDrinkStep(values)
           setStepActive(2)          
           handleGoToNextStep()
@@ -105,9 +104,8 @@ const DrinksStep: FC<Props> = ({
       >
         {(props: FormikProps<any>) => {
 
-          console.log('values', props.values);
-
-          return (<>
+          return (
+          <>
             <form onSubmit={props.handleSubmit}>
               <IngredientsPanel
                 formikProps={props}

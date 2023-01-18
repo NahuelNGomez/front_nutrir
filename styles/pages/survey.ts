@@ -118,6 +118,20 @@ const DrinkStep = (theme = 'light') => ({
   }
 })
 
+const MealStep = (theme = 'light') => ({
+  button: {
+    width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+    borderRadius: "18px",
+    textTransform: "none",
+    padding: "10px",
+    fontSize: "14px",
+    backgroundColor: 'transparent',
+    border: '1px solid #40a39b',
+    color: "#40a39b",
+    mt: 4
+  }
+})
+
 const IngredientsPanel = (theme = 'light') => ({
   compoundCard: {
     container: {
@@ -146,7 +160,7 @@ const IngredientsPanel = (theme = 'light') => ({
       justifyContent: 'space-between',
       alignItems: 'center'
     },
-    title:{
+    title: {
       paddingLeft: 1.5
     }
   }
@@ -161,6 +175,7 @@ const survey = (theme = 'light') => ({
   stepper: Stepper(theme),
   guests: GuestsStep(theme),
   drinks: DrinkStep(theme),
+  mealStep: MealStep(theme),
   ingredientsPanel: IngredientsPanel(theme)
 })
 

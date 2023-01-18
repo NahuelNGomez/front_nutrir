@@ -1,14 +1,10 @@
-import FormPanel from '@components/ui/contents/FormPanel'
 import { Button, Grid } from '@mui/material'
 import React, { FC, useState } from 'react'
-import GuestsPanel from './GuestsStep'
-import CustomAccordion from './IngredientsSteps'
-import SurveyStepper from '../surveyStepper/SurveyStepper'
 import IngredientsPanel from '../mealCompositionPanel/customAccordion/IngredientsPanel'
+import { Formik, FormikProps } from 'formik'
+import { mealStepType } from '../../../src/types/global'
 import { useAppCtx } from '../../../src/contexts/store'
 import { pagesStyles } from '@styles/index'
-import { mealStepType } from '../../../src/types/global'
-import { Formik, FormikProps } from 'formik'
 
 
 const mockMeals = [
@@ -139,12 +135,12 @@ type Props = {
   handleGoToPreviousStep: () => {}
 }
 
-const CompoundMainDishStep: FC<Props> = ({
+const SimpleMainMealStep: FC<Props> = ({
   handleGoToNextStep,
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setCompoundMainMailStep } = useAppCtx();
+  const { modeTheme, setStepActive, setSimpleMainMealStep } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
 
   const initialValues: mealStepType = {
@@ -155,8 +151,8 @@ const CompoundMainDishStep: FC<Props> = ({
 
   const handleBackBtn = () => {
     handleGoToPreviousStep()
-    setCompoundMainMailStep(initialValues)
-    setStepActive(3)
+    setSimpleMainMealStep(initialValues)
+    setStepActive(2)
   }
 
   return (
@@ -164,11 +160,10 @@ const CompoundMainDishStep: FC<Props> = ({
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
-          // console.log({values});
-
-          setCompoundMainMailStep(values)
-          setStepActive(4)
+          setSimpleMainMealStep(values)
+          setStepActive(3)
           handleGoToNextStep()
+
         }}
       // validationSchema={validationSchema}
       >
@@ -203,8 +198,7 @@ const CompoundMainDishStep: FC<Props> = ({
         }
         }
       </Formik>
-    </>
-  )
+    </>)
 }
 
-export default CompoundMainDishStep
+export default SimpleMainMealStep
