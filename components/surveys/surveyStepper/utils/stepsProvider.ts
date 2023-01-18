@@ -1,8 +1,7 @@
-import { guestsStepsType, selectedSurveyType } from "../../../../src/types/global"
 
 const simpleSurveySteps = (
   selectedSurveyService: string, 
-  guestsStep: number, 
+  guestsDescription: number | string, 
   drinksDecription: string, 
   simpleMainMealDescription: string) => {
   return (
@@ -13,7 +12,7 @@ const simpleSurveySteps = (
       },
       {
         label: '2. Cantidad de comenzales',
-        description: `${guestsStep === 0 ? '' : guestsStep}`
+        description: guestsDescription
       },
       {
         label: '3. Bebida',
@@ -33,7 +32,7 @@ const simpleSurveySteps = (
 
 const compoundSurveySteps = (
   selectedSurveyService: string, 
-  guestsStep: number,
+  guestsDescription: number | string,
   entryDescription: string, 
   compoundMainMealDescription: string,
   dessertStep: string,
@@ -46,7 +45,7 @@ const compoundSurveySteps = (
       },
       {
         label: '2. Cantidad de comenzales',
-        description: `${guestsStep === 0 ? '' : guestsStep}`
+        description: guestsDescription
       },
       {
         label: '3. Entrada',
@@ -71,35 +70,33 @@ const compoundSurveySteps = (
 
 const stepsProvider = (
   selectedSurveyService: string, 
-  guestsStep: guestsStepsType,
+  guestsDescription: number | string,
   drinksDecription: string,
   simpleMainMealDescription: string,
   entryDescription: string,
   compoundMainMealDescription: string,
   dessertStep: string,
   )
-  : Array<{ label: string, description: string }> => {
-
-  const guestsAmount = guestsStep.childs + guestsStep.kids + guestsStep.teens + guestsStep.adults
+  : Array<{ label: string, description: string | number }> => {
 
   switch (selectedSurveyService) {
     case 'desayuno':
-      return simpleSurveySteps(selectedSurveyService, guestsAmount, drinksDecription, simpleMainMealDescription)
+      return simpleSurveySteps(selectedSurveyService, guestsDescription, drinksDecription, simpleMainMealDescription)
       break;
     case 'almuerzo':
-      return compoundSurveySteps(selectedSurveyService, guestsAmount, entryDescription, compoundMainMealDescription, dessertStep)
+      return compoundSurveySteps(selectedSurveyService, guestsDescription, entryDescription, compoundMainMealDescription, dessertStep)
       break;
     case 'merienda':
-      return simpleSurveySteps(selectedSurveyService, guestsAmount, drinksDecription, simpleMainMealDescription)
+      return simpleSurveySteps(selectedSurveyService, guestsDescription, drinksDecription, simpleMainMealDescription)
       break;
     case 'cena':
-      return compoundSurveySteps(selectedSurveyService, guestsAmount, entryDescription, compoundMainMealDescription, dessertStep)
+      return compoundSurveySteps(selectedSurveyService, guestsDescription, entryDescription, compoundMainMealDescription, dessertStep)
       break;
     case 'Olla Popular':
-      return compoundSurveySteps(selectedSurveyService, guestsAmount, entryDescription, compoundMainMealDescription, dessertStep)
+      return compoundSurveySteps(selectedSurveyService, guestsDescription, entryDescription, compoundMainMealDescription, dessertStep)
       break;
     default:
-      return simpleSurveySteps(selectedSurveyService, guestsAmount, drinksDecription, simpleMainMealDescription)
+      return simpleSurveySteps(selectedSurveyService, guestsDescription, drinksDecription, simpleMainMealDescription)
       break;
   }
 }

@@ -2,28 +2,14 @@ import FormPanel from '@components/ui/contents/FormPanel'
 import { Grid } from '@mui/material'
 import React from 'react'
 import servicesStepsProvider from './utils/servicesStepsProvider'
-import { FC, useState } from "react";
+import { useState } from "react";
 import SurveyStepper from '../surveyStepper/SurveyStepper';
 import { useAppCtx } from '../../../src/contexts/store';
-import { guestsStepsType } from '../../../src/types/global';
 
 const StepsLayout = () => {
 
   const { selectedSurvey, displaySideStepper } = useAppCtx();
-
   const [activeStep, setActiveStep] = useState(0)
-
-  const [dateStep, setDateStep] = useState<string>()
-  const [suerveyInfo, setSurveyInfo] = useState<{ comedor: number, fecha: string, funcionamiento: string }>()
-  const [mealTypeStep, setMealTypeStep] = useState<string>()
-  const [guestsStep, setGuestStep] = useState<guestsStepsType>({
-    childs: 0,
-    kids: 0,
-    teens: 0,
-    adults: 0
-  })
-  const [drinkStep, setDrinkStep] = useState<string>()
-  const [breakFastMainMailStep, setBreakFastMainMealStep] = useState<string>()
 
   const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''  
 
@@ -58,24 +44,10 @@ const StepsLayout = () => {
               <FormPanel
                 title={`${steps[activeStep].title}`}
                 subtitle={`${steps[activeStep].subtitle}`}
-              // backClickHandler={handleGoToPreviousStep}
-              // fowardClickHandler={handleGoToNextStep}
               >
                 <ActiveStepComponent
                   handleGoToNextStep={handleGoToNextStep}
                   handleGoToPreviousStep={handleGoToPreviousStep}
-                  setDateStep={setDateStep}
-                  dateStep={dateStep}
-                  suerveyInfo={suerveyInfo}
-                  setSurveyInfo={setSurveyInfo}
-                  setMealTypeStep={setMealTypeStep}
-                  mealTypeStep={mealTypeStep}
-                  setGuestStep={setGuestStep}
-                  guestsStep={guestsStep}
-                  setDrinkStep={setDrinkStep}
-                  drinkStep={drinkStep}
-                  setBreakFastMainMealStep={setBreakFastMainMealStep}
-                  breakFastMainMailStep={breakFastMainMailStep}
                 />
               </FormPanel>
             </Grid>

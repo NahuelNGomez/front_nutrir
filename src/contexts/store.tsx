@@ -136,12 +136,12 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalLogin, setModalLogin] = useState(false);
   const [comedoresDisponibles, setComedoresDisponibles] = useState<Array<any>>([])
-  const [comedorSeleccionado, setComedorSeleccionado] = useState<comedorInfoType>()
+  const [comedorSeleccionado, setComedorSeleccionado] = useState<comedorInfoType>(comedorInit)
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal, setSurverOptionsModal] = useState(false);
   // Steps
-  const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>();
+  const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>({ date: '', service: '' });
   const [guestsAmount, setGuestsAmount] = useState<guestsStepsType>({
     childs: 0,
     kids: 0,

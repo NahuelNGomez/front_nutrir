@@ -1,14 +1,11 @@
-import FormPanel from '@components/ui/contents/FormPanel'
-import { Button, Grid } from '@mui/material'
-import React, { FC, useState } from 'react'
-import GuestsPanel from './GuestsStep'
-import CustomAccordion from './IngredientsSteps'
-import SurveyStepper from '../surveyStepper/SurveyStepper'
+import { Button, CircularProgress, Grid } from '@mui/material'
+import React, { FC, useEffect, useState } from 'react'
 import IngredientsPanel from '../mealCompositionPanel/customAccordion/IngredientsPanel'
 import { useAppCtx } from '../../../src/contexts/store'
 import { pagesStyles } from '@styles/index'
 import { mealStepType } from '../../../src/types/global'
 import { Formik, FormikProps } from 'formik'
+import axios from 'axios'
 
 
 const mockMeals = [
@@ -144,8 +141,51 @@ const CompoundMainDishStep: FC<Props> = ({
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setCompoundMainMailStep } = useAppCtx();
+  const { modeTheme, setStepActive, setCompoundMainMailStep, user, setModalLogin, selectedSurvey } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
+  const [comidas, setComidas] = useState<Array<any>>([])
+
+  useEffect(() => {
+
+    axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}comida/servicio/cena`,
+      { headers: { Authorization: `Bearer ${user.access_token}` } })
+      .then(res => {
+        if (res.status === 401) {
+          setModalLogin(true)
+        } else {
+          const data = res.data.data["plato principal"]
+          const dataComidas = data.map(async (comida: any) => {
+            try {
+              const info = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}comida/${comida.id}`,
+                { headers: { Authorization: `Bearer ${user.access_token}` } })
+              return info
+            } catch (error) {
+              console.log('comida data error', error);
+            }
+          })
+
+          const promisesFormatted = async () => {
+            try {
+              const promises = await Promise.all(dataComidas)
+              const res = promises.map((e) => e.data.data)
+              setComidas(res)
+            } catch (error) {
+              console.log('promesas catch', error)
+            }
+          }
+          promisesFormatted()
+
+          // setComidas(dataComidas)
+        }
+      })
+      .catch(err => {
+        // console.log('err', err.response)
+        if (err.response.status === 401) {
+          setModalLogin(true)
+        }
+      })
+  }, [user.access_token])
 
   const initialValues: mealStepType = {
     comida: null,
@@ -159,51 +199,59 @@ const CompoundMainDishStep: FC<Props> = ({
     setStepActive(3)
   }
 
+
+
   return (
     <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          // console.log({values});
-
-          setCompoundMainMailStep(values)
-          setStepActive(4)
-          handleGoToNextStep()
-        }}
-      // validationSchema={validationSchema}
-      >
-        {(props: FormikProps<any>) => {
-          return (
-            <>
-              <form onSubmit={props.handleSubmit}>
-                <IngredientsPanel
-                  formikProps={props}
-                  meals={mockMeals}
-                />
-                <Grid
-                  container xs={12}
-                  justifyContent={"space-between"}
-                  sx={{ pt: 0 }}
-                >
-                  <Button
-                    onClick={handleBackBtn}
-                    sx={mealStep.button}
-                  >
-                    Volver
-                  </Button>
-                  <Button
-                    sx={mealStep.button}
-                    type='submit'
-                  >
-                    Siguiente
-                  </Button>
-                </Grid>
-              </form>
-            </>)
-        }
-        }
-      </Formik>
+      {
+        comidas.length > 0
+          ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={(values) => {
+                setCompoundMainMailStep(values)
+                setStepActive(4)
+                handleGoToNextStep()
+              }}
+            // validationSchema={validationSchema}
+            >
+              {(props: FormikProps<any>) => {
+                return (
+                  <>
+                    <form onSubmit={props.handleSubmit}>
+                      <IngredientsPanel
+                        formikProps={props}
+                        meals={mockMeals}
+                      />
+                      <Grid
+                        container xs={12}
+                        justifyContent={"space-between"}
+                        sx={{ pt: 0 }}
+                      >
+                        <Button
+                          onClick={handleBackBtn}
+                          sx={mealStep.button}
+                        >
+                          Volver
+                        </Button>
+                        <Button
+                          sx={mealStep.button}
+                          type='submit'
+                        >
+                          Siguiente
+                        </Button>
+                      </Grid>
+                    </form>
+                  </>
+                )
+              }
+              }
+            </Formik>
+          )
+          : <CircularProgress />
+      }
     </>
+
   )
 }
 

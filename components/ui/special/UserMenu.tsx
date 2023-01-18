@@ -1,6 +1,6 @@
 import { Avatar, Grid, Menu } from "@mui/material";
 import {componentsStyles} from "@styles/index";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import UserOptions from "../contents/UserOptions";
 import PersonIcon from '@mui/icons-material/Person';

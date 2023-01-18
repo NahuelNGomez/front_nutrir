@@ -87,7 +87,7 @@ export type comedorInfoType = {
   fuente_agua?: number;
   fuente_agua_potable?: boolean;
   gobierno_local?: number;
-  id?: number;
+  id: number;
   localidad?: number;
   latitud?: string;
   longitud?: string;
@@ -107,8 +107,8 @@ export type comedorInfoType = {
 // Step 0: date & service type - selected survey to complete
 
 export type selectedSurveyType = {
-  date?: string;
-  service?: string;
+  date: string;
+  service: string;
 }
 
 // Step 1: guests

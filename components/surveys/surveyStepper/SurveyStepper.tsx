@@ -11,6 +11,8 @@ import moment from "moment";
 import { pagesStyles } from "@styles/index";
 import stepsProvider from "./utils/stepsProvider";
 import mealDescriptionFormatter from "./utils/mealDescriptionFormatter";
+import guestsDescriptionFormatter from "./utils/guestsDescriptionFormatter";
+import submitContentFormatter from "./utils/submitContentFormatter";
 
 type Props = {
   breakFastMainMailStep?: {}
@@ -25,20 +27,26 @@ const SurveyStepper: FC<Props> = ({
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
 
-  const { selectedSurvey, displaySideStepper, setDisplaySideStepper, guestsAmount, stepActive, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep } = useAppCtx()
+  const { user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep, displaySideStepper, setDisplaySideStepper, stepActive } = useAppCtx()
 
   const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''
+  const guestsDescription = guestsDescriptionFormatter(guestsAmount)
   const drinksDecription = mealDescriptionFormatter(drinkStep)
   const simpleMainMealDescription = mealDescriptionFormatter(simpleMainMealStep)
   const entryDescription = mealDescriptionFormatter(entryStep)
   const compoundMainMealDescription = mealDescriptionFormatter(compoundMainMealStep)
   const dessertDescription = mealDescriptionFormatter(dessertStep)
 
-  const steps = stepsProvider(selectedService, guestsAmount, drinksDecription, simpleMainMealDescription, entryDescription, compoundMainMealDescription, dessertDescription)
+  const steps = stepsProvider(selectedService, guestsDescription, drinksDecription, simpleMainMealDescription, entryDescription, compoundMainMealDescription, dessertDescription)
 
   const handlerBackClick = (e: any) => {
     backClickHandler()
     setDisplaySideStepper(true)
+  }
+
+  const handlerSubmit = ()=>{
+    const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)
+    alert(JSON.stringify(data))    
   }
 
   return (
@@ -69,14 +77,6 @@ const SurveyStepper: FC<Props> = ({
                   </Step>
                 ))}
               </Stepper>
-              {/* {activeStep === steps.length && (
-                      <Paper square elevation={0} sx={{ p: 3 }}>
-                        <Typography>All steps completed - you&apos;re finished</Typography>
-                        <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                          Reset
-                        </Button>
-                      </Paper>
-                    )} */}
             </Box>
 
             {
@@ -91,6 +91,7 @@ const SurveyStepper: FC<Props> = ({
                         Volver
                       </Button>
                       <Button
+                        onClick={handlerSubmit}
                         sx={stepper.buttons}
                       >
                         Enviar
