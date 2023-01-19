@@ -6,6 +6,13 @@ import EntryDishStep from "../EntryDishStep"
 import CompoundMainDishStep from "../CompoundMainDishStep"
 import DessertDishStep from "../DessertDishStep"
 
+// Simple y compound deberían recibir un argumento string que diga si es
+// - simple
+//    - desayuno o merienda
+// - compound
+//    - almuerzo o cena
+// - ver comida
+
 const simpleDish = [
   {
     title: '2. ¿Cuántos comenzales tienes?',

@@ -1,13 +1,8 @@
 import { FC, useEffect, useState } from "react";
 
-import { Button, Card, CardContent, Divider, Grid, Typography } from "@mui/material";
-import LoggedLayout from "@components/layouts/LoggedLayout";
-// export { getServerSideProps } from "../../src/serverSideProps"
+import { Card, CardContent, Grid } from "@mui/material";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
-import SurveysAvailable from "@components/ui/contents/SurveysAvailable";
-// import { dishesList } from "../../src/contents/dishesList";
-import { Box } from "@mui/system";
 import PanelHeader from "../dateTable/PanelHeader";
 import DataTable from '../../common/form/DateTable/DataTable'
 import axios from "axios";

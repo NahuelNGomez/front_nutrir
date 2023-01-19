@@ -10,13 +10,16 @@ import axios from "axios";
 
 const Home: NextPage = () => {
   const { modeTheme, user, setModalLogin, setComedoresDisponibles, comedoresDisponibles, comedorSeleccionado, setModalOpen } = useAppCtx();
-  const { dashboardStyles } = pagesStyles(modeTheme); 
-  
+  const { dashboardStyles } = pagesStyles(modeTheme);
+
 
   useEffect(() => {
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/responsable/`,
-      { headers: { Authorization: `Bearer ${user.access_token}` } })
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+    const url = `${baseUrl}comedor/responsable/`
+    const headers = { headers: { Authorization: `Bearer ${user.access_token}` } }
+
+    axios.get(url, headers)
       .then(res => {
         setComedoresDisponibles(res.data)
         if (res.status === 401) {
@@ -24,18 +27,21 @@ const Home: NextPage = () => {
         }
       })
       .catch(err => {
-        if (err.response.status === 401) {
+        if (err.response && err.response.status === 401) {
           setModalLogin(true)
+        } else if (err.code === "ERR_NETWORK") {
+          // console.log(err)
+          alert('No es posible la conexión con el servidor')
         }
       })
   }, [])
 
   useEffect(() => {
-    if(comedoresDisponibles?.length > 0){
+    if (comedoresDisponibles?.length > 0) {
       setModalOpen(true)
     }
   }, [comedoresDisponibles])
-  
+
 
   return (
     <LoggedLayout>

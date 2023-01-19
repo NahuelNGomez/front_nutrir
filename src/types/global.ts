@@ -11,6 +11,7 @@ export type userType = {
   logged: boolean;
   access_token: string;
   refresh_token: string;
+  pk: number;
   groups: [];
 };
 

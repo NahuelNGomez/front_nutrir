@@ -36,6 +36,7 @@ const initialStoreState: storeType = {
   currentTheme: lightTheme,
   modeTheme: "light",
   user: {
+    pk: 0,
     first_name: "",
     last_name: "",
     cuil: 1,

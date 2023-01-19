@@ -158,7 +158,8 @@ const IngredientsPanel = (theme = 'light') => ({
       p: 1.5,
       borderRadius: '5px',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      mb: '0.5rem'
     },
     title: {
       paddingLeft: 1.5

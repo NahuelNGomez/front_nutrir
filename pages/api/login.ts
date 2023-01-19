@@ -3,7 +3,6 @@ import { withSessionRoute } from "../../src/utils/withIronSession";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {cuil, password} = JSON.parse(req.body);
-  // console.log({body});
   
   if (cuil && password) {
 

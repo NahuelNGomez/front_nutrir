@@ -13,40 +13,55 @@ import stepsProvider from "./utils/stepsProvider";
 import mealDescriptionFormatter from "./utils/mealDescriptionFormatter";
 import guestsDescriptionFormatter from "./utils/guestsDescriptionFormatter";
 import submitContentFormatter from "./utils/submitContentFormatter";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 type Props = {
-  breakFastMainMailStep?: {}
   backClickHandler: () => void
 }
 
 const SurveyStepper: FC<Props> = ({
-  breakFastMainMailStep,
   backClickHandler
 }) => {
-
+  const route = useRouter()
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
 
   const { user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep, displaySideStepper, setDisplaySideStepper, stepActive } = useAppCtx()
 
-  const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''
+  const serviceDescription = selectedSurvey?.service ? selectedSurvey?.service : ''
   const guestsDescription = guestsDescriptionFormatter(guestsAmount)
   const drinksDecription = mealDescriptionFormatter(drinkStep)
   const simpleMainMealDescription = mealDescriptionFormatter(simpleMainMealStep)
   const entryDescription = mealDescriptionFormatter(entryStep)
   const compoundMainMealDescription = mealDescriptionFormatter(compoundMainMealStep)
-  const dessertDescription = mealDescriptionFormatter(dessertStep)
+  const dessertDescription = mealDescriptionFormatter(dessertStep)  
 
-  const steps = stepsProvider(selectedService, guestsDescription, drinksDecription, simpleMainMealDescription, entryDescription, compoundMainMealDescription, dessertDescription)
+  const steps = stepsProvider(serviceDescription, guestsDescription, drinksDecription, simpleMainMealDescription, entryDescription, compoundMainMealDescription, dessertDescription)
 
   const handlerBackClick = (e: any) => {
+    e.preventDefault()
     backClickHandler()
     setDisplaySideStepper(true)
   }
 
-  const handlerSubmit = ()=>{
-    const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)
-    alert(JSON.stringify(data))    
+  const handlerSubmit = (e: any) => {
+    e.preventDefault()
+
+    const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)   
+
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/`
+    const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
+    axios.post(url, data, config,)
+    .then(res =>{
+      console.log(res);
+      alert('Encuesta enviada correctamente')
+      route.push('/')
+    })
+    .catch(err=>{
+      alert('La encuesta no pudo ser enviada')
+      console.log('Post err', err);
+    })
   }
 
   return (
