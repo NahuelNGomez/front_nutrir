@@ -30,7 +30,6 @@ const Home: NextPage = () => {
         if (err.response && err.response.status === 401) {
           setModalLogin(true)
         } else if (err.code === "ERR_NETWORK") {
-          // console.log(err)
           alert('No es posible la conexión con el servidor')
         }
       })

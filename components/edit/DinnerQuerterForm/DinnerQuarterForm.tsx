@@ -34,6 +34,7 @@ const DinnerQuarterForm: FC<Props> = ({ comedorData }) => {
   } = pagesStyles(modeTheme);
 
   useEffect(() => {
+
     defaultValues({
       name: comedorInfo.descripcion,
       street: comedorInfo.calle,
@@ -174,30 +175,6 @@ const DinnerQuarterForm: FC<Props> = ({ comedorData }) => {
                 onChange={updateField}
               />
             </Grid>
-
-            {/*Between 2  */}
-            {/* <Grid
-              item
-              xs={12}
-              sm={12}
-              lg={12}
-              xl={12}
-              sx={comedorForm.form.fields}
-            >
-              <TextField
-                error={errors.between_street2}
-                fullWidth
-                id="input-with-sx"
-                label="Entre Calle 2"
-                variant="outlined"
-                type="text"
-                name="between_street2"
-                margin="normal"
-                value={fields.between_street2}
-                sx={comedorForm.utils.textInput}
-                onChange={updateField}
-              />
-            </Grid> */}
 
             {/* Province */}
             <Grid

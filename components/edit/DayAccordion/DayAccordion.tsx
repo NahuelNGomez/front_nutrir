@@ -1,18 +1,22 @@
 import { Accordion, AccordionDetails, AccordionSummary, CardActions, FormControlLabel, FormGroup, Grid, Switch, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import { pagesStyles } from "@styles/index";
+import { serviciosDiaType } from "../../../src/types/global";
+import servicesByDayInfo from "./constants/servicesByDayInfo";
+import ServiceAvailableCard from "./ServiceAvailableCard";
 
 type Props = {
-  index: number,
-  dayName: string,
-  funcionamiento?: string
+  dayData: Array<serviciosDiaType>;
+  index: number;
+  dayName: string;
 }
 
-const DayAccordion: React.FC<Props> = ({ dayName, index }) => {
+const DayAccordion: React.FC<Props> = ({ dayName, index, dayData, }) => {
 
   const { modeTheme } = useAppCtx();
+  // const [dayService, setDayService] = useState<serviciosDiaType>()
 
   const {
     editStyles: { daysForm },
@@ -25,6 +29,15 @@ const DayAccordion: React.FC<Props> = ({ dayName, index }) => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
+
+  // useEffect(() => {
+  //   if (dayData?.length) {
+  //     setDayService(dayData[0])
+  //   }
+  // }, [dayData])
+
+  console.log({ dayData });
+
 
   return (
     <div>
@@ -48,9 +61,9 @@ const DayAccordion: React.FC<Props> = ({ dayName, index }) => {
             <Grid container xs={12} justifyContent={'space-between'}>
               <CardActions sx={daysForm.actions}>
                 <Grid container wrap="wrap">
-                  <Grid item xs={12} md={6} lg={4} xl={4}>
+                  {/* <Grid item xs={12} md={6} lg={4} xl={4}>
                     <FormGroup>
-                      <FormControlLabel control={<Switch />} label="Desayuno" />
+                      <FormControlLabel checked={true} control={<Switch />} label="Desayuno" />
                     </FormGroup>
                   </Grid>
                   <Grid item xs={12} md={6} lg={4} xl={4}>
@@ -72,7 +85,24 @@ const DayAccordion: React.FC<Props> = ({ dayName, index }) => {
                     <FormGroup>
                       <FormControlLabel control={<Switch />} label="Olla Popular" />
                     </FormGroup>
-                  </Grid>
+                  </Grid> */}
+                  {
+                    servicesByDayInfo.map(({ name, keyInfo }, index) => {
+                      
+                      const funcionamientos = dayData.length > 0 ? dayData[0].funcionamientos : []
+                      const test = funcionamientos.filter(e => e === keyInfo)
+                      const checked = test.length > 0 ? true : false
+
+                      return (
+                        <ServiceAvailableCard
+                          name={name}
+                          keyInfo={keyInfo}
+                          checked={checked}
+                          key={`serviceCard_key_${index}`}
+                        />
+                      )
+                    })
+                  }
                 </Grid>
               </CardActions>
             </Grid>

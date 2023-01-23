@@ -23,49 +23,63 @@ import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import useForm from "../src/hooks/useForm";
 import { merenderoFields } from "../src/types/forms";
-import { comedorInfoType, serviciosType } from "../src/types/global";
+import { comedorInfoType, serviciosDiaType } from "../src/types/global";
 export { getServerSideProps } from "../src/serverSideProps";
 
 const Edit: NextPage = () => {
-  const { modeTheme, user, comedorSeleccionado } = useAppCtx();
+  const { modeTheme, user, comedorSeleccionado, setModalLogin } = useAppCtx();
   const [comedorData, setComedordata] = useState<Array<comedorInfoType>>([])
-  const [serviciosData, setServiciosData] = useState<Array<serviciosType>>([])
-
-  const {
-    fields,
-    errors,
-    processing,
-    updateField,
-    submit,
-    finishProcess,
-  } = useForm<merenderoFields>(statesForms.merendero);
+  const [serviciosData, setServiciosData] = useState<Array<serviciosDiaType>>([])
 
   const { editStyles } = pagesStyles(modeTheme);
   const { groups, access_token } = user
 
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+  const headers = { headers: { Authorization: `Bearer ${access_token}` } }
+
   useEffect(() => {
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/${comedorSeleccionado?.id}`,
-      { headers: { Authorization: `Bearer ${access_token}` } })
+
+    const url = `${baseUrl}comedor/${comedorSeleccionado?.id}`
+
+    axios.get(url, headers)
       .then(res => {
+        if (res.status === 401) {
+          setModalLogin(true)
+        }
         setComedordata(res.data)
       })
       .catch(err => {
-        console.log('err', err.response)
+        if (err.response && err.response.status === 401) {
+          setModalLogin(true)
+        } else if (err.code === "ERR_NETWORK") {
+          // console.log(err)
+          alert('No es posible la conexión con el servidor')
+        }
       })
-  }, [access_token, groups])
+  }, [])
 
   useEffect(() => {
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/${comedorSeleccionado?.id}/funcionamiento/`,
-      { headers: { Authorization: `Bearer ${access_token}` } })
+
+    const url = `${baseUrl}comedor/${comedorSeleccionado?.id}/funcionamiento/`
+
+    axios.get(url, headers)
       .then(res => {
-        setServiciosData(res.data)
+        if (res.status === 401) {
+          setModalLogin(true)
+        }
+        console.log('servicios data', res.data.data);
+               
+        setServiciosData(res.data.data)
       })
       .catch(err => {
-        console.log('err', err.response)
+        if (err.response && err.response.status === 401) {
+          setModalLogin(true)
+        } else if (err.code === "ERR_NETWORK") {
+          // console.log(err)
+          alert('No es posible la conexión con el servidor')
+        }
       })
-  }, [access_token, groups])
+  }, [])
 
   return (
     <LoggedLayout>
@@ -109,7 +123,7 @@ const Edit: NextPage = () => {
               xl={6}
             >
               {
-                serviciosData
+                serviciosData.length > 0
                   ? <DaysForm serviciosData={serviciosData} />
                   : (
                     <CircularProgress

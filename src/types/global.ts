@@ -74,6 +74,18 @@ export type serviciosType = {
   entre_calles: string;
 }
 
+export type serviciosDiaType = {
+  comedor: number;
+  dia: string;
+  funcionamientos: Array<string>
+}
+
+export type serviceByDayTipe = {
+  name: string,
+  keyInfo: string,
+}
+
+
 export type comedorInfoType = {
   actividades?: Array<number>;
   activo?: boolean;
