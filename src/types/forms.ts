@@ -2,10 +2,10 @@
 
 export enum profileFields {
   user = "required",
-  name = "required",
+  firstName = "required",
+  lastName = "required",
   phone = "required",
   email = "required",
-  password = "optional"
 }
 
 export enum merenderoFields {
@@ -39,7 +39,7 @@ export enum emailResetFields {
 export enum passwordResetFields {
   password = "required",
   confirm_password = "required",
-  token = "required",
+  // token = "optional",
 };
 
 export type stateFormBase<T> = {
@@ -55,7 +55,7 @@ export type stateFormBase<T> = {
 
 export type formBase = typeof statesForms;
 
-export type SubmitForm = { token: string; success?: boolean; errors: any };
+export type SubmitForm = { token?: string; success?: boolean; errors: any, status?: number};
 
 export enum ActionsForm {
   FETCH_FIELDS = "fetch_fields",

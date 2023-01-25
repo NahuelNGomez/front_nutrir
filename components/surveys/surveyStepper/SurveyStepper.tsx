@@ -54,13 +54,13 @@ const SurveyStepper: FC<Props> = ({
     const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
     axios.post(url, data, config,)
     .then(res =>{
-      console.log(res);
+      // console.log(res);
       alert('Encuesta enviada correctamente')
       route.push('/')
     })
     .catch(err=>{
       alert('La encuesta no pudo ser enviada')
-      console.log('Post err', err);
+      // console.log('Post err', err);
     })
   }
 

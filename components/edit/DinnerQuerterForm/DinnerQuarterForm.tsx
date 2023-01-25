@@ -5,7 +5,7 @@ import { merenderoFields } from '../../../src/types/forms';
 import { statesForms } from '../../../src/constants/states';
 import { useAppCtx } from "../../../src/contexts/store";
 import { pagesStyles } from "@styles/index";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { comedorInfoType } from "../../../src/types/global";
 
 interface Props {
@@ -14,8 +14,9 @@ interface Props {
 
 const DinnerQuarterForm: FC<Props> = ({ comedorData }) => {
 
-  const { modeTheme, user } = useAppCtx();
-  const router = useRouter();
+  const { modeTheme, user, setModalLogin } = useAppCtx();
+  const [success, setSuccess] = useState(false)
+  const [responseError, setResponseError] = useState(false)
 
   const {
     fields,
@@ -33,30 +34,48 @@ const DinnerQuarterForm: FC<Props> = ({ comedorData }) => {
     editStyles: { comedorForm },
   } = pagesStyles(modeTheme);
 
+  const successDisplay = ()=>{
+    setSuccess(true)
+    setTimeout(()=>{
+      setSuccess(false)
+    }, 3000)
+  }
+
+
   useEffect(() => {
 
     defaultValues({
-      name: comedorInfo.descripcion,
+      name: comedorInfo.nombre,
       street: comedorInfo.calle,
       number: comedorInfo.numero,
       between_street1: comedorInfo.entre_calles,
-      // between_street2: 'NSNC',
       province: 'Buenos Aires'
     })
   }, [comedorInfo])
 
-
+  const handleSubmit = (e:React.FormEvent)=>{
+    submit(e, "/api/merendero/edit")
+    .then((res) => {
+      if(res.success && res.status === 401) {
+        setModalLogin(true)
+      } 
+      if(res.success) {
+        successDisplay()
+        setResponseError(false)
+      }
+      finishProcess();
+    }
+    )
+    .catch(err=>{
+      setResponseError(true)
+    })
+  }
 
   return (
     <Card>
       {processing.loading && <LinearProgress color="primary" />}
       <form
-        onSubmit={(e) =>
-          submit(e, "/api/merendero").then(() => {
-            console.log("it works!");
-            finishProcess();
-          })
-        }
+        onSubmit={(e) => handleSubmit(e)}
       >
         <CardContent>
           <Typography
@@ -224,14 +243,14 @@ const DinnerQuarterForm: FC<Props> = ({ comedorData }) => {
             )}
           </Button>
         </CardActions>
-        {!processing.validate && (
+        {responseError && (
           <div style={comedorForm.utils.errorMessage}>
             <Alert severity="error" sx={comedorForm.utils.AlertMessage}>
               Hubo un error!
             </Alert>
           </div>
         )}
-        {processing.finish && (
+        {success && (
           <div style={comedorForm.utils.errorMessage}>
             <Alert severity="success" sx={comedorForm.utils.AlertMessage}>
               Se Modifico con exito el comedor

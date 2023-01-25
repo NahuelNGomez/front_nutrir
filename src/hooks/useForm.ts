@@ -5,15 +5,17 @@ import {
   stateFormBase,
   SubmitForm,
 } from "../types/forms";
+import { useAppCtx } from "../contexts/store";
 
 export default function useForm<T>(initialState: stateFormBase<T>) {
   const reducer = buildReducer<T>(initialState);
   const [Form, dispatch] = useReducer(reducer, initialState);
+  const { user, comedorSeleccionado } = useAppCtx()
 
-  const defaultValues = (values:typeof Form.fields) => {
+  const defaultValues = (values: typeof Form.fields) => {
     dispatch({
       type: ActionsForm.FETCH_FIELDS,
-      payload: { ...values},
+      payload: { ...values },
     });
   }
 
@@ -25,6 +27,10 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
   };
 
   const updateField = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    // const fieldsvalues = { ...Form.fields, [e.target.name]: e.target.value }
+    // console.log({fieldsvalues});
+  
     dispatch({
       type: ActionsForm.FETCH_FIELDS,
       payload: { ...Form.fields, [e.target.name]: e.target.value },
@@ -32,11 +38,16 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
   };
 
   const validateFields = (): boolean => {
+
+
     const errors = Object.keys(Form.fields).reduce((err: any, field) => {
-      err[field] =   !Form.fields[field] && !Form.rules[field].includes('optional');
+      err[field] = !Form.fields[field] && !Form.rules[field].includes('optional');
       return err;
     }, {});
 
+    // console.log('errors',{errors});
+    
+    
     dispatch({
       type: ActionsForm.FETCH_ERRORS,
       payload: errors,
@@ -48,10 +59,10 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
     );
   };
 
-  const setProcess = ({ validate, loading,finish }: typeof Form.processing) => {
+  const setProcess = ({ validate, loading, finish }: typeof Form.processing) => {
     dispatch({
       type: ActionsForm.FETCH_PROCESS,
-      payload: { validate, loading,finish },
+      payload: { validate, loading, finish },
     });
   };
 
@@ -59,22 +70,39 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
     e: React.FormEvent,
     action: string
   ): Promise<SubmitForm> => {
+
+    
     e.preventDefault();
+    
+    // console.log(e);
+    // console.log('submit passs!', e)
+    
 
     return new Promise(async (resolve, reject) => {
-      setProcess({ validate: true, loading: true,finish:false });
+      setProcess({ validate: true, loading: true, finish: false });
 
       if (validateFields()) {
+
+    
+
+        const infoUser = { ...Form.fields, userinfo: user ? user : null }
+
+        const infoComedor = { ...Form.fields, userinfo: user ? user : null, comedorInfo: comedorSeleccionado ? comedorSeleccionado : null }
+
+        const data = action === "/api/merendero/edit" ? infoComedor : infoUser
+
         const response = await fetch(action, {
           method: "POST",
-          body: JSON.stringify(Form.fields),
+          body: JSON.stringify(data)
         }).then((res) => res.json());
 
+        console.log('useForm response', { response });
+        
         if (response.success) {
-          resolve(response); 
-          
+          resolve(response);
+
         } else {
-          setProcess({ validate: false, loading: false,finish:false });
+          setProcess({ validate: false, loading: false, finish: false });
 
           if (response.errors) {
             dispatch({
@@ -87,14 +115,14 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
           }
         }
       } else {
-        setProcess({ validate: true, loading: false,finish:false });
+        setProcess({ validate: true, loading: false, finish: false });
         reject({ errors: {} });
       }
     });
   };
 
   const finishProcess = () => {
-    setProcess({ validate: true, loading: false,finish:true });
+    setProcess({ validate: true, loading: false, finish: true });
   }
-  return { ...Form, submit, updateField, updateFieldProps,defaultValues,finishProcess };
+  return { ...Form, submit, updateField, updateFieldProps, defaultValues, finishProcess };
 }

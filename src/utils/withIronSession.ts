@@ -19,7 +19,8 @@ declare module "iron-session" {
       last_name?: string;
       telefono?: string;
       picture: null;
-      groups: [1];
+      // groups: [1];
+      groups: Array<number>;
     };
   }
 }

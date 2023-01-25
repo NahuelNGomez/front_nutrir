@@ -7,16 +7,19 @@ import {
   Typography,
   Card,
 } from "@mui/material";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { statesForms } from "../../src/constants/states";
 import { useAppCtx } from "../../src/contexts/store";
 import useForm from "../../src/hooks/useForm";
 import { profileFields } from "../../src/types/forms";
 import { pagesStyles } from "@styles/index";
+import { resolveSoa } from "dns";
 
 
 const UserForm: FC<{}> = () => {
-  const { modeTheme, user } = useAppCtx();
+  const { modeTheme, user, setModalLogin } = useAppCtx();
+  const [success, setSuccess] = useState(false)
+  const [responseError, setResponseError] = useState(false)
 
   const {
     fields,
@@ -35,21 +38,43 @@ const UserForm: FC<{}> = () => {
   useEffect(() => {
     defaultValues({
       user: user.cuil,
-      name: user.first_name,
+      firstName: user.first_name,
+      lastName: user.last_name,
       phone: user.telefono,
       email: user.email,
     });
-  }, []);
+  }, [user]);
+
+  const successDisplay = ()=>{
+    setSuccess(true)
+    setTimeout(()=>{
+      setSuccess(false)
+    }, 3000)
+  }
+
+
+  const handleSubmit = (e:React.FormEvent)=>{
+    submit(e, "/api/profile")
+    .then((res) => {
+      if(res.success) {
+        successDisplay()
+        setResponseError(false)
+      }
+      if(res.success && res.status === 401) {
+        setModalLogin(true)
+      } 
+      finishProcess();
+    }
+    )
+    .catch(err=>{
+      setResponseError(true)
+    })
+  }
 
   return (
     
       <form
-        onSubmit={(e) =>
-          submit(e, "/api/profile").then(() => {
-            console.log("it works!");
-            finishProcess();
-          })
-        }
+        onSubmit={handleSubmit}
       >
         <Grid>
           <Typography
@@ -66,6 +91,7 @@ const UserForm: FC<{}> = () => {
                 error={errors.user}
                 fullWidth
                 id="input-with-sx"
+                disabled={true}
                 label="Usuario"
                 variant="outlined"
                 type="text"
@@ -82,12 +108,30 @@ const UserForm: FC<{}> = () => {
                 error={errors.name}
                 fullWidth
                 id="input-with-sx"
-                label="Nombre y Apellido"
+                label="Nombre"
                 variant="outlined"
                 type="text"
-                name="name"
+                name="firstName"
                 margin="normal"
-                value={fields.name}
+                value={fields.firstName}
+                sx={formStyles.textInput}
+                helperText={
+                  errors.name ? "Debes ingresar tu nombre y appellido" : ""
+                }
+                onChange={updateField}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} lg={12} xl={12} sx={formStyles.fields}>
+              <TextField
+                error={errors.name}
+                fullWidth
+                id="input-with-sx"
+                label="Apellido"
+                variant="outlined"
+                type="text"
+                name="lastName"
+                margin="normal"
+                value={fields.lastName}
                 sx={formStyles.textInput}
                 helperText={
                   errors.name ? "Debes ingresar tu nombre y appellido" : ""
@@ -149,14 +193,14 @@ const UserForm: FC<{}> = () => {
             )}
           </Button>
         </Grid>
-        {!processing.validate && (
+        {responseError && (
           <div style={formStyles.errorMessage}>
             <Alert severity="error" sx={formStyles.alertComponent}>
               Hubo un error!
             </Alert>
           </div>
         )}
-        {processing.finish && (
+        {success && (
           <div style={formStyles.errorMessage}>
             <Alert severity="success" sx={formStyles.alertComponent}>
               Se Modifico con exito tu perfil

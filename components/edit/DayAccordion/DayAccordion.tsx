@@ -16,7 +16,6 @@ type Props = {
 const DayAccordion: React.FC<Props> = ({ dayName, index, dayData, }) => {
 
   const { modeTheme } = useAppCtx();
-  // const [dayService, setDayService] = useState<serviciosDiaType>()
 
   const {
     editStyles: { daysForm },
@@ -29,15 +28,6 @@ const DayAccordion: React.FC<Props> = ({ dayName, index, dayData, }) => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
-
-  // useEffect(() => {
-  //   if (dayData?.length) {
-  //     setDayService(dayData[0])
-  //   }
-  // }, [dayData])
-
-  console.log({ dayData });
-
 
   return (
     <div>

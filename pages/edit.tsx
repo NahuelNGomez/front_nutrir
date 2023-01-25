@@ -1,10 +1,5 @@
 import LoggedLayout from "@components/layouts/LoggedLayout";
 import {
-  Alert,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
   CircularProgress,
   Divider,
   Grid,
@@ -66,9 +61,7 @@ const Edit: NextPage = () => {
       .then(res => {
         if (res.status === 401) {
           setModalLogin(true)
-        }
-        console.log('servicios data', res.data.data);
-               
+        }               
         setServiciosData(res.data.data)
       })
       .catch(err => {

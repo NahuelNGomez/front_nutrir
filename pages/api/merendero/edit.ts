@@ -1,27 +1,28 @@
-import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-// const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}user/sesion/user/`
     const body = JSON.parse(req.body)
-    const { email, firstName, lastName, phone, userinfo } = body
-
+    // console.log({body});
+    
+    const { name, street, number, between_street1, userinfo } = body
+    const {id } = body.comedorInfo   
+    
     const paylaod = {
-        email: email,
-        first_name: firstName,
-        last_name: lastName,
-        telefono: phone
+        nombre: name,
+        calle: street,
+        numero: String(number) ,
+        entre_calles: between_street1
     }
 
-    console.log({ paylaod });
-
-
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/${id}/`
+    
     try {
 
         const access_token = `Bearer ${userinfo.access_token}`
+
+        // console.log({access_token});
+        
 
         const response = await fetch(url, {
             method: 'PATCH',
@@ -45,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } catch (error) {
         console.log('api post error', error);
     }
-
+    
 };
 
 export default handler;

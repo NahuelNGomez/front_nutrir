@@ -106,6 +106,7 @@ const Form = (theme = "light") => ({
   },
   alertComponent: {
     justifyContent: "center",
+    mb: 3
   },
 });
 
@@ -141,7 +142,7 @@ const PassForm = (theme = "light") => ({
     padding: "10px",
     fontSize: "14px",
     width: { xs: "100%", sm: "100%", md: "80%", lg: "40%", xl: "40%" },
-    margin: "15px",
+    // margin: "10px",
     color: "white"
   },
   circularProgress: {
@@ -162,7 +163,7 @@ const profile = (theme = "light") => ({
   secondContainer: {
     pl: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
     pr: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
-    pb: { xs: 2, sm: 2, md: 4, lg: 2, xl: 2 },
+    pb: { xs: 5, sm: 5, md: 4, lg: 3, xl: 3 },
     pt: { xs: 2, sm: 2, md: 4, lg: 2, xl: 2 },
     width: { xs: "100%", sm: "100%", md: "100%", lg: "99%", xl: "99%" },
     ml: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
