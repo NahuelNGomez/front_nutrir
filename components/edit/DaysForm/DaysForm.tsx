@@ -1,8 +1,8 @@
-import { Button, Card, CardContent, CircularProgress, Grid, Typography } from "@mui/material"
+import { Alert, Button, Card, CardContent, CircularProgress, Grid, Typography } from "@mui/material"
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
 import DayAccordion from "../DayAccordion/DayAccordion";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { serviciosDiaType, serviciosType } from "../../../src/types/global";
 import serviciosMock from "./mock/serviciosMock";
 import { daysName } from "./constants/constants";
@@ -15,13 +15,21 @@ interface Props {
 
 const DaysForm: FC<Props> = ({ serviciosData }) => {
 
-  const { modeTheme, comedorSeleccionado, user } = useAppCtx();
-
-  console.log({ serviciosData });
+  const { modeTheme, comedorSeleccionado, user, setModalLogin } = useAppCtx();
+  const [success, setSuccess] = useState(false)
+  const [responseError, setResponseError] = useState(false)
 
   const {
     editStyles: { daysForm },
   } = pagesStyles(modeTheme);
+
+
+  const successDisplay = () => {
+    setSuccess(true)
+    setTimeout(() => {
+      setSuccess(false)
+    }, 3000)
+  }
 
   const handleSubmit = (values: { funcionamientos: Array<serviciosDiaType> }) => {
 
@@ -42,10 +50,18 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
 
     fetch('api/merendero/days', config)
       .then(res => {
-        console.log('days panel, api response', res);
+        console.log({ res });
+
+        if (res.status === 200) {
+          successDisplay()
+          setResponseError(false)
+        }
+        if (res.status === 401) {
+          setModalLogin(true)
+        }
       })
       .catch(err => {
-        console.log('days panel, api err', err);
+        setResponseError(true)
       })
 
   }
@@ -64,9 +80,6 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
             // validationSchema={validationSchema}
             >
               {(props: FormikProps<any>) => {
-
-
-                console.log('formik values', props.values);
 
                 return (
                   <>
@@ -111,6 +124,20 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
                             Guardar cambios
                           </Button>
                         </Grid>
+                        {responseError && (
+                          <div style={daysForm.utils.errorMessage}>
+                            <Alert severity="error" sx={daysForm.utils.alertComponent}>
+                              Hubo un error!
+                            </Alert>
+                          </div>
+                        )}
+                        {success && (
+                          <div style={daysForm.utils.errorMessage}>
+                            <Alert severity="success" sx={daysForm.utils.alertComponent}>
+                              Se Modifico con exito tu perfil
+                            </Alert>
+                          </div>
+                        )}
                       </Card>
                     </form>
                   </>

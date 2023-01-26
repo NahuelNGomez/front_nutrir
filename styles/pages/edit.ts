@@ -132,9 +132,21 @@ const DaysForm = (theme = 'light') => ({
       padding: "10px",
       fontSize: "14px",
       width: "40%",
-      marginTop: "15px",
-      marginBottom: "15px",
+      // marginTop: "15px",
+      marginBottom: 3,
       color: "white"
+    },
+    errorMessage: {
+      paddingTop: "15px",
+      ml: 3,
+      mr: 3,
+      mb: 3
+    },
+    alertComponent: {
+      justifyContent: "center",
+      ml: 3,
+      mr: 3,
+      mb: 3
     },
   }
 })
