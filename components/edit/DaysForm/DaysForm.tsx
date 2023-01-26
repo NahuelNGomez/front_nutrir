@@ -50,7 +50,6 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
 
     fetch('api/merendero/days', config)
       .then(res => {
-        console.log({ res });
 
         if (res.status === 200) {
           successDisplay()

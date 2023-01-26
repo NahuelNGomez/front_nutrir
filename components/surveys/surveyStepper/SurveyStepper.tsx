@@ -57,7 +57,6 @@ const SurveyStepper: FC<Props> = ({
     .then(res =>{
       // console.log(res);
       alert('Encuesta enviada correctamente')
-      
       route.push('/')
     })
     .catch(err=>{
