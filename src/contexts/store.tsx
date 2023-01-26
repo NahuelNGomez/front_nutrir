@@ -1,36 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme } from "../template/theme";
 import { storeType, themes, userType, invoiceInfoType, comedorInfoType, selectedSurveyType, guestsStepsType, mealStepType } from "../types/global";
-
-const comedorInit = {
-  nombre: '',
-  numero: 1,
-  organizacion_regional: 1,
-  actividades: [1],
-  activo: false,
-  asistentes_diarios: 1,
-  barrio: '',
-  calle: '',
-  cantidad_trabajadores: 0,
-  departamento: 0,
-  descripcion: '',
-  entre_calles: '',
-  fecha_inicio_actividad: '',
-  fuente_agua: 0,
-  fuente_agua_potable: false,
-  gobierno_local: 0,
-  id: 0,
-  latitud: '',
-  localidad: 0,
-  longitud: '',
-  provincia: 0,
-  responsable_comedor: 0,
-  servicio_comedor: 0,
-  tipos_energia: 0,
-  ubicacion_georreferencial: '',
-  selected: false
-}
-
+import { comedorInit, mealInit } from "./constants/initInfo";
 
 const initialStoreState: storeType = {
   currentTheme: lightTheme,
@@ -149,31 +120,11 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     teens: 0,
     adults: 0
   });
-  const [drinkStep, setDrinkStep] = useState<mealStepType>({
-    comida: null,
-    nombre: '',
-    alimento: []
-  })
-  const [simpleMainMealStep, setSimpleMainMealStep] = useState<mealStepType>({
-    comida: null,
-    nombre: '',
-    alimento: []
-  })
-  const [entryStep, setEntryStep] = useState<mealStepType>({
-    comida: null,
-    nombre: '',
-    alimento: []
-  })
-  const [compoundMainMealStep, setCompoundMainMailStep] = useState<mealStepType>({
-    comida: null,
-    nombre: '',
-    alimento: []
-  })
-  const [dessertStep, setDessertStep] = useState<mealStepType>({
-    comida: null,
-    nombre: '',
-    alimento: []
-  })
+  const [drinkStep, setDrinkStep] = useState<mealStepType>(mealInit)
+  const [simpleMainMealStep, setSimpleMainMealStep] = useState<mealStepType>(mealInit)
+  const [entryStep, setEntryStep] = useState<mealStepType>(mealInit)
+  const [compoundMainMealStep, setCompoundMainMailStep] = useState<mealStepType>(mealInit)
+  const [dessertStep, setDessertStep] = useState<mealStepType>(mealInit)
   const [displaySideStepper, setDisplaySideStepper] = useState(true);
   const [stepActive, setStepActive] = useState<number>();
 

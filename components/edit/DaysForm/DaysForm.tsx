@@ -134,7 +134,7 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
                         {success && (
                           <div style={daysForm.utils.errorMessage}>
                             <Alert severity="success" sx={daysForm.utils.alertComponent}>
-                              Se Modifico con exito tu perfil
+                              Se modificaron los servicios con éxito
                             </Alert>
                           </div>
                         )}

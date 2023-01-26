@@ -15,6 +15,7 @@ import guestsDescriptionFormatter from "./utils/guestsDescriptionFormatter";
 import submitContentFormatter from "./utils/submitContentFormatter";
 import axios from "axios";
 import { useRouter } from "next/router";
+import useSurveyReset from "../steps/hooks/useSurveyReset";
 
 type Props = {
   backClickHandler: () => void
@@ -35,7 +36,7 @@ const SurveyStepper: FC<Props> = ({
   const simpleMainMealDescription = mealDescriptionFormatter(simpleMainMealStep)
   const entryDescription = mealDescriptionFormatter(entryStep)
   const compoundMainMealDescription = mealDescriptionFormatter(compoundMainMealStep)
-  const dessertDescription = mealDescriptionFormatter(dessertStep)  
+  const dessertDescription = mealDescriptionFormatter(dessertStep)
 
   const steps = stepsProvider(serviceDescription, guestsDescription, drinksDecription, simpleMainMealDescription, entryDescription, compoundMainMealDescription, dessertDescription)
 
@@ -48,7 +49,7 @@ const SurveyStepper: FC<Props> = ({
   const handlerSubmit = (e: any) => {
     e.preventDefault()
 
-    const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)   
+    const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)
 
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/`
     const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
@@ -56,11 +57,12 @@ const SurveyStepper: FC<Props> = ({
     .then(res =>{
       // console.log(res);
       alert('Encuesta enviada correctamente')
+      
       route.push('/')
     })
     .catch(err=>{
       alert('La encuesta no pudo ser enviada')
-      // console.log('Post err', err);
+      // console.log('Post err', err); 
     })
   }
 

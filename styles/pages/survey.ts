@@ -133,36 +133,66 @@ const MealStep = (theme = 'light') => ({
 })
 
 const IngredientsPanel = (theme = 'light') => ({
+  container: {
+    box: {
+      backgroundColor: '#40a39b',
+    },
+    details: {
+      backgroundColor: theme == "light" ? '' : '#121212',
+      backgroundImage:
+        theme == "light"
+          ? "-webkit-linear-gradient(71deg, #ffffff 50%, #ffffff 50%)"
+          : "-webkit-linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)",
+    },
+  },
   compoundCard: {
     container: {
-      p: '0.5rem 1rem',
       display: 'flex',
       flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center'
     },
-    cardContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: '1rem'
+    descriptionContainer:{
+      alignItems: 'center', 
+      p: 1
     },
     imageContainer: {
-      display: 'relatve',
-      width: '35px',
-      height: '35px'
+      ml: 2
+    },
+    primaryText: {
+      color: theme == "light" ? '' : 'white',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      ml: 2
+    },
+    quantityContainer: {
+      display: 'flex', flexDirection: 'row', alignItems: 'center'
+    },
+    secondaryText: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'end'
+    },
+    errorMsg: {
+      color: 'red'
     }
   },
   simpleCard: {
     container: {
+      backgroundColor: '#40a39b',
       display: 'flex',
       flexDirection: 'row',
-      p: 1.5,
+      p: 0.5,
       borderRadius: '5px',
       justifyContent: 'space-between',
       alignItems: 'center',
-      mb: '0.5rem'
+      mb: '0.5rem',
     },
     title: {
-      paddingLeft: 1.5
+      ml: 3
     }
   }
 })

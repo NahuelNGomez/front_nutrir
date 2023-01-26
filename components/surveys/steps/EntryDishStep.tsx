@@ -19,7 +19,7 @@ const EntryDishStep: FC<Props> = ({
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setEntryStep, user, selectedSurvey, setModalLogin } = useAppCtx();
+  const { modeTheme, setStepActive, setEntryStep, entryStep, user, selectedSurvey, setModalLogin } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comida, setComida] = useState<Array<any>>([])
 
@@ -84,7 +84,7 @@ const EntryDishStep: FC<Props> = ({
         comida.length > 0
           ? (
             <Formik
-              initialValues={mealInitialValues}
+              initialValues={entryStep}
               onSubmit={(values) => {
                 setEntryStep(values)
                 setStepActive(3)
@@ -93,7 +93,8 @@ const EntryDishStep: FC<Props> = ({
               }}
             // validationSchema={validationSchema}
             >
-              {(props: FormikProps<any>) => {
+              {(props: FormikProps<any>) => {                
+
                 return (
                   <>
                     <form onSubmit={props.handleSubmit}>

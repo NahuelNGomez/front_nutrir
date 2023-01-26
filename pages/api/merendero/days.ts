@@ -13,9 +13,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const config = `Bearer ${token}`
 
-    console.log({ config });
-
-
     const response = await fetch(url, {
       method: 'PATCH',
       headers: new Headers({
@@ -25,7 +22,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       body: JSON.stringify(body)
     })
 
-    console.log({ response });
     if (response.status === 200) {
       res.status(200).json({ success: true, status: 200 });
     }

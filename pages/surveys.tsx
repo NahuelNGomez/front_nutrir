@@ -1,11 +1,11 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import LoggedLayout from "@components/layouts/LoggedLayout";
-export { getServerSideProps } from "../../src/serverSideProps"
+export { getServerSideProps } from "../src/serverSideProps"
 import { pagesStyles } from "@styles/index";
-import { useAppCtx } from "../../src/contexts/store";
-import SelectSurveyStep from "../../components/surveys/steps/SelectSurveyStep";
-import StepsLayout from "../../components/surveys/steps/StepsLayout";
+import { useAppCtx } from "../src/contexts/store";
+import SelectSurveyStep from "../components/surveys/steps/SelectSurveyStep";
+import StepsLayout from "../components/surveys/steps/StepsLayout";
 
 
 const DailySurvers: NextPage = () => {

@@ -162,6 +162,7 @@ export type foodDataType = {
 export type foodStepType = {
   id: number;
   nombre: string;
+  quantity: number;
 }
 
 export type mealStepType = {

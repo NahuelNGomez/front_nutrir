@@ -21,9 +21,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const access_token = `Bearer ${userinfo.access_token}`
 
-        // console.log({access_token});
-        
-
         const response = await fetch(url, {
             method: 'PATCH',
             headers: new Headers({

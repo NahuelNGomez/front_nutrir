@@ -19,7 +19,7 @@ const DessertDishStep: FC<Props> = ({
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setDessertStep, user, selectedSurvey, setModalLogin } = useAppCtx();
+  const { modeTheme, setStepActive, setDessertStep, user, selectedSurvey, setModalLogin, dessertStep } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comida, setComida] = useState<Array<any>>([])
 
@@ -73,7 +73,7 @@ const DessertDishStep: FC<Props> = ({
   const handleBackBtn = () => {
     handleGoToPreviousStep()
     setDessertStep(mealInitialValues)
-    setStepActive(4)
+    setStepActive(3)
   }
 
   return (
@@ -82,14 +82,13 @@ const DessertDishStep: FC<Props> = ({
         comida.length > 0
           ? (
             <Formik
-              initialValues={mealInitialValues}
+              initialValues={dessertStep}
               onSubmit={(values) => {
                 setDessertStep(values)
-                setStepActive(3)
+                setStepActive(4)
                 handleGoToNextStep()
 
               }}
-            // validationSchema={validationSchema}
             >
               {(props: FormikProps<any>) => {
                 return (

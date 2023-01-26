@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
+import { Card, CardContent, Grid, TextField, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import Image from 'next/image';
 import { useAppCtx } from '../../../../src/contexts/store';
@@ -25,30 +25,46 @@ const MealIngredientCard: FC<Props> = ({
 
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { ingredientsPanel } } = pagesStyles(modeTheme);
+  const [alimentoCheck, setAlimentoCheck] = useState(false)
+  const [enableQuantity, setEnableQuantity] = useState<boolean>(true)
+  const [quantityValue, setQuantityValue] = useState<number>(0)
+  const [ingredientName, setIngredientname] = useState<string>('')
+  const [error, setError] = useState(false)
 
   const { setFieldValue } = formikProps
+  const currentAlimentos = formikProps.getFieldProps('alimento').value
+
+  useEffect(() => {
+    const alimentoChecked = currentAlimentos.filter((alimento: foodStepType) => alimento.id === ingredientId)
+
+    if (alimentoChecked.length) {
+      setAlimentoCheck(true)
+      setEnableQuantity(false)
+      setQuantityValue(alimentoChecked[0].quantity)
+    }
+
+  }, [ingredientId, currentAlimentos])
+
 
   const ingredientHandleChange = (e: any) => {
 
-    const alimentos = formikProps.getFieldProps('alimento').value
-
     if (e.target.checked) {
-
-      setFieldValue('comida', meal.id)
-      setFieldValue('nombre', meal.nombre.toLocaleLowerCase())
-      setFieldValue('alimento', [...alimentos, {
-        id: ingredientId,
-        nombre: e.target.name.toLocaleLowerCase()
-      }])
+      setAlimentoCheck(true)
+      setEnableQuantity(false)
+      setIngredientname(e.target.name.toLocaleLowerCase())
     }
 
     if (e.target.checked === false) {
+      setAlimentoCheck(false)
+      setEnableQuantity(true)
+      setIngredientname('')
+      setQuantityValue(0)
 
-      const alimentosFiltered = alimentos.filter((alimento: foodStepType) => alimento.id !== ingredientId)
-      if (alimentosFiltered.lenght > 0) {
+      const newAlimentosEntry = currentAlimentos.filter((alimento: foodStepType) => alimento.id !== ingredientId)
+      if (newAlimentosEntry.lenght > 0) {
         setFieldValue('comida', meal.id)
         setFieldValue('nombre', meal.nombre)
-        setFieldValue('alimento', alimentosFiltered)
+        setFieldValue('alimento', newAlimentosEntry)
       } else {
         setFieldValue('comida', null)
         setFieldValue('nombre', '')
@@ -57,36 +73,106 @@ const MealIngredientCard: FC<Props> = ({
     }
   }
 
+  const quantityFielHandleChange = (e: any) => {
+    setQuantityValue(e.target.value)
+
+    if (error) setError(false)
+    if (e.target.value < 0) setError(true)
+
+    const newAlimentosEntry = currentAlimentos.filter((el: foodStepType) => el.id !== ingredientId)
+
+    setFieldValue('comida', meal.id)
+    setFieldValue('nombre', meal.nombre.toLocaleLowerCase())
+    setFieldValue('alimento', [...newAlimentosEntry, {
+      id: ingredientId,
+      nombre: ingredientName,
+      quantity: parseFloat(e.target.value)
+    }])
+  }
+
   return (
     <Grid
+      container
       item
-      xs={6}
+      xs={12}
       sx={ingredientsPanel.compoundCard.container}
       justifyContent={'space-between'}
     >
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem' }}>
-        <div style={ingredientsPanel.compoundCard.imageContainer}>
-          <Image
-            src={picture}
-            alt={`${picture}_img`}
-            width={35}
-            height={35}
+      <Grid
+        item
+        container
+        xs={9}
+        sx={ingredientsPanel.compoundCard.descriptionContainer}
+      >
+        <Grid
+          item
+          xs={1}
+        >
+          <Checkbox
+            checked={alimentoCheck}
+            name={ingredienteName}
+            onClick={(e) => ingredientHandleChange(e)}
           />
-        </div>
+        </Grid>
+        <Grid
+          item
+          xs={1}
+          sx={ingredientsPanel.compoundCard.imageContainer}
+        >
+          <div style={{ display: 'flex', position: 'relative' }}>
+            <Image
+              src={picture}
+              alt={`${picture}_img`}
+              width={50}
+              height={50}
+            />
+          </div>
+        </Grid>
+        <Grid
+          item
+          xs={4}
+          sx={ingredientsPanel.compoundCard.primaryText}
+        >
+          <Typography >
+            {ingredienteName}
+          </Typography>
+        </Grid>
+      </Grid>
 
-        <Typography>
-          {ingredienteName}
-        </Typography>
-
-      </div>
-      <div>
-        <Checkbox
-          // checked={true}
-          name={ingredienteName}
-          onClick={(e) => ingredientHandleChange(e)}
-        />
-
-      </div>
+      <Grid
+        container
+        xs={3}
+        spacing={2}
+        sx={ingredientsPanel.compoundCard.quantityContainer}
+      >
+        <Grid
+          item
+          xs={8}
+        >
+          <TextField
+            onChange={quantityFielHandleChange}
+            id="outlined-number"
+            value={quantityValue}
+            disabled={enableQuantity}
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={2}
+          sx={ingredientsPanel.compoundCard.secondaryText}
+        >
+          <Typography >
+            Kg
+          </Typography>
+        </Grid>
+      </Grid>
+      {
+        error && <Typography sx={ingredientsPanel.compoundCard.errorMsg}>La cantidad de alimento no puede ser menor a 0</Typography>
+      }
     </Grid>
   )
 }

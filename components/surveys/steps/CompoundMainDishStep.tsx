@@ -6,6 +6,7 @@ import { pagesStyles } from '@styles/index'
 import { mealStepType } from '../../../src/types/global'
 import { Formik, FormikProps } from 'formik'
 import axios from 'axios'
+import mealInitialValues from './constants/mealInitialValues'
 
 
 type Props = {
@@ -18,7 +19,7 @@ const CompoundMainDishStep: FC<Props> = ({
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setCompoundMainMailStep, user, setModalLogin, selectedSurvey } = useAppCtx();
+  const { modeTheme, setStepActive, setCompoundMainMailStep, user, setModalLogin, selectedSurvey, compoundMainMealStep } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comidas, setComidas] = useState<Array<any>>([])
 
@@ -67,19 +68,11 @@ const CompoundMainDishStep: FC<Props> = ({
       })
   }, [user.access_token, selectedSurvey])
 
-  const initialValues: mealStepType = {
-    comida: null,
-    nombre: '',
-    alimento: []
-  }
-
   const handleBackBtn = () => {
     handleGoToPreviousStep()
-    setCompoundMainMailStep(initialValues)
+    setCompoundMainMailStep(mealInitialValues)
     setStepActive(3)
   }
-
-
 
   return (
     <>
@@ -87,13 +80,12 @@ const CompoundMainDishStep: FC<Props> = ({
         comidas.length > 0
           ? (
             <Formik
-              initialValues={initialValues}
+              initialValues={compoundMainMealStep}
               onSubmit={(values) => {
                 setCompoundMainMailStep(values)
                 setStepActive(4)
                 handleGoToNextStep()
               }}
-            // validationSchema={validationSchema}
             >
               {(props: FormikProps<any>) => {
                 return (

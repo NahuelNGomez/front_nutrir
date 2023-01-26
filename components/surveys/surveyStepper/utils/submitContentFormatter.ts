@@ -11,7 +11,7 @@ const submitContentFormatter = (
   entryStep: mealStepType,
   compoundMainMealStep: mealStepType,
   dessertStep: mealStepType
-) => { 
+) => {
 
   // FORMATTER
 
@@ -25,8 +25,14 @@ const submitContentFormatter = (
 
     const dateFormatted = moment(selectedSurvey.date).format('YYYY DD MM').replaceAll(' ', '-')
 
-    const alimentosIdProvider = (alimentos: Array<foodStepType>) => {
-      const alimentosId = alimentos.map(alimento => alimento.id)
+    const alimentosFormattedProvider = (alimentos: Array<foodStepType>) => {
+      const alimentosId = alimentos.map((alimento) => {
+        const alimentoFormatted = {
+          id: alimento.id,
+          quantity: alimento.quantity
+        }
+        return alimentoFormatted
+      })
       return alimentosId
     }
 
@@ -50,22 +56,22 @@ const submitContentFormatter = (
         // Id comida
         comida: drinkStep?.comida || entryStep?.comida,
         // Id alimentos
-        alimento: drinkStep?.alimento && alimentosIdProvider(drinkStep?.alimento) || entryStep?.alimento && alimentosIdProvider(entryStep?.alimento)
+        alimento: drinkStep?.alimento && alimentosFormattedProvider(drinkStep?.alimento) || entryStep?.alimento && alimentosFormattedProvider(entryStep?.alimento)
       },
       comida2: {
         comida: simpleMainMealStep?.comida || compoundMainMealStep?.comida,
-        alimento: simpleMainMealStep?.alimento && alimentosIdProvider(simpleMainMealStep?.alimento) || compoundMainMealStep?.alimento && alimentosIdProvider(compoundMainMealStep?.alimento)
+        alimento: simpleMainMealStep?.alimento && alimentosFormattedProvider(simpleMainMealStep?.alimento) || compoundMainMealStep?.alimento && alimentosFormattedProvider(compoundMainMealStep?.alimento)
       },
       comida3: {
         comida: dessertStep ? dessertStep?.comida : null,
-        alimento: dessertStep?.alimento ? alimentosIdProvider(dessertStep?.alimento) : null
+        alimento: dessertStep?.alimento ? alimentosFormattedProvider(dessertStep?.alimento) : null
       }
     }
     return dataFormatted
   }
-  
+
   // CASES
-  
+
   if (selectedSurvey.service === 'desayuno' || selectedSurvey.service === 'merienda') {
     const data = dataFormatter(drinkStep, simpleMainMealStep)
     return data

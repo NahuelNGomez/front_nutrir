@@ -20,7 +20,7 @@ const SimpleMainMealStep: FC<Props> = ({
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setSimpleMainMealStep, user, setModalLogin, selectedSurvey } = useAppCtx();
+  const { modeTheme, setStepActive, setSimpleMainMealStep, simpleMainMealStep ,  user, setModalLogin, selectedSurvey } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comida, setComida] = useState<Array<any>>([])
 
@@ -81,7 +81,7 @@ const SimpleMainMealStep: FC<Props> = ({
         comida.length > 0
           ? (
             <Formik
-              initialValues={mealInitialValues}
+              initialValues={simpleMainMealStep}
               onSubmit={(values) => {
                 setSimpleMainMealStep(values)
                 setStepActive(3)
