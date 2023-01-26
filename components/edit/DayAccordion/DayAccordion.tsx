@@ -1,21 +1,23 @@
 import { Accordion, AccordionDetails, AccordionSummary, CardActions, FormControlLabel, FormGroup, Grid, Switch, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppCtx } from "../../../src/contexts/store";
 import { pagesStyles } from "@styles/index";
 import { serviciosDiaType } from "../../../src/types/global";
 import servicesByDayInfo from "./constants/servicesByDayInfo";
 import ServiceAvailableCard from "./ServiceAvailableCard";
+import { FormikProps } from "formik";
 
 type Props = {
+  formikProps: FormikProps<any>;
   dayData: Array<serviciosDiaType>;
   index: number;
   dayName: string;
 }
 
-const DayAccordion: React.FC<Props> = ({ dayName, index, dayData, }) => {
+const DayAccordion: React.FC<Props> = ({ dayName, index, dayData, formikProps }) => {
 
-  const { modeTheme } = useAppCtx();
+  const { modeTheme, comedorSeleccionado } = useAppCtx();
 
   const {
     editStyles: { daysForm },
@@ -51,43 +53,20 @@ const DayAccordion: React.FC<Props> = ({ dayName, index, dayData, }) => {
             <Grid container xs={12} justifyContent={'space-between'}>
               <CardActions sx={daysForm.actions}>
                 <Grid container wrap="wrap">
-                  {/* <Grid item xs={12} md={6} lg={4} xl={4}>
-                    <FormGroup>
-                      <FormControlLabel checked={true} control={<Switch />} label="Desayuno" />
-                    </FormGroup>
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4} xl={4}>
-                    <FormGroup>
-                      <FormControlLabel control={<Switch />} label="Almuerzo" />
-                    </FormGroup>
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4} xl={4}>
-                    <FormGroup>
-                      <FormControlLabel control={<Switch />} label="Merienda" />
-                    </FormGroup>
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4} xl={4}>
-                    <FormGroup>
-                      <FormControlLabel control={<Switch />} label="Cena" />
-                    </FormGroup>
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4} xl={4}>
-                    <FormGroup>
-                      <FormControlLabel control={<Switch />} label="Olla Popular" />
-                    </FormGroup>
-                  </Grid> */}
                   {
                     servicesByDayInfo.map(({ name, keyInfo }, index) => {
-                      
+
                       const funcionamientos = dayData.length > 0 ? dayData[0].funcionamientos : []
                       const test = funcionamientos.filter(e => e === keyInfo)
-                      const checked = test.length > 0 ? true : false
+                      const defaultChecked = test.length > 0 ? true : false
 
                       return (
                         <ServiceAvailableCard
+                          comedorId={comedorSeleccionado.id}
+                          formikProps={formikProps}
+                          dayName={dayName}
                           name={name}
-                          keyInfo={keyInfo}
-                          checked={checked}
+                          defaultChecked={defaultChecked}
                           key={`serviceCard_key_${index}`}
                         />
                       )

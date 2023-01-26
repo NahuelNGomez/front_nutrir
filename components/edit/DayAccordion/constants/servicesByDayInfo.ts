@@ -15,10 +15,10 @@ const servicesByDayInfo = [
     name: 'Cena',
     keyInfo: 'cena',
   },
-  {
-    name: 'Olla Popular',
-    keyInfo: 'olla_popular',
-  }
+  // {
+  //   name: 'Olla Popular',
+  //   keyInfo: 'olla_popular',
+  // }
 ]
 
 export default servicesByDayInfo
