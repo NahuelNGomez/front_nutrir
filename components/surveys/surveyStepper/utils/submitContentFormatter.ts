@@ -28,8 +28,8 @@ const submitContentFormatter = (
     const alimentosFormattedProvider = (alimentos: Array<foodStepType>) => {
       const alimentosId = alimentos.map((alimento) => {
         const alimentoFormatted = {
-          id: alimento.id,
-          quantity: alimento.quantity
+          alimento: alimento.id,
+          cantidad: alimento.quantity
         }
         return alimentoFormatted
       })

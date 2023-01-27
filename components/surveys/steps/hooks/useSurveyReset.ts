@@ -16,6 +16,6 @@ export default function useSurveyReset() {
   setEntryStep(mealInit)
   setCompoundMainMailStep(mealInit)
   setDessertStep(mealInit)
-  // setDisplaySideStepper(true)
+  setDisplaySideStepper(true)
 
 }

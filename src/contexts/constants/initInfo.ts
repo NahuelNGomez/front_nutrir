@@ -6,7 +6,7 @@ export const mealInit = {
 
 export const comedorInit = {
   nombre: '',
-  numero: 1,
+  numero: 0,
   organizacion_regional: 1,
   actividades: [1],
   activo: false,

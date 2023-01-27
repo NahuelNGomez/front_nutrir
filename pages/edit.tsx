@@ -27,7 +27,7 @@ const Edit: NextPage = () => {
   const [serviciosData, setServiciosData] = useState<Array<serviciosDiaType>>([])
 
   const { editStyles } = pagesStyles(modeTheme);
-  const { groups, access_token } = user
+  const { access_token } = user
 
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
   const headers = { headers: { Authorization: `Bearer ${access_token}` } }

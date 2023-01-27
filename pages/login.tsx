@@ -20,20 +20,15 @@ import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
 import UnloggedLayout from "@components/layouts/UnloggedLayout";
 
-const Cookies = require('js-cookie')
-// import Cookies from 'js-cookie'
-import axios from "axios";
-
-
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { modeTheme, user } = useAppCtx();
+  const { modeTheme, user, setFirstLogin } = useAppCtx();
   const { fields, errors, processing, updateField, submit } = useForm<loginFields>(
     statesForms.login
   );
   const { loginStyles } = pagesStyles(modeTheme);
-
+  
 
   return (
     <UnloggedLayout>
@@ -50,7 +45,10 @@ const Login: NextPage = () => {
           {processing.loading && <LinearProgress color="primary" />}
           <form
               onSubmit={(e) =>
-                submit(e, "/api/login").then(() => router.push("/"))
+                submit(e, "/api/login").then(() => {
+                  router.push("/")
+                  setFirstLogin(false)
+                })
               }
           >
             <CardContent sx={loginStyles.cardContent}>

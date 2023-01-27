@@ -43,6 +43,9 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
       token: user.access_token
     }
 
+    console.log('dataaa', data);
+    
+
     const config = {
       method: "POST",
       body: JSON.stringify(data),
@@ -50,7 +53,8 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
 
     fetch('api/merendero/days', config)
       .then(res => {
-
+        console.log('ress', res);
+        
         if (res.status === 200) {
           successDisplay()
           setResponseError(false)
@@ -60,6 +64,8 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
         }
       })
       .catch(err => {
+        console.log('erro submit', err);
+        
         setResponseError(true)
       })
 

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme } from "../template/theme";
-import { storeType, themes, userType, invoiceInfoType, comedorInfoType, selectedSurveyType, guestsStepsType, mealStepType } from "../types/global";
+import { storeType, themes, userType, invoiceInfoType, comedorInfoType, selectedSurveyType, guestsStepsType, mealStepType, surveyType } from "../types/global";
 import { comedorInit, mealInit } from "./constants/initInfo";
 
 const initialStoreState: storeType = {
@@ -27,9 +27,13 @@ const initialStoreState: storeType = {
   surverOptionsModal: false,
   comedoresDisponibles: [],
   comedorSeleccionado: comedorInit,
+  firstLogin: false,
+  todaySurveySelected: false,
   // Steps
   // Step 0
   selectedSurvey: { date: '', service: '' },
+  // 0 b
+  encuestasAdeudadas: [],
   // Step 1: guest Amount
   guestsAmount: {
     childs: 0,
@@ -38,34 +42,14 @@ const initialStoreState: storeType = {
     adults: 0,
   },
   // Step 2: Drink
-  drinkStep: {
-    comida: null,
-    nombre: '',
-    alimento: []
-  },
+  drinkStep: mealInit,
   // Step 3a: simpleMainMealStep Breakfast
-  simpleMainMealStep: {
-    comida: null,
-    nombre: '',
-    alimento: []
-  },
+  simpleMainMealStep: mealInit,
   // 3b
-  entryStep: {
-    comida: null,
-    nombre: '',
-    alimento: []
-  },
+  entryStep: mealInit,
   // 4
-  compoundMainMealStep: {
-    comida: null,
-    nombre: '',
-    alimento: []
-  },
-  dessertStep: {
-    comida: null,
-    nombre: '',
-    alimento: []
-  },
+  compoundMainMealStep: mealInit,
+  dessertStep: mealInit,
   // Last step
   displaySideStepper: true,
   // Step active
@@ -80,8 +64,11 @@ const initialStoreState: storeType = {
   setSurveynfo: () => { },
   setComedoresDisponibles: () => { },
   setComedorSeleccionado: () => { },
-
+  setFirstLogin: () => { },
+  setTodaySurveySelected: () => { },
   // Steps
+  // 0 b
+  setEncuestasAdeudadas: () => { },
   setSelectedSurvey: () => { },
   // Step 1: guest Amount
   setGuestsAmount: () => { },
@@ -112,8 +99,11 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [surveyModalOpen, setSurverModalOpen] = useState(false);
   const [surveyInfo, setSurveynfo] = useState<invoiceInfoType>({});
   const [surverOptionsModal, setSurverOptionsModal] = useState(false);
+  const [firstLogin, setFirstLogin] = useState<boolean>(false);
+  const [todaySurveySelected, setTodaySurveySelected] = useState<boolean>(false);
   // Steps
   const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>({ date: '', service: '' });
+  const [encuestasAdeudadas, setEncuestasAdeudadas] = useState<Array<surveyType>>([])
   const [guestsAmount, setGuestsAmount] = useState<guestsStepsType>({
     childs: 0,
     kids: 0,
@@ -128,6 +118,7 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [displaySideStepper, setDisplaySideStepper] = useState(true);
   const [stepActive, setStepActive] = useState<number>();
 
+  ;
   const updateTheme = (mode: keyof typeof themes): void => {
     setCurrentTheme(themes[mode]);
     setModeTheme(mode);
@@ -153,8 +144,12 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     surveyInfo,
     surverOptionsModal,
     surveyModalOpen,
+    firstLogin,
+    todaySurveySelected,
     // Step
     selectedSurvey,
+    // 0 b
+    encuestasAdeudadas,
     // Step 1: guest amount
     guestsAmount,
     // Step 2: drink
@@ -181,8 +176,12 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
     setComedoresDisponibles,
     setComedorSeleccionado,
     updateTheme,
+    setFirstLogin,
+    setTodaySurveySelected,
     // Step
     setSelectedSurvey,
+    // 0 b
+    setEncuestasAdeudadas,
     // Step 1: guest amount
     setGuestsAmount,
     // Step 2: drink

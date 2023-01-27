@@ -184,10 +184,13 @@ export type storeType = {
   surveyInfo: invoiceInfoType;
   surverOptionsModal: boolean;
   surveyModalOpen: boolean;
-
+  firstLogin: boolean;
+  todaySurveySelected: boolean;
   // Steps
   // 0: selected survey
   selectedSurvey: selectedSurveyType;
+  // 0 b
+  encuestasAdeudadas: surveyType[];
   // 1: guests amount
   guestsAmount: guestsStepsType;
   // 2: drink
@@ -214,11 +217,15 @@ export type storeType = {
   setComedoresDisponibles(): void,
   setComedorSeleccionado(): void,
   updateTheme(): void;
+  setFirstLogin(): void;
+  setTodaySurveySelected(): void;
 
   // Steps
 
   // Step 0: selected survey
   setSelectedSurvey(): void;
+  // 0 b
+  setEncuestasAdeudadas(): void;
   // 1: guest amount
   setGuestsAmount(): void;
   // 2: drink

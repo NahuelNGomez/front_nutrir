@@ -16,14 +16,17 @@ import { useRouter } from "next/router";
 
 
 const UserOptions: FC<{}> = () => {
-  const { setModalOpen, modeTheme, updateTheme } = useAppCtx();
+  const { setModalOpen, modeTheme, updateTheme, setComedorSeleccionado, setComedoresDisponibles } = useAppCtx();
   const { contentStyles: { userMenuStyles } } = componentsStyles(modeTheme);
 
   const router = useRouter()
 
-  const onLogoutHandler = () => {
+  const onLogoutHandler = () => { 
+    
     fetch('api/logout')
-      .then(() => router.push("/"))
+      .then(() => {
+        router.push("/login")
+      })
       .catch(err => {
         console.log('client side err', { err });
       })

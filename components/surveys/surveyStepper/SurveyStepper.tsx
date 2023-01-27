@@ -16,6 +16,7 @@ import submitContentFormatter from "./utils/submitContentFormatter";
 import axios from "axios";
 import { useRouter } from "next/router";
 import useSurveyReset from "../steps/hooks/useSurveyReset";
+import { mealInit } from "../../../src/contexts/constants/initInfo";
 
 type Props = {
   backClickHandler: () => void
@@ -29,6 +30,9 @@ const SurveyStepper: FC<Props> = ({
   const { surveyStyles: { stepper } } = pagesStyles(modeTheme);
 
   const { user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep, displaySideStepper, setDisplaySideStepper, stepActive } = useAppCtx()
+
+  const { setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setStepActive } = useAppCtx()
+
 
   const serviceDescription = selectedSurvey?.service ? selectedSurvey?.service : ''
   const guestsDescription = guestsDescriptionFormatter(guestsAmount)
@@ -53,16 +57,30 @@ const SurveyStepper: FC<Props> = ({
 
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/`
     const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
+
     axios.post(url, data, config,)
-    .then(res =>{
-      // console.log(res);
-      alert('Encuesta enviada correctamente')
-      route.push('/')
-    })
-    .catch(err=>{
-      alert('La encuesta no pudo ser enviada')
-      // console.log('Post err', err); 
-    })
+      .then(res => {
+        console.log(res);
+        alert('Encuesta enviada correctamente')
+        route.push('/')
+        setSelectedSurvey({ date: '', service: '' })
+        setGuestsAmount({
+          childs: 0,
+          kids: 0,
+          teens: 0,
+          adults: 0
+        })
+        setDrinkStep(mealInit)
+        setSimpleMainMealStep(mealInit)
+        setEntryStep(mealInit)
+        setCompoundMainMailStep(mealInit)
+        setDessertStep(mealInit)
+        setDisplaySideStepper(true)
+      })
+      .catch(err => {
+        console.log('Post err', err);
+        alert('La encuesta no pudo ser enviada')
+      })
   }
 
   return (

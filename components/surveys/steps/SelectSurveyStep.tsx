@@ -7,39 +7,50 @@ import PanelHeader from "../dateTable/PanelHeader";
 import DataTable from '../../common/form/DateTable/DataTable'
 import axios from "axios";
 import currentDay from "../../../src/utils/currentDate";
-import { surveyType } from "../../../src/types/global";
 
 
 const SelectSurveyStep = () => {
 
-  const { modeTheme, user, setModalLogin, comedorSeleccionado } = useAppCtx();
+  const { modeTheme, user, setModalLogin, comedorSeleccionado, setEncuestasAdeudadas, encuestasAdeudadas, todaySurveySelected, setTodaySurveySelected } = useAppCtx();
   const { surveyStyles: { dataTable } } = pagesStyles(modeTheme);
-  
-  const [encuestasAdeudadas, setEncuestasAdeudadas] = useState<Array<surveyType>>([])
+
 
   useEffect(() => {
-
     const id = comedorSeleccionado?.id
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+    const url = `${baseUrl}encuesta/incompletas/${id}/${currentDay('YYYY-MM-DD')}`
+    const headers = { headers: { Authorization: `Bearer ${user.access_token}` } }
+   
 
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/incompletas/${id}/${currentDay('YYYY-MM-DD')}`,
-      { headers: { Authorization: `Bearer ${user.access_token}` } })
-      .then(res => {
-        if (res.status === 401) {
-          setModalLogin(true)
-        } else {
-          const data = res.data.encuestas
-          // console.log('respuesta date', data);
-          setEncuestasAdeudadas([...data])
-        }
-      })
-      .catch(err => {
-        // console.log('err', err.response)
-        if (err.response.status === 401) {
-          setModalLogin(true)
-        }
-      })
-  }, [user.access_token])
+    if (!todaySurveySelected) {
+
+      axios.get(url, headers)
+        .then(res => {
+          if (res.status === 400) {
+            alert('Sin conexión al server')
+          }
+          if (res.status === 401) {
+            setModalLogin(true)
+          } else {
+            const data = res.data.encuestas
+            // console.log('respuesta date', data);
+            setEncuestasAdeudadas([...data])
+          }
+        })
+        .catch(err => {
+          // console.log('err', err.response)
+          if (err.response.status === 401) {
+            setModalLogin(true)
+          }
+        })
+
+    }
+    return () => {
+      setTodaySurveySelected(false)
+    }
+    
+  }, [encuestasAdeudadas, user, todaySurveySelected])
+
 
 
   return (
