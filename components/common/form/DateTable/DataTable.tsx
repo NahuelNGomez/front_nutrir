@@ -16,10 +16,14 @@ const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: 
   }
 
   const rows = encuestas?.map((e, index) => {
+
+    moment.locale('es');
+
     return (
       {
         id: index + 1,
-        date: moment(e.fecha).format('DD MM YYYY').replaceAll(' ', '/'),
+        date: e.fecha,
+        // date: moment(e.fecha).format('DD MM YYYY').replaceAll('-', '/'),
         meal: servicioFormatter(e.funcionamiento),
         data: e
       }

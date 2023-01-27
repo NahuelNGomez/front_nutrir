@@ -23,6 +23,7 @@ const submitContentFormatter = (
     dessertStep?: mealStepType
   ) => {
 
+    moment.locale('es');
     const dateFormatted = moment(selectedSurvey.date).format('YYYY DD MM').replaceAll(' ', '-')
 
     const alimentosFormattedProvider = (alimentos: Array<foodStepType>) => {
@@ -38,7 +39,7 @@ const submitContentFormatter = (
 
     const dataFormatted = {
       encuesta: {
-        fecha: dateFormatted,
+        fecha: selectedSurvey.date,
         cantidad_rango_1: guestsAmount.childs,
         cantidad_rango_2: guestsAmount.kids,
         cantidad_rango_3: guestsAmount.teens,

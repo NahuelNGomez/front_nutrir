@@ -19,6 +19,9 @@ const SubmitBtn: FC<Props> = ({
   columData,
 }) => {
 
+  console.log('column data', columData);
+  
+
   const { modeTheme, setSelectedSurvey } = useAppCtx();
   const { surveyStyles } = pagesStyles(modeTheme);  
 

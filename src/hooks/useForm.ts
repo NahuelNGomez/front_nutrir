@@ -96,7 +96,7 @@ export default function useForm<T>(initialState: stateFormBase<T>) {
           body: JSON.stringify(data)
         }).then((res) => res.json());
 
-        console.log('useForm response', { response });
+        // console.log('useForm response', { response });
         
         if (response.success) {
           resolve(response);

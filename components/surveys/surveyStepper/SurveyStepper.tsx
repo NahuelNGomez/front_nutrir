@@ -33,6 +33,8 @@ const SurveyStepper: FC<Props> = ({
 
   const { setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setStepActive } = useAppCtx()
 
+  moment.locale('es');
+
 
   const serviceDescription = selectedSurvey?.service ? selectedSurvey?.service : ''
   const guestsDescription = guestsDescriptionFormatter(guestsAmount)
@@ -54,6 +56,9 @@ const SurveyStepper: FC<Props> = ({
     e.preventDefault()
 
     const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)
+
+    // console.log('dataaa', data);
+    
 
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/`
     const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
@@ -82,7 +87,6 @@ const SurveyStepper: FC<Props> = ({
         alert('La encuesta no pudo ser enviada')
       })
   }
-
   return (
     <>
       <Grid
@@ -95,7 +99,8 @@ const SurveyStepper: FC<Props> = ({
         <Card sx={stepper.card}>
           <CardContent>
             <Typography variant="h1" sx={stepper.title}>Resumen de la encuesta</Typography>
-            <Typography variant="h1" sx={stepper.subtitle}>{moment(selectedSurvey?.date).format('LL')}</Typography>
+            {/* <Typography variant="h1" sx={stepper.subtitle}>{moment(selectedSurvey?.date).format('LL')}</Typography> */}
+            <Typography variant="h1" sx={stepper.subtitle}>{selectedSurvey?.date}</Typography>
 
 
             <Box sx={{ maxWidth: 400 }}>
