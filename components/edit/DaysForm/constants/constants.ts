@@ -8,7 +8,7 @@ export const daysName = [
     key: 'martes'
   },
   {
-    name: 'Miércoles',
+    name: 'Miercoles',
     key: 'miercoles'
   },
   {
@@ -20,7 +20,7 @@ export const daysName = [
     key: 'viernes'
   },
   {
-    name: 'Sábado',
+    name: 'Sabado',
     key: 'sabado'
   },
   {
