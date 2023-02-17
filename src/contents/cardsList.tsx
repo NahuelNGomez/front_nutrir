@@ -23,7 +23,7 @@ export const dashboardCards:Array<dashCards> = [
     },
     {
         title:'Ya puedes ver los balances semanales',
-        redirectTo:'/',
+        redirectTo:'/stats',
         image:'/images/ui/dash/03sin fondo.png',
         background_light: "-webkit-linear-gradient(71deg, white 50%, #eaf6f6 50%)",
         title_button: 'VER ANALISIS'

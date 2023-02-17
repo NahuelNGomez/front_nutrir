@@ -27,7 +27,6 @@ const DashboardNewsCards: FC<{}> = () => {
     const url = `${baseUrl}encuesta/incompletas_dia/${id}/${currentDay('YYYY-MM-DD')}`
     const headers = { headers: { Authorization: `Bearer ${user.access_token}` } }
 
-
     axios.get(url, headers)
       .then(res => {
         if (res.status === 401) {
@@ -41,10 +40,7 @@ const DashboardNewsCards: FC<{}> = () => {
             setTodaySurveySelected(true)
             setEncuestasAdeudadas([...data])
             router.push('/surveys')
-
           }
-
-
         }
       })
       .catch(err => {

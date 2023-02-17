@@ -65,7 +65,7 @@ const SurveyStepper: FC<Props> = ({
 
     axios.post(url, data, config,)
       .then(res => {
-        console.log(res);
+        // console.log('encuesta post res', res);
         alert('Encuesta enviada correctamente')
         route.push('/')
         setSelectedSurvey({ date: '', service: '' })
@@ -83,7 +83,7 @@ const SurveyStepper: FC<Props> = ({
         setDisplaySideStepper(true)
       })
       .catch(err => {
-        console.log('Post err', err);
+        // console.log('Post err', err);
         alert('La encuesta no pudo ser enviada')
       })
   }
