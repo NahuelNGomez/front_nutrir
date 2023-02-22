@@ -50,10 +50,10 @@ export const MenuList: Array<MenuItem> = [
       {
         key: "ver-estadistinas",
         text: "Ver estadísticas",
-        path:"/stadistics",
+        path:"/stats",
         Icon:(props) =>  <LensOutlined fontSize="small" {...props} />,
         action: (router) => {
-          router.push("/api/logout");
+          router.push("stats");
         },
       },
     ],
