@@ -1,24 +1,49 @@
 import { Card, Grid, Typography } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
+import { useRouter } from "next/router";
+import { comedorInfoType } from "../../../src/types/global";
 
-const MerenderoCard: FC<{ name?: string; address?: string }> = ({
+const MerenderoCard: FC<{ name?: string; address?: string, comedor: comedorInfoType }> = ({
   name,
   address,
+  comedor
 }) => {
-  const { modeTheme } = useAppCtx();
+  const { modeTheme, setComedorSeleccionado, comedorSeleccionado } = useAppCtx();
+  const [selected, setSelected] = useState(false)
+  const router = useRouter()
+  const comedorSeleccionadoId = comedorSeleccionado.id
+
+  useEffect(() => {
+    if (comedor.id === comedorSeleccionadoId) {
+      setSelected(true)
+    } else{
+      setSelected(false)
+    }
+  }, [comedorSeleccionadoId])
+
 
   const {
     profileStyles: { merenderosCardsStyles },
   } = pagesStyles(modeTheme);
+
+  const editButtonHandler = () => {
+    setComedorSeleccionado(comedor)
+    router.push('/edit')
+  }
+
+  const selectButtonHandler = () => {
+    setComedorSeleccionado(comedor)
+  }
+
   return (
     <Grid xl={12}>
-      <Card sx={merenderosCardsStyles.card}>
+      <Card sx={(selected ? merenderosCardsStyles.cardActive : merenderosCardsStyles.card)}>
         <Grid container>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-            <Typography sx={merenderosCardsStyles.titleCard}>{name}</Typography>
-            <Typography sx={merenderosCardsStyles.titleCard}>
+            <Typography >{name}</Typography>
+            <Typography >
               {address}
             </Typography>
           </Grid>
@@ -31,16 +56,18 @@ const MerenderoCard: FC<{ name?: string; address?: string }> = ({
             xl={6}
             sx={merenderosCardsStyles.actions}
           >
-            <div onClick={() => { }}>
+            <div onClick={editButtonHandler}>
               <Typography sx={merenderosCardsStyles.button}>Editar</Typography>
             </div>
-            <Typography sx={merenderosCardsStyles.button}>
-              Seleccionar
-            </Typography>
+            <div onClick={selectButtonHandler}>
+              <Typography sx={merenderosCardsStyles.button}>
+                Seleccionar
+              </Typography>
+            </div>
           </Grid>
         </Grid>
-      </Card>
-    </Grid>
+      </Card >
+    </Grid >
   );
 };
 

@@ -46,8 +46,16 @@ const MerenderoCards = (theme = "light") => ({
     p: 2,
     mb: 1,
     borderLeft: `4px solid ${colors(theme).primary}`,
+    color: "gray"
   },
   titleCard: { color: "gray" },
+  cardActive: {
+    p: 2,
+    mb: 1,
+    borderLeft: `4px solid ${colors(theme).primary}`,
+    backgroundColor: "rgb(77, 135, 135)",
+    color: 'white'
+  },
   actions: {
     display: "flex",
     flexDirection: "row",

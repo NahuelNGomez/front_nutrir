@@ -44,7 +44,7 @@ const MerenderoCards: FC<{}> = () => {
       {
         comedores
           ? comedores?.map((comedor, index) => (
-            <MerenderoCard name={comedor.nombre} address={`${comedor.calle} ${comedor.numero}, ${comedor.provincia}`} key={index} />
+            <MerenderoCard comedor={comedor} name={comedor.nombre} address={`${comedor.calle} ${comedor.numero}, ${comedor.provincia}`} key={index} />
           ))
           : (
             <CircularProgress
@@ -64,7 +64,7 @@ const MerenderoCards: FC<{}> = () => {
       {comedores.length > 1 && (
         <Collapse in={collapse} timeout="auto" unmountOnExit>
           {comedores?.map((merendero, index) => (
-            <MerenderoCard name={merendero.descripcion} address={'123'} key={index} />
+            <MerenderoCard comedor={merendero} name={merendero.descripcion} address={'123'} key={index} />
           ))}
         </Collapse>
       )}
