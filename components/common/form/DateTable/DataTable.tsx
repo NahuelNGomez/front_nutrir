@@ -1,42 +1,18 @@
 import { CircularProgress, Grid } from '@mui/material';
-import moment from 'moment';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import SubmitBtn from '../SubmitBtn/SubmitBtn';
-import { FC } from 'react';
-import { surveyType } from '../../../../src/types/global';
-
-
-
-const row = (encuestas: Array<{ comedor: number, fecha: string, funcionamiento: string }>) => {
-  const servicioFormatter = (servicio: string) => {
-    if (servicio) {
-      const servicioFomatted = servicio.replace('_', ' ')
-      return servicioFomatted
-    }
-  }
-
-  const rows = encuestas?.map((e, index) => {
-
-    moment.locale('es');
-
-    return (
-      {
-        id: index + 1,
-        date: e.fecha,
-        // date: moment(e.fecha).format('DD MM YYYY').replaceAll('-', '/'),
-        meal: servicioFormatter(e.funcionamiento),
-        data: e
-      }
-    )
-  })
-  return rows
-}
+import { Dispatch, FC, SetStateAction } from 'react';
+import { surveyType, userType } from '../../../../src/types/global';
+import { rowFormatter } from './utils';
 
 interface Props {
   encuestasAdeudadas: Array<surveyType>,
+  user: userType,
+  comedorId: number,
+  setModalLogin: Dispatch<SetStateAction<boolean>>
 }
 
-const DataTable: FC<Props> = ({encuestasAdeudadas}) => {
+const DataTable: FC<Props> = ({ encuestasAdeudadas, user, comedorId, setModalLogin }) => {
 
   const columns: GridColDef[] = [
     { field: 'date', headerName: 'Día' },
@@ -57,11 +33,17 @@ const DataTable: FC<Props> = ({encuestasAdeudadas}) => {
                 columData={params}
                 type={'uncomplete'}
                 text="No se sirvió"
+                user={user}
+                comedorId={comedorId}
+                setModalLogin={setModalLogin}
               />
             </Grid>
             <Grid item xs={5}>
               <SubmitBtn
                 columData={params}
+                user={user}
+                comedorId={comedorId}
+                setModalLogin={setModalLogin}
                 type={'complete'}
                 text="Responder"
               />
@@ -83,8 +65,7 @@ const DataTable: FC<Props> = ({encuestasAdeudadas}) => {
         encuestasAdeudadas
           ? (
             <DataGrid
-              rows={row(encuestasAdeudadas)}
-              // rows={rows2}
+              rows={rowFormatter(encuestasAdeudadas)}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}

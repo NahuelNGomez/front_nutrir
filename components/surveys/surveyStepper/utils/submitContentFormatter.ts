@@ -1,5 +1,5 @@
-import moment from "moment"
 import { comedorInfoType, foodStepType, guestsStepsType, mealStepType, selectedSurveyType, userType } from "../../../../src/types/global"
+import { postFormatterDate } from "../../steps/utils/formatterDate";
 
 const submitContentFormatter = (
   user: userType,
@@ -23,8 +23,7 @@ const submitContentFormatter = (
     dessertStep?: mealStepType
   ) => {
 
-    moment.locale('es');
-    const dateFormatted = moment(selectedSurvey.date).format('YYYY DD MM').replaceAll(' ', '-')
+    const dateFormatted = postFormatterDate(selectedSurvey.date)
 
     const alimentosFormattedProvider = (alimentos: Array<foodStepType>) => {
       const alimentosId = alimentos.map((alimento) => {
@@ -39,12 +38,12 @@ const submitContentFormatter = (
 
     const dataFormatted = {
       encuesta: {
-        fecha: selectedSurvey.date,
+        fecha: dateFormatted,
         cantidad_rango_1: guestsAmount.childs,
         cantidad_rango_2: guestsAmount.kids,
         cantidad_rango_3: guestsAmount.teens,
         cantidad_rango_4: guestsAmount.adults,
-        // Nombre servicio: listo
+        // Nombre servicio
         funcionamiento: selectedSurvey.service,
         // Id comedor
         comedor: comedorSeleccionado.id,
@@ -80,7 +79,7 @@ const submitContentFormatter = (
     const data = dataFormatter(null, null, entryStep, compoundMainMealStep, dessertStep)
     return data
   }
-
+  return {}
 }
 
 export default submitContentFormatter

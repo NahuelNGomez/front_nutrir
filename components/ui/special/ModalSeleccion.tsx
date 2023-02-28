@@ -15,19 +15,30 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import { componentsStyles } from "@styles/index";
+import { merenderosDataFetch } from "../../profile/services";
+import { fetchErrorHandler } from "../../../src/dataFetch/fetchErrorHandler";
 
 
 const ModalSeleccion: FC<{}> = () => {
-  const { modalOpen, setModalOpen, modeTheme, comedoresDisponibles, setComedorSeleccionado } = useAppCtx();
+  const { modalOpen, setModalOpen, modeTheme, comedoresDisponibles, setComedorSeleccionado, setModalLogin, user } = useAppCtx();
   const [search, setSearch] = useState("");
 
-  // const comedores = [
-  //   {
-  //     name: "comedor 1",
-  //     address: "Centro Cultural El Cole",
-  //     selected: true,
-  //   },
-  // ];
+  const [comedoresModal, setComedoresModal] = useState([])
+
+  useEffect(() => {
+    merenderosDataFetch(user.access_token)
+    .then(res =>{
+      if (res.status === 401) {
+        setModalLogin(true)
+      } else {
+        setComedoresModal(res.data)
+      }
+    })
+    .catch(err =>{
+      fetchErrorHandler(err, setModalLogin) 
+    })
+  }, [])
+  
 
   const results = useMemo(() => {
     if (search.length === 0) {

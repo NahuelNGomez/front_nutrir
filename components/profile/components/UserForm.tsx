@@ -8,10 +8,10 @@ import {
   Card,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { statesForms } from "../../src/constants/states";
-import { useAppCtx } from "../../src/contexts/store";
-import useForm from "../../src/hooks/useForm";
-import { profileFields } from "../../src/types/forms";
+import { statesForms } from "../../../src/constants/states";
+import { useAppCtx } from "../../../src/contexts/store"; 
+import useForm from "../../../src/hooks/useForm"; 
+import { profileFields } from "../../../src/types/forms"; 
 import { pagesStyles } from "@styles/index";
 import { resolveSoa } from "dns";
 

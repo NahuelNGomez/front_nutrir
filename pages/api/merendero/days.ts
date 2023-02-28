@@ -5,7 +5,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const body = JSON.parse(req.body)
   const { token, comedor, funcionamientos } = body
   delete body.token
-  // console.log(body.funcionamientos);
 
   const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/funcionamiento/`
 

@@ -1,8 +1,12 @@
 import { Button } from "@mui/material"
 import { pagesStyles } from "@styles/index"
 import { useRouter } from "next/router"
-import { FC } from "react"
+import { Dispatch, FC, SetStateAction } from "react"
 import { useAppCtx } from "../../../../src/contexts/store"
+import { userType } from "../../../../src/types/global"
+import { uncompletedSurveyFormatter } from "../../../surveys/steps/utils/uncompleteSurveyFormatter"
+import { uncompletedSurveyPost } from "../../../surveys/services"
+import { fetchErrorHandler } from "../../../../src/dataFetch/fetchErrorHandler"
 
 
 
@@ -10,6 +14,9 @@ interface Props {
   text: string,
   type: string,
   columData: any,
+  user: userType,
+  comedorId: number,
+  setModalLogin: Dispatch<SetStateAction<boolean>>,
 }
 
 
@@ -17,19 +24,19 @@ const SubmitBtn: FC<Props> = ({
   text,
   type = 'complete',
   columData,
+  user,
+  comedorId,
+  setModalLogin
 }) => {
 
-  console.log('column data', columData);
-  
-
   const { modeTheme, setSelectedSurvey } = useAppCtx();
-  const { surveyStyles } = pagesStyles(modeTheme);  
+  const { surveyStyles } = pagesStyles(modeTheme);
 
   const completeHandleClick = (e: any, data: any) => {
     e.preventDefault()
-    const date = data.row.date 
-    const service = data.row.meal    
-    
+    const date = data.row.date
+    const service = data.row.meal
+
     setSelectedSurvey({
       date,
       service
@@ -38,10 +45,24 @@ const SubmitBtn: FC<Props> = ({
     // setSurveyInfo(surveyData)
   }
 
-  const uncompleteHandleClick = (e: any) => {
+  const uncompleteHandleClick = (e: any, data: any) => {
     e.preventDefault()
-    alert('La opción fue marcada como no servida')
-  } 
+    const date = data.row.date
+    const service = data.row.meal
+
+    const payload = uncompletedSurveyFormatter(date, service, comedorId)
+
+    uncompletedSurveyPost(payload, user.access_token)
+      .then(res => {
+        if (res.status === 200) {
+          alert('La opción fue marcada como no servida')
+        }
+      })
+      .catch(err => {
+        fetchErrorHandler(err, setModalLogin)
+      })
+
+  }
 
   return (
     <>
@@ -63,7 +84,10 @@ const SubmitBtn: FC<Props> = ({
             ? (
               <Button
                 sx={surveyStyles.dataTable.utils.uncompleteButton}
-                onClick={uncompleteHandleClick}
+                onClick={(e) => {
+                  const data = columData
+                  uncompleteHandleClick(e, data)
+                }}
               >
                 {text}
               </Button>

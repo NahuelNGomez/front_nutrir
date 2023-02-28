@@ -1,6 +1,5 @@
 import axios from "axios"
 import { ChartsTypes, statsDataFetchType } from "./types"
-import { axiosTokenized } from "../../src/dataFetch/axios"
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 const rationPerWeekPath = `${baseUrl}reporte/racion_semana/`

@@ -1,10 +1,11 @@
-import { Card, CardContent, CircularProgress, Collapse, Grid, Typography } from "@mui/material";
+import { CircularProgress, Collapse, Grid, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { pagesStyles } from "@styles/index";
-import { useAppCtx } from "../../src/contexts/store";
+import { useAppCtx } from "../../../src/contexts/store";
 import MerenderoCard from "@components/ui/special/MerenderoCard";
-import axios from "axios";
-import { comedorInfoType } from "../../src/types/global";
+import { comedorInfoType } from "../../../src/types/global";
+import { merenderosDataFetch } from "../services";
+import { fetchErrorHandler } from "../../../src/dataFetch/fetchErrorHandler";
 
 
 const MerenderoCards: FC<{}> = () => {
@@ -13,23 +14,19 @@ const MerenderoCards: FC<{}> = () => {
   const [comedores, setComedores] = useState<Array<comedorInfoType>>([])
 
   useEffect(() => {
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}comedor/responsable`,
-      { headers: { Authorization: `Bearer ${user.access_token}` } })
-      .then(res => {
-        if (res.status === 401) {
-          setModalLogin(true)
-        } else {
-          setComedores(res.data)
-        }
-      })
-      .catch(err => {
-        // console.log('err', err.response)
-        if (err.response.status === 401) {
-          setModalLogin(true)
-        }
-      })
-  }, [user.access_token, user.groups])
+    merenderosDataFetch(user.access_token)
+    .then(res =>{
+      if (res.status === 401) {
+        setModalLogin(true)
+      } else {
+        setComedores(res.data)
+      }
+    })
+    .catch(err =>{
+      fetchErrorHandler(err, setModalLogin) 
+    })
+
+  }, [user])
 
   const { modeTheme } = useAppCtx();
   const {

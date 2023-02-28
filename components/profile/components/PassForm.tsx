@@ -8,15 +8,16 @@ import {
   Card,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { statesForms } from "../../src/constants/states";
-import { useAppCtx } from "../../src/contexts/store";
-import useForm from "../../src/hooks/useForm";
-import { profileFields } from "../../src/types/forms";
+import { statesForms } from "../../../src/constants/states";
+import { useAppCtx } from "../../../src/contexts/store";
+import useForm from "../../../src/hooks/useForm";
+import { profileFields } from "../../../src/types/forms";
 import { pagesStyles } from "@styles/index";
 import { Formik, FormikProps, useFormik } from "formik";
-import passwordSchema from "./schema/passwordSchema";
+import passwordSchema from "../schema/passwordSchema";
 import { string } from "yup/lib/locale";
-import { passwordType } from "./types/profileTypes";
+import { passwordType } from "../types/profileTypes";
+import { passwordPost } from "../services";
 
 
 const PassForm: FC<{}> = () => {
@@ -46,20 +47,7 @@ const PassForm: FC<{}> = () => {
   }
 
   const handlePassSubmit = (values: passwordType) => {
-
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}user/sesion/password/change/`
-    const access_token = `Bearer ${user.access_token}`
-
-    const config = {
-      method: 'POST',
-      headers: new Headers({
-        'Authorization': access_token,
-        'Content-Type': "application/json"
-      }),
-      body: JSON.stringify(values)
-    }
-
-    fetch(url, config)
+    passwordPost(values, user.access_token)
       .then(res => {
         if (res.status === 200) {
           successDisplay()

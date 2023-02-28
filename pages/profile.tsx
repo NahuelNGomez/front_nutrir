@@ -4,10 +4,10 @@ import { pagesStyles } from "@styles/index";
 import { NextPage } from "next";
 import { useAppCtx } from "../src/contexts/store";
 export { getServerSideProps } from "../src/serverSideProps";
-import InfoCard from "../components/profile/InfoCard";
-import MerenderoCards from "../components/profile/MerenderoCards";
-import UserForm from "../components/profile/UserForm";
-import PassForm from "../components/profile/PassForm";
+import InfoCard from "../components/profile/components/InfoCard";
+import MerenderoCards from "../components/profile/components/MerenderoCards";
+import UserForm from "../components/profile/components/UserForm";
+import PassForm from "../components/profile/components/PassForm";
 
 const Profile: NextPage = () => {
   const { modeTheme } = useAppCtx();

@@ -17,6 +17,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import useSurveyReset from "../steps/hooks/useSurveyReset";
 import { mealInit } from "../../../src/contexts/constants/initInfo";
+import { surveyPost } from "../services";
 
 type Props = {
   backClickHandler: () => void
@@ -34,7 +35,6 @@ const SurveyStepper: FC<Props> = ({
   const { setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setStepActive } = useAppCtx()
 
   moment.locale('es');
-
 
   const serviceDescription = selectedSurvey?.service ? selectedSurvey?.service : ''
   const guestsDescription = guestsDescriptionFormatter(guestsAmount)
@@ -57,13 +57,7 @@ const SurveyStepper: FC<Props> = ({
 
     const data = submitContentFormatter(user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep)
 
-    // console.log('dataaa', data);
-    
-
-    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}encuesta/`
-    const config = { headers: { Authorization: `Bearer ${user.access_token}` } }
-
-    axios.post(url, data, config,)
+    surveyPost(data , user.access_token)
       .then(res => {
         // console.log('encuesta post res', res);
         alert('Encuesta enviada correctamente')
@@ -83,7 +77,6 @@ const SurveyStepper: FC<Props> = ({
         setDisplaySideStepper(true)
       })
       .catch(err => {
-        // console.log('Post err', err);
         alert('La encuesta no pudo ser enviada')
       })
   }

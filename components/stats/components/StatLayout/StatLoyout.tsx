@@ -15,7 +15,7 @@ import { ChartDataFetchedType, ChartDataType, ChartsTypes, DataSetReturned } fro
 import { useUserTokenAndComedorFetchDetail } from '../../hooks';
 import { statsDataFetch } from '../../services';
 import { useAppCtx } from '../../../../src/contexts/store';
-import { fetchErrorHandler } from '../../utils/fetchErrorHandler';
+import { fetchErrorHandler } from '../../../../src/dataFetch/fetchErrorHandler';
 
 ChartJS.register(
   CategoryScale,

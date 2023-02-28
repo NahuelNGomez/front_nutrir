@@ -1,9 +1,9 @@
 import { Avatar, Grid, Typography } from "@mui/material";
 import { FC } from "react";
-import { useAppCtx } from "../../src/contexts/store";
+import { useAppCtx } from "../../../src/contexts/store";
 import PersonIcon from "@mui/icons-material/Person";
 import { pagesStyles } from "@styles/index";
-import userTypeConverter from "./utils/userTypeConverter";
+import userTypeConverter from "../utils/userTypeConverter";
 
 const InfoCard: FC<{}> = () => {
   const { modeTheme, user } = useAppCtx();

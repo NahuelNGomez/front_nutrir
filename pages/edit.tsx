@@ -8,17 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { pagesStyles } from "@styles/index";
-import axios from "axios";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DaysForm from "../components/edit/DaysForm/DaysForm";
 import DinnerQuarterForm from "../components/edit/DinnerQuerterForm/DinnerQuarterForm";
-import { statesForms } from "../src/constants/states";
 import { useAppCtx } from "../src/contexts/store";
-import useForm from "../src/hooks/useForm";
-import { merenderoFields } from "../src/types/forms";
 import { comedorInfoType, serviciosDiaType } from "../src/types/global";
+import { comedorDataFetch, weekServicesFetch } from "../components/edit/services";
+import { fetchErrorHandler } from "../src/dataFetch/fetchErrorHandler";
 export { getServerSideProps } from "../src/serverSideProps";
 
 const Edit: NextPage = () => {
@@ -27,16 +24,12 @@ const Edit: NextPage = () => {
   const [serviciosData, setServiciosData] = useState<Array<serviciosDiaType>>([])
 
   const { editStyles } = pagesStyles(modeTheme);
+  
   const { access_token } = user
-
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
-  const headers = { headers: { Authorization: `Bearer ${access_token}` } }
+  const { id } = comedorSeleccionado
 
   useEffect(() => {
-
-    const url = `${baseUrl}comedor/${comedorSeleccionado?.id}`
-
-    axios.get(url, headers)
+    comedorDataFetch(access_token, id)
       .then(res => {
         if (res.status === 401) {
           setModalLogin(true)
@@ -44,33 +37,20 @@ const Edit: NextPage = () => {
         setComedordata(res.data)
       })
       .catch(err => {
-        if (err.response && err.response.status === 401) {
-          setModalLogin(true)
-        } else if (err.code === "ERR_NETWORK") {
-          // console.log(err)
-          alert('No es posible la conexión con el servidor')
-        }
+        fetchErrorHandler(err, setModalLogin)
       })
   }, [])
 
   useEffect(() => {
-
-    const url = `${baseUrl}comedor/${comedorSeleccionado?.id}/funcionamiento/`
-
-    axios.get(url, headers)
+    weekServicesFetch(access_token, id)
       .then(res => {
         if (res.status === 401) {
           setModalLogin(true)
-        }               
+        }
         setServiciosData(res.data.data)
       })
       .catch(err => {
-        if (err.response && err.response.status === 401) {
-          setModalLogin(true)
-        } else if (err.code === "ERR_NETWORK") {
-          // console.log(err)
-          alert('No es posible la conexión con el servidor')
-        }
+        fetchErrorHandler(err, setModalLogin)
       })
   }, [])
 

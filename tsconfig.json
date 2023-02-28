@@ -22,6 +22,6 @@
       "@styles/*" : ["./styles/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/components/utils"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/components/utils", "components/edit/DaysForm/utils"],
   "exclude": ["node_modules"]
 }

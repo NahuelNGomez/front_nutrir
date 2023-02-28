@@ -3,8 +3,7 @@ import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../../../src/contexts/store";
 import DayAccordion from "../DayAccordion/DayAccordion";
 import { FC, useState } from "react";
-import { serviciosDiaType, serviciosType } from "../../../src/types/global";
-import serviciosMock from "./mock/serviciosMock";
+import { serviciosDiaType } from "../../../src/types/global";
 import { daysName } from "./constants/constants";
 import { Formik, FormikProps } from "formik";
 
@@ -60,9 +59,7 @@ const DaysForm: FC<Props> = ({ serviciosData }) => {
           setModalLogin(true)
         }
       })
-      .catch(err => {
-        // console.log('erro submit', err);
-        
+      .catch(err => {    
         setResponseError(true)
       })
 
