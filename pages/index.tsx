@@ -43,14 +43,13 @@ const Home: NextPage = () => {
   }, [comedoresDisponibles, comedorSeleccionado])
 
   useEffect(() => {
-    if (comedorSeleccionado.id === 0 ) {
+    if (comedorSeleccionado.id === 0  ) {
       if (comedoresDisponibles?.length > 0 ) {
         setModalOpen(true)
       }
     }
 
-  }, [comedoresDisponibles, firstLogin, comedorSeleccionado])
-
+  }, [comedoresDisponibles, firstLogin, comedorSeleccionado])  
 
   return (
     <LoggedLayout>
