@@ -6,11 +6,34 @@ import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../src/contexts/store";
 import SelectSurveyStep from "../components/surveys/steps/SelectSurveyStep";
 import StepsLayout from "../components/surveys/steps/StepsLayout";
+import { useEffect } from "react";
+import { mealInit } from "../src/contexts/constants/initInfo";
 
 
 const DailySurvers: NextPage = () => {
-  const { modeTheme, selectedSurvey } = useAppCtx();
+  const { modeTheme, selectedSurvey, setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setDisplaySideStepper } = useAppCtx();
   const { surveyStyles } = pagesStyles(modeTheme);
+
+  useEffect(() => {
+    
+  
+    return () => {
+      setSelectedSurvey({ date: '', service: '' })
+      setGuestsAmount({
+        childs: 0,
+        kids: 0,
+        teens: 0,
+        adults: 0
+      })
+      setDrinkStep(mealInit)
+      setSimpleMainMealStep(mealInit)
+      setEntryStep(mealInit)
+      setCompoundMainMailStep(mealInit)
+      setDessertStep(mealInit)
+      setDisplaySideStepper(true)
+    }
+  }, [])
+  
 
   return (
     <LoggedLayout>

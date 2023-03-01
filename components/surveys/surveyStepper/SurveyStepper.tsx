@@ -1,3 +1,7 @@
+import { FC } from "react";
+import { useRouter } from "next/router";
+import { useAppCtx } from "../../../src/contexts/store";
+import moment from "moment";
 import { Card, CardContent, Grid, Typography } from "@mui/material"
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -5,19 +9,13 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
-import { FC } from "react";
-import { useAppCtx } from "../../../src/contexts/store";
-import moment from "moment";
-import { pagesStyles } from "@styles/index";
 import stepsProvider from "./utils/stepsProvider";
 import mealDescriptionFormatter from "./utils/mealDescriptionFormatter";
 import guestsDescriptionFormatter from "./utils/guestsDescriptionFormatter";
 import submitContentFormatter from "./utils/submitContentFormatter";
-import axios from "axios";
-import { useRouter } from "next/router";
-import useSurveyReset from "../steps/hooks/useSurveyReset";
-import { mealInit } from "../../../src/contexts/constants/initInfo";
 import { surveyPost } from "../services";
+import { mealInit } from "../../../src/contexts/constants/initInfo";
+import { pagesStyles } from "@styles/index";
 
 type Props = {
   backClickHandler: () => void
@@ -33,8 +31,6 @@ const SurveyStepper: FC<Props> = ({
   const { user, comedorSeleccionado, selectedSurvey, guestsAmount, drinkStep, simpleMainMealStep, entryStep, compoundMainMealStep, dessertStep, displaySideStepper, setDisplaySideStepper, stepActive } = useAppCtx()
 
   const { setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setStepActive } = useAppCtx()
-
-  moment.locale('es');
 
   const serviceDescription = selectedSurvey?.service ? selectedSurvey?.service : ''
   const guestsDescription = guestsDescriptionFormatter(guestsAmount)
