@@ -11,7 +11,7 @@ import {
   Grid,
 } from "@mui/material";
 import { NextPage } from "next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { pagesStyles } from "@styles/index";
 import useForm from "../src/hooks/useForm";
 import { useRouter } from "next/router";
@@ -28,7 +28,9 @@ const Login: NextPage = () => {
     statesForms.login
   );
   const { loginStyles } = pagesStyles(modeTheme);
-  
+
+  const [passwordError, setPasswordError] = useState(false)
+
 
   return (
     <UnloggedLayout>
@@ -44,12 +46,18 @@ const Login: NextPage = () => {
         <Card>
           {processing.loading && <LinearProgress color="primary" />}
           <form
-              onSubmit={(e) =>
-                submit(e, "/api/login").then(() => {
+            onSubmit={(e) =>
+              submit(e, "/api/login")
+                .then(() => {
                   router.push("/")
+                  setPasswordError(false)
                   setFirstLogin(false)
                 })
-              }
+                .catch(err =>{
+                  console.log('error login', err);
+                  setPasswordError(true)
+                })
+            }
           >
             <CardContent sx={loginStyles.cardContent}>
               <img
@@ -68,7 +76,6 @@ const Login: NextPage = () => {
                   id="input-with-sx"
                   label="Usuario"
                   variant="outlined"
-                  // type="email"
                   name="cuil"
                   margin="normal"
                   value={fields.cuil}
@@ -136,7 +143,7 @@ const Login: NextPage = () => {
                 </Button>
               </Typography>
             </CardActions>
-            {!processing.validate && (
+            {passwordError && (
               <div style={loginStyles.utils.errorMessage}>
                 <Alert severity="error" sx={{ justifyContent: "center" }}>
                   Usuario o Contraseña son incorrectas
