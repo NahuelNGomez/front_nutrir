@@ -24,20 +24,23 @@ const ModalSeleccion: FC<{}> = () => {
   const [search, setSearch] = useState("");
 
   const [comedoresModal, setComedoresModal] = useState([])
+  const [comedorActive, setComedorActive] = useState<number>()
 
   useEffect(() => {
-    merenderosDataFetch(user.access_token)
-    .then(res =>{
-      if (res.status === 401) {
-        setModalLogin(true)
-      } else {
-        setComedoresModal(res.data)
-      }
-    })
-    .catch(err =>{
-      fetchErrorHandler(err, setModalLogin) 
-    })
-  }, [])
+    if(user?.access_token){
+      merenderosDataFetch(user.access_token)
+      .then(res =>{
+        if (res.status === 401) {
+          setModalLogin(true)
+        } else {
+          setComedoresModal(res.data)
+        }
+      })
+      .catch(err =>{
+        fetchErrorHandler(err, setModalLogin) 
+      })
+    }
+  }, [user])
   
 
   const results = useMemo(() => {
@@ -69,6 +72,7 @@ const ModalSeleccion: FC<{}> = () => {
             onClick={() => setModalOpen(false)}
           />
         </Grid>
+
         <TextField
           sx={merenderosModalStyles.searchInput}
           id="outlined-basic"
@@ -78,6 +82,7 @@ const ModalSeleccion: FC<{}> = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+
         <List>
           {results.map((comedor, index) => (
             <ListItemButton
@@ -93,12 +98,13 @@ const ModalSeleccion: FC<{}> = () => {
               }}
               onClick={()=>{
                 comedor.selected = true;
+                setComedorActive(comedor.id)
                 setComedorSeleccionado(comedor)
                 setModalOpen(false)
               }}
             >
               <ListItemIcon>
-                {comedor.selected ? (
+                {comedor.id === comedorActive ? (
                   <CheckCircleOutlineIcon
                     fontSize={"medium"}
                     color={"primary"}

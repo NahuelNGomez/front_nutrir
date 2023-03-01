@@ -39,7 +39,7 @@ const Edit: NextPage = () => {
       .catch(err => {
         fetchErrorHandler(err, setModalLogin)
       })
-  }, [])
+  }, [id])
 
   useEffect(() => {
     weekServicesFetch(access_token, id)
@@ -52,7 +52,7 @@ const Edit: NextPage = () => {
       .catch(err => {
         fetchErrorHandler(err, setModalLogin)
       })
-  }, [])
+  }, [id])
 
   return (
     <LoggedLayout>
