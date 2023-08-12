@@ -101,7 +101,11 @@ const MealIngredientCard: FC<Props> = ({
       <Grid
         item
         container
-        xs={9}
+        xs={7}
+        sm={7}
+        md={7}
+        lg={9}
+        xl={9}
         sx={ingredientsPanel.compoundCard.descriptionContainer}
       >
         <Grid
@@ -116,7 +120,9 @@ const MealIngredientCard: FC<Props> = ({
         </Grid>
         <Grid
           item
-          xs={1}
+          xs={2}
+          sm={2}
+          md={1}
           sx={ingredientsPanel.compoundCard.imageContainer}
         >
           <div style={{ display: 'flex', position: 'relative' }}>
@@ -141,13 +147,22 @@ const MealIngredientCard: FC<Props> = ({
 
       <Grid
         container
-        xs={3}
+        xs={5}
+        sm={5}
+        md={3}
+        lg={3}
+        xl={3}
         spacing={2}
         sx={ingredientsPanel.compoundCard.quantityContainer}
       >
         <Grid
           item
           xs={8}
+          sm={8}
+          md={8}
+          lg={8}
+          xl={8}
+          sx={{mr: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 }}}
         >
           <TextField
             onChange={quantityFielHandleChange}
@@ -162,7 +177,11 @@ const MealIngredientCard: FC<Props> = ({
         </Grid>
         <Grid
           item
-          xs={2}
+          xs={1}
+          sm={1}
+          md={2}
+          lg={2}
+          xl={2}
           sx={ingredientsPanel.compoundCard.secondaryText}
         >
           <Typography >
