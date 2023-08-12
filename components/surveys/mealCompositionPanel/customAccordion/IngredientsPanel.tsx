@@ -89,7 +89,7 @@ const IngredientsPanel: React.FC<Props> = ({
                       id="panel1bh-header"
                       sx={{ ml: 1.5 }}
                     >
-                      <Typography sx={{ width: '33%', flexShrink: 0 }}>
+                      <Typography sx={{ width: {xs: '70%', sm: '70%', md: '70%', lg: '33%', xl: '33%'}, flexShrink: 0 }}>
                         {nombre}
                       </Typography>
                     </AccordionSummary>

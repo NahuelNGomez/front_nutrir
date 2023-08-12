@@ -1,13 +1,9 @@
 import { fontWeight } from "@mui/system";
 
-const SurveyStep = (theme = 'light') => ({
-
-})
-
 const Stepper = (theme = 'light') => ({
   container: {
     padding: "20px",
-    minHeight: '600px',
+    minHeight: {xs: "fit-content", sm: 'fit-content', md: 'fit-content', lg: '600px', xl: '600px'},
   },
   card: {
     height: '100%',
@@ -28,6 +24,7 @@ const Stepper = (theme = 'light') => ({
   },
   buttons: {
     width: { xs: "100%", sm: "90%", lg: "20%", xl: "20%" },
+    mb: { xs: 1, sm: 1, lg: 0, xl: 0 },
     borderRadius: "18px",
     textTransform: "none",
     padding: "10px",
@@ -48,6 +45,18 @@ const FormPanel = (theme = 'light') => ({
     mt: 1
   }
 })
+
+const FormPanelMobile = (theme = 'light') => ({
+  title: {
+    mt: 0,
+    fontWeight: '700',
+    fontSize: '1rem'
+  },
+  subtitle: {
+    mt: 1
+  }
+})
+
 
 const DishSelection = (theme = 'ligh') => ({
   container: {
@@ -96,7 +105,7 @@ const GuestsStep = (theme = 'light') => ({
     backgroundColor: 'transparent',
     border: '1px solid #40a39b',
     color: "#40a39b",
-    mt: 4,
+    mt: { xs: 2, sm: 2, lg: 4, xl: 4 },
     ":disabled": {
       backgroundColor: theme === 'light' ? '#ededed' : 'transparent',
       border: theme === 'light' ? 'none' : '1px solid #9d9ba2',
@@ -114,7 +123,7 @@ const DrinkStep = (theme = 'light') => ({
     backgroundColor: 'transparent',
     border: '1px solid #40a39b',
     color: "#40a39b",
-    mt: 4
+    mt: { xs: 2, sm: 2, lg: 4, xl: 4 },
   }
 })
 
@@ -128,7 +137,7 @@ const MealStep = (theme = 'light') => ({
     backgroundColor: 'transparent',
     border: '1px solid #40a39b',
     color: "#40a39b",
-    mt: 4
+    mt: { xs: 2, sm: 2, lg: 4, xl: 4 },
   }
 })
 
@@ -138,6 +147,8 @@ const IngredientsPanel = (theme = 'light') => ({
       backgroundColor: '#40a39b',
     },
     details: {
+      pl: { xs: 0, sm: 0, md: 0 },
+      pr: { xs: 0, sm: 0, md: 0 },
       backgroundColor: theme == "light" ? '' : '#121212',
       backgroundImage:
         theme == "light"
@@ -150,14 +161,15 @@ const IngredientsPanel = (theme = 'light') => ({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      alignItems: 'center'
+      alignItems: 'center',
+     
     },
-    descriptionContainer:{
-      alignItems: 'center', 
-      p: 1
+    descriptionContainer: {
+      alignItems: 'center',
+      p: { xs: 0, sm: 0, md: 0, lg: 1, xl: 1 },
     },
     imageContainer: {
-      ml: 2
+      ml: { xs: 3, sm: 3, md: 2, lg: 2, xl: 2 }
     },
     primaryText: {
       color: theme == "light" ? '' : 'white',
@@ -165,10 +177,13 @@ const IngredientsPanel = (theme = 'light') => ({
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      ml: 2
+      ml: { xs: 0.5, sm: 0.5, md: 2, lg: 2, xl: 2 }
     },
     quantityContainer: {
-      display: 'flex', flexDirection: 'row', alignItems: 'center'
+      display: 'flex', 
+      flexDirection: 'row', 
+      alignItems: 'center',
+      
     },
     secondaryText: {
       height: '100%',
@@ -203,6 +218,7 @@ const survey = (theme = 'light') => ({
   dataTable: DateTable(theme),
   dishSelection: DishSelection(theme),
   formPanel: FormPanel(theme),
+  formPanelMobile: FormPanelMobile(theme),
   stepper: Stepper(theme),
   guests: GuestsStep(theme),
   drinks: DrinkStep(theme),
