@@ -49,7 +49,6 @@ const StepsLayout = () => {
         >
           <SurveyStepper
             backClickHandler={handleGoToPreviousStep}
-            mobile
           />
         </Grid>
 
@@ -116,7 +115,6 @@ const StepsLayout = () => {
         >
           <SurveyStepper
             backClickHandler={handleGoToPreviousStep}
-            mobile={false}
           />
         </Grid>
       </Grid>
