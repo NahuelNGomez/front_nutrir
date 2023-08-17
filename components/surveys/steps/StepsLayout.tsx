@@ -5,20 +5,15 @@ import servicesStepsProvider from './utils/servicesStepsProvider'
 import { useState } from "react";
 import SurveyStepper from '../surveyStepper/SurveyStepper';
 import { useAppCtx } from '../../../src/contexts/store';
-import useWindowDimensions from '../../../src/hooks/useWindowDimensions';
-import { breakpoints } from '../../../src/constants/breakpoints';
+import { useMediaQuery } from '../../../src/hooks/useMediaQuery';
 
 
 const StepsLayout = () => {
 
   const { selectedSurvey, displaySideStepper } = useAppCtx();
-  const [width, setWidth] = useState(0);
   const [activeStep, setActiveStep] = useState(0)
-  const dimensions = useWindowDimensions();
+  const matches = useMediaQuery("(min-width: 768px)");
 
-  useEffect(() => {
-    setWidth(dimensions.width);
-  }, []);
 
   const selectedService = selectedSurvey?.service ? selectedSurvey?.service : ''
 
@@ -77,7 +72,7 @@ const StepsLayout = () => {
     )
   }
 
-  const desktopLayour = () => {
+  const desktopLayout = () => {
     return (
       <Grid
         container
@@ -122,10 +117,10 @@ const StepsLayout = () => {
   }
 
   return (
-     width !== 0 && width >= breakpoints.xs && width < breakpoints.m
-      ? mobileLayout()
-      : desktopLayour()
-  )
+    matches
+     ? desktopLayout()
+     : mobileLayout()
+ )
 }
 
 export default StepsLayout

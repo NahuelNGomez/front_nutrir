@@ -55,7 +55,6 @@ const SurveyStepper: FC<Props> = ({
 
     surveyPost(data , user.access_token)
       .then(res => {
-        // console.log('encuesta post res', res);
         alert('Encuesta enviada correctamente')
         route.push('/')
         setSelectedSurvey({ date: '', service: '' })
