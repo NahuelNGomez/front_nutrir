@@ -11,12 +11,10 @@ import { mealInit } from "../src/contexts/constants/initInfo";
 
 
 const DailySurvers: NextPage = () => {
-  const { modeTheme, selectedSurvey, setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setDisplaySideStepper } = useAppCtx();
+  const { modeTheme, selectedSurvey, setSelectedSurvey, setGuestsAmount, setDrinkStep, setSimpleMainMealStep, setEntryStep, setCompoundMainMailStep, setDessertStep, setDisplaySideStepper, setStepActive } = useAppCtx();
   const { surveyStyles } = pagesStyles(modeTheme);
 
   useEffect(() => {
-    
-  
     return () => {
       setSelectedSurvey({ date: '', service: '' })
       setGuestsAmount({
@@ -31,6 +29,7 @@ const DailySurvers: NextPage = () => {
       setCompoundMainMailStep(mealInit)
       setDessertStep(mealInit)
       setDisplaySideStepper(true)
+      setStepActive(0);
     }
   }, [])
   

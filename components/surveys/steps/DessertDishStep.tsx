@@ -35,7 +35,7 @@ const DessertDishStep: FC<Props> = ({
         if (res.status === 401) {
           setModalLogin(true)
         } else {
-          const data = res.data.data.entrada
+          const data = res.data.data.postre
           const dataComidas = data.map(async (comida: any) => {
             try {
               const info = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}comida/${comida.id}`,
