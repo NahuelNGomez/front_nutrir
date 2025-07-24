@@ -115,6 +115,10 @@ const MealIngredientCard: FC<Props> = ({
         ]);
     };
 
+    const currentAlimento = meal.alimento.find(
+        (alimento) => alimento.id === ingredientId
+    );
+
     return (
         <Grid
             container
@@ -202,25 +206,21 @@ const MealIngredientCard: FC<Props> = ({
                     <Box sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>
                             <InputLabel id='unit-label'>Unidad</InputLabel>
-                            {meal.alimento.map((alimento) => (
+                            {currentAlimento && (
                                 <Select
-                                    key={alimento.id}
                                     labelId='unit-label'
                                     id='unit'
                                     value={unit.toString()}
                                     label='Unidad'
                                     onChange={handleChange}
                                 >
-                                    {alimento.unidades?.map((unidad) => (
-                                        <MenuItem
-                                            value={unidad.id}
-                                            key={unidad.id}
-                                        >
+                                    {currentAlimento.unidades?.map((unidad) => (
+                                        <MenuItem value={unidad.id} key={unidad.id}>
                                             {unidad.nombre}
                                         </MenuItem>
                                     ))}
                                 </Select>
-                            ))}
+                            )}
                         </FormControl>
                     </Box>
                 </Grid>
