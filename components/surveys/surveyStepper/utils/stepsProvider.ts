@@ -16,11 +16,11 @@ const simpleSurveySteps = (
       },
       {
         label: '3. Bebida',
-        description: drinksDecription,
+        description: drinksDecription || '',
       },
       {
         label: '4. Comida',
-        description: simpleMainMealDescription 
+        description: simpleMainMealDescription || ''
       },
       {
         label: '5. Confirmar encuesta',
@@ -49,15 +49,15 @@ const compoundSurveySteps = (
       },
       {
         label: '3. Entrada',
-        description: entryDescription
+        description: entryDescription || ''
       },
       {
         label: '4. Plato Principal',
-        description: compoundMainMealDescription
+        description: compoundMainMealDescription || ''
       },
       {
         label: '5. Postre',
-        description: dessertStep
+        description: dessertStep || ''
       },
       {
         label: '6. Confirmar encuesta',

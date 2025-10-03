@@ -49,8 +49,10 @@ const MealIngredientCard: FC<Props> = ({
         setUnit(event.target.value as unknown as number);
     };
 
-    const { setFieldValue } = formikProps;
-    const currentAlimentos = formikProps.getFieldProps('alimento').value;
+    const { setFieldValue, values } = formikProps;
+    // Buscar la comida correspondiente en el array de comidas
+    const currentComida = values.comidas?.find((comida: any) => comida.comida === meal.id);
+    const currentAlimentos = currentComida?.alimento || [];
 
     useEffect(() => {
         const alimentoChecked = currentAlimentos.filter(
@@ -60,15 +62,98 @@ const MealIngredientCard: FC<Props> = ({
         if (alimentoChecked.length) {
             setAlimentoCheck(true);
             setEnableQuantity(false);
-            setQuantityValue(alimentoChecked[0].quantity);
+            // Solo actualizar si el valor es diferente para evitar sobrescribir lo que está escribiendo el usuario
+            if (alimentoChecked[0].quantity !== quantityValue) {
+                setQuantityValue(alimentoChecked[0].quantity);
+            }
+            // Establecer la unidad del alimento seleccionado usando unitId en lugar de unit
+            if (alimentoChecked[0].unitId) {
+                setUnit(alimentoChecked[0].unitId);
+            }
+        } else {
+            // Si no hay alimento seleccionado, resetear el estado
+            setAlimentoCheck(false);
+            setEnableQuantity(true);
+            setQuantityValue(0);
         }
     }, [ingredientId, currentAlimentos]);
+
+    // Establecer la primera unidad por defecto cuando se carga el componente
+    useEffect(() => {
+        const currentAlimento = meal.alimento.find(
+            (alimento) => alimento.id === ingredientId
+        );
+        
+        if (currentAlimento && currentAlimento.unidades && currentAlimento.unidades.length > 0) {
+            // Solo establecer la primera unidad si no hay un alimento ya seleccionado
+            const alimentoYaSeleccionado = currentAlimentos.some((alimento: foodStepType) => alimento.id === ingredientId);
+            if (!alimentoYaSeleccionado && unit === 1) {
+                setUnit(currentAlimento.unidades[0].id);
+            }
+        }
+    }, [ingredientId, meal.alimento, currentAlimentos]);
+
+    // Sincronizar la unidad cuando cambia el estado del formulario
+    useEffect(() => {
+        const currentAlimento = meal.alimento.find(
+            (alimento) => alimento.id === ingredientId
+        );
+        
+        if (currentAlimento && currentAlimento.unidades && currentAlimento.unidades.length > 0) {
+            // Si la unidad actual no es válida para este alimento, usar la primera disponible
+            const unidadValida = currentAlimento.unidades.find(u => u.id === unit);
+            if (!unidadValida && currentAlimento.unidades.length > 0) {
+                setUnit(currentAlimento.unidades[0].id);
+            }
+        }
+    }, [unit, ingredientId, meal.alimento]);
 
     const ingredientHandleChange = (e: any) => {
         if (e.target.checked) {
             setAlimentoCheck(true);
             setEnableQuantity(false);
             setIngredientname(e.target.name.toLocaleLowerCase());
+            
+            // Guardar el ingrediente con la unidad seleccionada actualmente
+            const currentAlimento = meal.alimento.find(
+                (alimento) => alimento.id === ingredientId
+            );
+            const selectedUnidad = currentAlimento?.unidades?.find(u => u.id === unit);
+            const unidadNombre = selectedUnidad?.nombre || currentAlimento?.unidades?.[0]?.nombre || '';
+            const unitId = selectedUnidad?.id || currentAlimento?.unidades?.[0]?.id || 1;
+            
+            // Asegurar que la comida existe en el array de comidas
+            let updatedComidas = values.comidas || [];
+            const existingComidaIndex = updatedComidas.findIndex((comida: any) => comida.comida === meal.id);
+            
+            if (existingComidaIndex === -1) {
+                updatedComidas.push({
+                    comida: meal.id,
+                    nombre: meal.nombre,
+                    alimento: []
+                });
+            }
+            
+            // Agregar el ingrediente con la unidad seleccionada
+            updatedComidas = updatedComidas.map((comida: any) => 
+                comida.comida === meal.id 
+                    ? {
+                        ...comida,
+                        alimento: [
+                            ...comida.alimento,
+                            {
+                                id: ingredientId,
+                                nombre: e.target.name,
+                                quantity: 0,
+                                unit: unidadNombre,
+                                unitId: unitId,
+                            }
+                        ]
+                    }
+                    : comida
+            );
+            
+            setFieldValue('comidas', updatedComidas);
         }
 
         if (e.target.checked === false) {
@@ -76,43 +161,101 @@ const MealIngredientCard: FC<Props> = ({
             setEnableQuantity(true);
             setIngredientname('');
             setQuantityValue(0);
+            // No resetear la unidad aquí para mantener la selección del usuario
 
             const newAlimentosEntry = currentAlimentos.filter(
                 (alimento: foodStepType) => alimento.id !== ingredientId
             );
-            if (newAlimentosEntry.lenght > 0) {
-                setFieldValue('comida', meal.id);
-                setFieldValue('nombre', meal.nombre);
-                setFieldValue('alimento', newAlimentosEntry);
-            } else {
-                setFieldValue('comida', null);
-                setFieldValue('nombre', '');
-                setFieldValue('alimento', []);
-            }
+            
+            // Actualizar la comida específica en el array de comidas
+            const updatedComidas = values.comidas?.map((comida: any) => 
+                comida.comida === meal.id 
+                    ? { ...comida, alimento: newAlimentosEntry }
+                    : comida
+            ) || [];
+            
+            setFieldValue('comidas', updatedComidas);
         }
     };
 
     const quantityFielHandleChange = (e: any) => {
-        setQuantityValue(e.target.value);
+        const inputValue = e.target.value;
+        
+        // Actualizar siempre el valor mostrado
+        setQuantityValue(inputValue);
+        
+        // Si está vacío, limpiar errores y no procesar
+        if (inputValue === '') {
+            setError(false);
+            // Limpiar el alimento del formulario si está vacío
+            const newAlimentosEntry = currentAlimentos.filter(
+                (el: foodStepType) => el.id !== ingredientId
+            );
+            
+            // Actualizar la comida específica en el array de comidas
+            const updatedComidas = values.comidas?.map((comida: any) => 
+                comida.comida === meal.id 
+                    ? { ...comida, alimento: newAlimentosEntry }
+                    : comida
+            ) || [];
+            
+            setFieldValue('comidas', updatedComidas);
+            return;
+        }
+        
+        // Con type='number' el navegador ya valida que sea un número válido
+        const numericValue = parseFloat(inputValue);
+        if (!isNaN(numericValue) && numericValue >= 0) {
+            setError(false);
+            
+            const newAlimentosEntry = currentAlimentos.filter(
+                (el: foodStepType) => el.id !== ingredientId
+            );
 
-        if (error) setError(false);
-        if (e.target.value < 0) setError(true);
-
-        const newAlimentosEntry = currentAlimentos.filter(
-            (el: foodStepType) => el.id !== ingredientId
-        );
-
-        setFieldValue('comida', meal.id);
-        setFieldValue('nombre', meal.nombre.toLocaleLowerCase());
-        setFieldValue('alimento', [
-            ...newAlimentosEntry,
-            {
-                id: ingredientId,
-                nombre: ingredientName,
-                quantity: parseFloat(e.target.value),
-                unit: unit,
-            },
-        ]);
+            // Asegurar que la comida existe en el array de comidas
+            let updatedComidas = values.comidas || [];
+            const existingComidaIndex = updatedComidas.findIndex((comida: any) => comida.comida === meal.id);
+            
+            if (existingComidaIndex === -1) {
+                // Si la comida no existe, agregarla
+                updatedComidas.push({
+                    comida: meal.id,
+                    nombre: meal.nombre,
+                    alimento: []
+                });
+            }
+            
+            // Obtener el nombre y ID de la unidad - usar la unidad seleccionada actualmente
+            const currentAlimento = meal.alimento.find(
+                (alimento) => alimento.id === ingredientId
+            );
+            const selectedUnidad = currentAlimento?.unidades?.find(u => u.id === unit);
+            const unidadNombre = selectedUnidad?.nombre || currentAlimento?.unidades?.[0]?.nombre || '';
+            const unitId = selectedUnidad?.id || currentAlimento?.unidades?.[0]?.id || 1;
+            
+            // Actualizar los alimentos de la comida específica
+            updatedComidas = updatedComidas.map((comida: any) => 
+                comida.comida === meal.id 
+                    ? {
+                        ...comida,
+                        alimento: [
+                            ...newAlimentosEntry,
+                            {
+                                id: ingredientId,
+                                nombre: ingredientName,
+                                quantity: numericValue,
+                                unit: unidadNombre,
+                                unitId: unitId,
+                            },
+                        ]
+                    }
+                    : comida
+            );
+            
+            setFieldValue('comidas', updatedComidas);
+        } else {
+            setError(true);
+        }
     };
 
     const currentAlimento = meal.alimento.find(
@@ -188,7 +331,10 @@ const MealIngredientCard: FC<Props> = ({
                         value={quantityValue}
                         disabled={enableQuantity}
                         type='number'
-                        inputProps={{ min: 0 }}
+                        inputProps={{ 
+                            step: '0.1',
+                            min: '0'
+                        }}
                         InputLabelProps={{
                             shrink: true,
                         }}

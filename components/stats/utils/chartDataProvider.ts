@@ -1,4 +1,4 @@
-import { ChartDataType, DataSet, DataSetReturned, RationDataType } from "../types"
+import { ChartDataType, DataSet, DataSetReturned, RationDataType, NutritionalDataType } from "../types"
 
 const mealChartDataFormatter = (data: DataSet): ChartDataType => {
 
@@ -49,7 +49,77 @@ const ratioChartDataFormatter = (data: RationDataType) => {
   }
 }
 
+const nutritionalChartDataFormatter = (data: NutritionalDataType) => {
+  const lista = [...data.lista]
+  
+  // Crear datasets para cada nutriente
+  const datasets = [
+    {
+      label: 'Hidratos de Carbono (g)',
+      data: lista.map(el => el.hidratos),
+      backgroundColor: "#e6004980",
+      borderColor: "#e60049",
+      borderWidth: 1
+    },
+    {
+      label: 'Proteínas (g)',
+      data: lista.map(el => el.proteinas),
+      backgroundColor: "#0bb4ff80",
+      borderColor: "#0bb4ff",
+      borderWidth: 1
+    },
+    {
+      label: 'Grasas Saturadas (g)',
+      data: lista.map(el => el.grasasSaturadas),
+      backgroundColor: "#50e99180",
+      borderColor: "#50e991",
+      borderWidth: 1
+    },
+    {
+      label: 'Grasas Totales (g)',
+      data: lista.map(el => el.grasasTotales),
+      backgroundColor: "#e6d80080",
+      borderColor: "#e6d800",
+      borderWidth: 1
+    },
+    {
+      label: 'Sodio (mg)',
+      data: lista.map(el => el.sodio),
+      backgroundColor: "#ffa30080",
+      borderColor: "#ffa300",
+      borderWidth: 1
+    }
+  ]
+
+  // Determinar las etiquetas basándose en si es mes o día
+  const labels = lista.map(el => el.mes || el.dia)
+
+  return {
+    labels: labels,
+    datasets: datasets
+  }
+}
+
+const caloriesLineChartDataFormatter = (data: NutritionalDataType) => {
+  const lista = [...data.lista]
+  
+  return {
+    labels: lista.map(el => el.mes || el.dia),
+    datasets: [{
+      label: 'Kilocalorías por comensal (kcal)',
+      data: lista.map(el => el.kilocalorias),
+      backgroundColor: "#9b19f580",
+      borderColor: "#9b19f5",
+      borderWidth: 2,
+      fill: false,
+      tension: 0.1
+    }]
+  }
+}
+
 export {
   mealChartDataFormatter,
-  ratioChartDataFormatter
+  ratioChartDataFormatter,
+  nutritionalChartDataFormatter,
+  caloriesLineChartDataFormatter
 }

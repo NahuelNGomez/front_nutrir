@@ -34,6 +34,13 @@ const SurveyStepper: FC<Props> = ({
 
   const serviceDescription = selectedSurvey?.service ? selectedSurvey?.service : ''
   const guestsDescription = guestsDescriptionFormatter(guestsAmount)
+  
+  console.log('SurveyStepper - drinkStep:', drinkStep)
+  console.log('SurveyStepper - simpleMainMealStep:', simpleMainMealStep)
+  console.log('SurveyStepper - entryStep:', entryStep)
+  console.log('SurveyStepper - compoundMainMealStep:', compoundMainMealStep)
+  console.log('SurveyStepper - dessertStep:', dessertStep)
+  
   const drinksDecription = mealDescriptionFormatter(drinkStep)
   const simpleMainMealDescription = mealDescriptionFormatter(simpleMainMealStep)
   const entryDescription = mealDescriptionFormatter(entryStep)

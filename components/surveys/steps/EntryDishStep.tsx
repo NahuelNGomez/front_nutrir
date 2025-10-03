@@ -22,8 +22,18 @@ const EntryDishStep: FC<Props> = ({
   const { modeTheme, setStepActive, setEntryStep, entryStep, user, selectedSurvey, setModalLogin } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comida, setComida] = useState<Array<any>>([])
+  const [loading, setLoading] = useState(true)
+  const [noComidasFound, setNoComidasFound] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+    setNoComidasFound(false)
+
+    // Timeout de seguridad para evitar loading infinito
+    const timeoutId = setTimeout(() => {
+      console.log('Timeout alcanzado, deteniendo loading')
+      setLoading(false)
+    }, 10000) // 10 segundos
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
     const service = selectedSurvey.service
@@ -36,6 +46,20 @@ const EntryDishStep: FC<Props> = ({
           setModalLogin(true)
         } else {
           const data = res.data.data.entrada
+          console.log('Datos recibidos:', data)
+          console.log('Tipo de datos:', typeof data)
+          console.log('Es array:', Array.isArray(data))
+          console.log('Longitud:', data?.length)
+          
+          // Verificar si hay comidas disponibles
+          if (!data || !Array.isArray(data) || data.length === 0) {
+            console.log('No hay comidas disponibles')
+            clearTimeout(timeoutId)
+            setNoComidasFound(true)
+            setLoading(false)
+            return
+          }
+          
           const dataComidas = data.map(async (comida: any) => {
             
             try {
@@ -51,17 +75,24 @@ const EntryDishStep: FC<Props> = ({
             try {
               const promises = await Promise.all(dataComidas)
               const res = promises.map((e) => e.data.data)
+              console.log('Comidas procesadas:', res)
+              clearTimeout(timeoutId)
               setComida(res)
+              setLoading(false)
               // console.log({res});
 
             } catch (error) {
               console.log('promesas catch', error)
+              clearTimeout(timeoutId)
+              setLoading(false)
             }
           }
           promisesFormatted()
         }
       })
       .catch(err => {
+        clearTimeout(timeoutId)
+        setLoading(false)
         if (err.response && err.response.status === 401) {
           setModalLogin(true)
         } else if (err.code === "ERR_NETWORK") {
@@ -81,52 +112,84 @@ const EntryDishStep: FC<Props> = ({
   return (
     <>
       {
-        comida.length > 0
-          ? (
-            <Formik
-              initialValues={entryStep}
-              onSubmit={(values) => {
-                setEntryStep(values)
-                setStepActive(3)
-                handleGoToNextStep()
+        loading
+          ? <CircularProgress />
+          : noComidasFound
+            ? (
+              <>
+                <Grid container justifyContent="center" sx={{ py: 4 }}>
+                  <Grid item xs={12} textAlign="center">
+                    <h3>No se encontraron comidas de entrada disponibles</h3>
+                    <p>No hay comidas de entrada disponibles para el servicio seleccionado. Puedes continuar sin seleccionar entrada.</p>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="space-between" sx={{ py: 2 }}>
+                  <Button
+                    onClick={handleBackBtn}
+                    sx={mealStep.button}
+                  >
+                    Volver
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      // Continuar sin entrada
+                      setEntryStep(mealInitialValues)
+                      setStepActive(3)
+                      handleGoToNextStep()
+                    }}
+                    sx={mealStep.button}
+                  >
+                    Continuar sin entrada
+                  </Button>
+                </Grid>
+              </>
+            )
+            : comida.length > 0
+              ? (
+                <Formik
+                  initialValues={entryStep}
+                  onSubmit={(values) => {
+                    setEntryStep(values)
+                    setStepActive(3)
+                    handleGoToNextStep()
 
-              }}
-            // validationSchema={validationSchema}
-            >
-              {(props: FormikProps<any>) => {                
+                  }}
+                // validationSchema={validationSchema}
+                >
+                  {(props: FormikProps<any>) => {                
 
-                return (
-                  <>
-                    <form onSubmit={props.handleSubmit}>
-                      <IngredientsPanel
-                        formikProps={props}
-                        meals={comida}
-                      />
-                      <Grid
-                        container xs={12}
-                        justifyContent={"space-between"}
-                        sx={{ pt: 0 }}
-                      >
-                        <Button
-                          onClick={handleBackBtn}
-                          sx={mealStep.button}
-                        >
-                          Volver
-                        </Button>
-                        <Button
-                          sx={mealStep.button}
-                          type='submit'
-                        >
-                          Siguiente
-                        </Button>
-                      </Grid>
-                    </form>
-                  </>)
-              }
-              }
-            </Formik>
-          )
-          : <CircularProgress />
+                    return (
+                      <>
+                        <form onSubmit={props.handleSubmit}>
+                          <IngredientsPanel
+                            formikProps={props}
+                            meals={comida}
+                          />
+                          <Grid
+                            container xs={12}
+                            justifyContent={"space-between"}
+                            sx={{ pt: 0 }}
+                          >
+                            <Button
+                              onClick={handleBackBtn}
+                              sx={mealStep.button}
+                            >
+                              Volver
+                            </Button>
+                            <Button
+                              sx={mealStep.button}
+                              type='submit'
+                            >
+                              Siguiente
+                            </Button>
+                          </Grid>
+                        </form>
+                      </>)
+                  }
+                  }
+                </Formik>
+              )
+              : <CircularProgress />
       }
     </>
   )

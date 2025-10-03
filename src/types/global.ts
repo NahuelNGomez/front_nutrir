@@ -6,7 +6,6 @@ export type userType = {
   last_name: string;
   telefono: string;
   email: string;
-  cuil: number;
   comedor: string;
   logged: boolean;
   access_token: string;
@@ -49,10 +48,10 @@ export type dishesCardType = {
 }
 
 export type guestType = {
-  childs: number;
-  kids: number;
-  teens: number;
-  adults: number
+  childs: number | null;
+  kids: number | null;
+  teens: number | null;
+  adults: number | null;
 }
 
 export type invoiceInfoType = {
@@ -127,23 +126,25 @@ export type selectedSurveyType = {
 // Step 1: guests
 
 export type guestsStepsType = {
-  childs: number;
-  kids: number;
-  teens: number;
-  adults: number;
+  childs: number | null;
+  kids: number | null;
+  teens: number | null;
+  adults: number | null;
 }
 
 // Step 2: drink
 export type Unidades = {
   id: number;
   nombre: string;
+  equivalencia_gramos?: number;
+  equivalencia_ml?: number;
 }
 
 export type mealDataType = {
   id: number;
   nombre: string;
   foto: string;
-  horario?: string;
+  horarios?: Array<any>;
   unidades?: Array<Unidades>;
   cantidad_porcion?: string | number;
   hidratos_carbono?: string | number;
@@ -170,12 +171,15 @@ export type foodStepType = {
   nombre: string;
   quantity: number;
   unit: string;
+  unitId?: number;
 }
 
 export type mealStepType = {
-  comida: number | null;
-  nombre: string;
-  alimento: Array<foodStepType>;
+  comidas: Array<{
+    comida: number;
+    nombre: string;
+    alimento: Array<foodStepType>;
+  }>;
 }
 
 

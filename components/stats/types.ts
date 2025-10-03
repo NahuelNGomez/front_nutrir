@@ -3,6 +3,10 @@ export enum ChartsTypes {
   RacionesMes = 'RacionesMes',
   ComidaSemana = 'ComidaSemana',
   ComidasMes = 'ComidasMes',
+  NutricionalSemana = 'NutricionalSemana',
+  NutricionalMes = 'NutricionalMes',
+  CaloriasSemana = 'CaloriasSemana',
+  CaloriasMes = 'CaloriasMes',
 }
 
 export type MealListElement = {
@@ -15,6 +19,17 @@ export type RationListElement = {
   cantidad: number
 }
 
+export type NutritionalListElement = {
+  mes?: string,
+  dia?: string,
+  hidratos: number,
+  proteinas: number,
+  grasasSaturadas: number,
+  grasasTotales: number,
+  kilocalorias: number,
+  sodio: number
+}
+
 export type DataSet = {
   comedor: string,
   labels: Array<string>,
@@ -24,6 +39,11 @@ export type DataSet = {
 export type RationDataType = {
   comedor: string,
   lista: Array<RationListElement>
+}
+
+export type NutritionalDataType = {
+  comedor: string,
+  lista: Array<NutritionalListElement>
 }
 
 export type DataSetReturned = {

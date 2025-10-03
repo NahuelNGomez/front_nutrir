@@ -30,16 +30,18 @@ const IngredientsPanel: React.FC<Props> = ({
   const { setFieldValue, values } = formikProps
 
   useEffect(() => {
-
-    if(values.alimento.length === 0){
-      setSingleMealCheck(values.comida)
+    // Inicializar con las comidas ya seleccionadas
+    if(values.comidas && values.comidas.length > 0){
+      const selectedMealIds = values.comidas.map(comida => comida.comida)
+      setSingleMealCheck(selectedMealIds)
     }
-    
   }, [values])  
   
   const checkInfoProvider = (id:number):boolean =>{
-    if(id === singleMealCheck) return true
-    else return false
+    if(Array.isArray(singleMealCheck)) {
+      return singleMealCheck.includes(id)
+    }
+    return singleMealCheck === id
   }
 
   // MUI Accordion handleChange 
@@ -48,21 +50,31 @@ const IngredientsPanel: React.FC<Props> = ({
       setExpanded(isExpanded ? panel : false);
     };
 
-  // SimpleMealCard
+  // SimpleMealCard - Ahora soporta múltiples comidas
   const simpleMealHandleChange = (e: any, id: number, nombre: string, alimento: Array<foodDataType>) => {
+    const currentComidas = values.comidas || []
 
     if (e.target.checked) {
-      setSingleMealCheck(id)
-      setFieldValue('comida', id)
-      setFieldValue('nombre', nombre.toLocaleLowerCase())
-      setFieldValue('alimento', [])
-    }
-
-    if (e.target.checked === false) {
-      setSingleMealCheck(0)
-      setFieldValue('comida', null)
-      setFieldValue('nombre', '')
-      setFieldValue('alimento', [])
+      // Agregar la comida seleccionada
+      const newComida = {
+        comida: id,
+        nombre: nombre,
+        alimento: []
+      }
+      const updatedComidas = [...currentComidas, newComida]
+      setFieldValue('comidas', updatedComidas)
+      
+      // Actualizar el estado local
+      const currentSelected = Array.isArray(singleMealCheck) ? singleMealCheck : [singleMealCheck]
+      setSingleMealCheck([...currentSelected, id])
+    } else {
+      // Remover la comida deseleccionada
+      const updatedComidas = currentComidas.filter(comida => comida.comida !== id)
+      setFieldValue('comidas', updatedComidas)
+      
+      // Actualizar el estado local
+      const currentSelected = Array.isArray(singleMealCheck) ? singleMealCheck : [singleMealCheck]
+      setSingleMealCheck(currentSelected.filter(mealId => mealId !== id))
     }
   }
 
