@@ -3,7 +3,13 @@ const mockMeals = [
     id: 2,
     nombre: "Leche Chocolatada",
     foto: "http://50.116.44.91:3600/media/images/pastel.jpeg",
-    horario: "almuerzo_cena_plato_principal",
+    horarios: [
+      {
+        id: 1,
+        codigo: "almuerzo_cena_plato_principal",
+        nombre: "Almuerzo/Cena - Plato Principal"
+      }
+    ],
     cantidad_porcion: "1.00",
     hidratos_carbono: "1.00",
     proteinas: "1.00",
@@ -46,7 +52,13 @@ const mockMeals = [
     id: 2,
     nombre: "Yogurt",
     foto: "http://50.116.44.91:3600/media/images/pastel.jpeg",
-    horario: "almuerzo_cena_plato_principal",
+    horarios: [
+      {
+        id: 1,
+        codigo: "almuerzo_cena_plato_principal",
+        nombre: "Almuerzo/Cena - Plato Principal"
+      }
+    ],
     cantidad_porcion: "1.00",
     hidratos_carbono: "1.00",
     proteinas: "1.00",

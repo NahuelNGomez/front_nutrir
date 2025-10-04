@@ -5,6 +5,7 @@ export { getServerSideProps } from "../src/serverSideProps"
 import { pagesStyles } from "@styles/index";
 import { useAppCtx } from "../src/contexts/store";
 import StatLoyout from "../components/stats/components/StatLayout/StatLoyout";
+import StatLineLayout from "../components/stats/components/StatLayout/StatLineLayout";
 import { ChartsTypes } from "../components/stats/types";
 
 
@@ -70,6 +71,42 @@ const Stats: NextPage = () => {
           <StatLoyout
             title={'Cantidad de raciones por comida de los últimos 30 días'}
             fetchType={ChartsTypes.ComidasMes}
+          />
+
+          <Grid
+            item
+            xs={12}
+            lg={12}
+          >
+            <Typography sx={statsStyles.subtitle}>
+              Análisis nutricional por comensal
+            </Typography>
+          </Grid>
+          <StatLoyout
+            title={'Análisis nutricional de los últimos 7 días'}
+            fetchType={ChartsTypes.NutricionalSemana}
+          />
+          <StatLoyout
+            title={'Análisis nutricional de los últimos 12 meses'}
+            fetchType={ChartsTypes.NutricionalMes}
+          />
+
+          <Grid
+            item
+            xs={12}
+            lg={12}
+          >
+            <Typography sx={statsStyles.subtitle}>
+              Evolución de kilocalorías por comensal
+            </Typography>
+          </Grid>
+          <StatLineLayout
+            title={'Kilocalorías de los últimos 7 días'}
+            fetchType={ChartsTypes.CaloriasSemana}
+          />
+          <StatLineLayout
+            title={'Kilocalorías de los últimos 12 meses'}
+            fetchType={ChartsTypes.CaloriasMes}
           />
 
         </Grid>

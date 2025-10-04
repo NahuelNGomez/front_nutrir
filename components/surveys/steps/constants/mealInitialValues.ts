@@ -1,9 +1,7 @@
 import { mealStepType } from "../../../../src/types/global"
 
 const mealInitialValues: mealStepType = {
-  comida: null,
-  nombre: '',
-  alimento: []
+  comidas: []
 }
 
 export default mealInitialValues

@@ -5,7 +5,6 @@ export enum profileFields {
     firstName = 'required',
     lastName = 'required',
     phone = 'required',
-    email = 'required',
 }
 
 export enum merenderoFields {

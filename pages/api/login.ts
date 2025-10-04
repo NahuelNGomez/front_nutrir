@@ -31,7 +31,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             access_token: resParsed.access_token,
             refresh_token: resParsed.refresh_token,
             pk: resParsed.user.pk,
-            cuil: resParsed.user.cuil,
             email: resParsed.user.email,
             first_name: resParsed.user.first_name,
             last_name: resParsed.user.last_name,

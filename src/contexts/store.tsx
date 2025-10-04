@@ -10,7 +10,6 @@ const initialStoreState: storeType = {
     pk: 0,
     first_name: "",
     last_name: "",
-    cuil: 1,
     email: "",
     comedor: "",
     logged: false,
@@ -105,10 +104,10 @@ export const useStoreController = ({ userLog }: { userLog: userType }) => {
   const [selectedSurvey, setSelectedSurvey] = useState<selectedSurveyType>({ date: '', service: '' });
   const [encuestasAdeudadas, setEncuestasAdeudadas] = useState<Array<surveyType>>([])
   const [guestsAmount, setGuestsAmount] = useState<guestsStepsType>({
-    childs: 0,
-    kids: 0,
-    teens: 0,
-    adults: 0
+    childs: null,
+    kids: null,
+    teens: null,
+    adults: null
   });
   const [drinkStep, setDrinkStep] = useState<mealStepType>(mealInit)
   const [simpleMainMealStep, setSimpleMainMealStep] = useState<mealStepType>(mealInit)

@@ -20,6 +20,8 @@ const UserForm: FC<{}> = () => {
   const { modeTheme, user, setModalLogin } = useAppCtx();
   const [success, setSuccess] = useState(false)
   const [responseError, setResponseError] = useState(false)
+  
+  console.log('UserForm renderizado, user:', user);
 
   const {
     fields,
@@ -30,18 +32,29 @@ const UserForm: FC<{}> = () => {
     defaultValues,
     finishProcess,
   } = useForm<profileFields>(statesForms.profile);
+  
+  console.log('Campos del formulario:', fields);
+  console.log('Valor del teléfono en fields:', fields.phone);
 
   const {
     profileStyles: { formStyles },
   } = pagesStyles(modeTheme);   
 
   useEffect(() => {
+    console.log('useEffect ejecutado');
+    console.log('Usuario cargado:', user);
+    console.log('Email del usuario:', user.email);
+    console.log('Teléfono del usuario:', user.telefono);
+    console.log('Tipo del teléfono:', typeof user.telefono);
+    console.log('Longitud del teléfono:', user.telefono?.length);
+    console.log('Primer nombre:', user.first_name);
+    console.log('Apellido:', user.last_name);
+    
     defaultValues({
-      user: user.cuil,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      phone: user.telefono,
-      email: user.email,
+      user: user.email || '',
+      firstName: user.first_name || '',
+      lastName: user.last_name || '',
+      phone: user.telefono || '',
     });
   }, [user]);
 
@@ -92,14 +105,14 @@ const UserForm: FC<{}> = () => {
                 fullWidth
                 id="input-with-sx"
                 disabled={true}
-                label="Usuario"
+                label="Email"
                 variant="outlined"
                 type="text"
                 name="user"
                 margin="normal"
                 value={fields.user}
                 sx={formStyles.textInput}
-                helperText={errors.user ? "Debes ingresar tu usuario" : ""}
+                helperText={errors.user ? "Debes ingresar tu email" : ""}
                 onChange={updateField}
               />
             </Grid>
@@ -154,23 +167,10 @@ const UserForm: FC<{}> = () => {
                 value={fields.phone}
                 sx={formStyles.textInput}
                 helperText={errors.phone ? "Debes ingresar tu telefono" : ""}
-                onChange={updateField}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} lg={12} xl={12} sx={formStyles.fields}>
-              <TextField
-                error={errors.email}
-                fullWidth
-                id="input-with-sx"
-                label="Correo Electronico"
-                variant="outlined"
-                type="email"
-                name="email"
-                margin="normal"
-                value={fields.email}
-                sx={formStyles.textInput}
-                helperText={errors.email ? "Debes ingresar tu correo" : ""}
-                onChange={updateField}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  console.log('Cambiando teléfono:', e.target.value);
+                  updateField(e);
+                }}
               />
             </Grid>
           </Grid>

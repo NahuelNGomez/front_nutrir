@@ -30,7 +30,7 @@ const submitContentFormatter = (
         const alimentoFormatted = {
           alimento: alimento.id,
           cantidad: alimento.quantity,
-          unidad: alimento.unit
+          unidad: alimento.unitId || 1 // Usar unitId si existe, sino usar 1 por defecto
         }
         return alimentoFormatted
       })
@@ -40,10 +40,10 @@ const submitContentFormatter = (
     const dataFormatted = {
       encuesta: {
         fecha: dateFormatted,
-        cantidad_rango_1: guestsAmount.childs,
-        cantidad_rango_2: guestsAmount.kids,
-        cantidad_rango_3: guestsAmount.teens,
-        cantidad_rango_4: guestsAmount.adults,
+        cantidad_rango_1: guestsAmount.childs || 0,
+        cantidad_rango_2: guestsAmount.kids || 0,
+        cantidad_rango_3: guestsAmount.teens || 0,
+        cantidad_rango_4: guestsAmount.adults || 0,
         // Nombre servicio
         funcionamiento: selectedSurvey.service,
         // Id comedor
@@ -53,20 +53,48 @@ const submitContentFormatter = (
         // Id responsable
         responsable_comedor: user.pk
       },
-      comida1: {
-        // Id comida
-        comida: drinkStep?.comida || entryStep?.comida,
-        // Id alimentos
-        alimento: drinkStep?.alimento && alimentosFormattedProvider(drinkStep?.alimento) || entryStep?.alimento && alimentosFormattedProvider(entryStep?.alimento)
-      },
-      comida2: {
-        comida: simpleMainMealStep?.comida || compoundMainMealStep?.comida,
-        alimento: simpleMainMealStep?.alimento && alimentosFormattedProvider(simpleMainMealStep?.alimento) || compoundMainMealStep?.alimento && alimentosFormattedProvider(compoundMainMealStep?.alimento)
-      },
-      comida3: {
-        comida: dessertStep ? dessertStep?.comida : null,
-        alimento: dessertStep?.alimento ? alimentosFormattedProvider(dessertStep?.alimento) : null
-      }
+      comidas: [
+        // Comidas de entrada (solo si tienen datos)
+        ...(entryStep?.comidas?.filter(comida => 
+          comida.alimento && comida.alimento.length > 0 && 
+          comida.alimento.some(alimento => alimento.quantity > 0)
+        )?.map(comida => ({
+          comida: comida.comida,
+          alimento: alimentosFormattedProvider(comida.alimento)
+        })) || []),
+        // Comidas de plato principal (solo si tienen datos)
+        ...(compoundMainMealStep?.comidas?.filter(comida => 
+          comida.alimento && comida.alimento.length > 0 && 
+          comida.alimento.some(alimento => alimento.quantity > 0)
+        )?.map(comida => ({
+          comida: comida.comida,
+          alimento: alimentosFormattedProvider(comida.alimento)
+        })) || []),
+        // Comidas de postre (solo si tienen datos)
+        ...(dessertStep?.comidas?.filter(comida => 
+          comida.alimento && comida.alimento.length > 0 && 
+          comida.alimento.some(alimento => alimento.quantity > 0)
+        )?.map(comida => ({
+          comida: comida.comida,
+          alimento: alimentosFormattedProvider(comida.alimento)
+        })) || []),
+        // Comidas de bebida (solo si tienen datos)
+        ...(drinkStep?.comidas?.filter(comida => 
+          comida.alimento && comida.alimento.length > 0 && 
+          comida.alimento.some(alimento => alimento.quantity > 0)
+        )?.map(comida => ({
+          comida: comida.comida,
+          alimento: alimentosFormattedProvider(comida.alimento)
+        })) || []),
+        // Comidas simples (solo si tienen datos)
+        ...(simpleMainMealStep?.comidas?.filter(comida => 
+          comida.alimento && comida.alimento.length > 0 && 
+          comida.alimento.some(alimento => alimento.quantity > 0)
+        )?.map(comida => ({
+          comida: comida.comida,
+          alimento: alimentosFormattedProvider(comida.alimento)
+        })) || [])
+      ]
     }
     return dataFormatted
   }

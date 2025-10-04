@@ -1,7 +1,5 @@
 export const mealInit = {
-  comida: null,
-  nombre: '',
-  alimento: []
+  comidas: []
 }
 
 export const comedorInit = {

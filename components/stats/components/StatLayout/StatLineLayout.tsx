@@ -2,15 +2,16 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
-import { mealChartDataFormatter, ratioChartDataFormatter, nutritionalChartDataFormatter } from '../../utils/chartDataProvider';
+import { caloriesLineChartDataFormatter } from '../../utils/chartDataProvider';
 import { ChartDataFetchedType, ChartDataType, ChartsTypes, DataSetReturned } from '../../types';
 import { useUserTokenAndComedorFetchDetail } from '../../hooks';
 import { statsDataFetch } from '../../services';
@@ -20,7 +21,8 @@ import { fetchErrorHandler } from '../../../../src/dataFetch/fetchErrorHandler';
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
@@ -31,7 +33,7 @@ type Props = {
   fetchType: ChartsTypes
 }
 
-const StatLoyout: FC<Props> = ({ title, fetchType }) => {
+const StatLineLayout: FC<Props> = ({ title, fetchType }) => {
 
   const { setModalLogin } = useAppCtx()
   const [chartData, setChartData] = useState<ChartDataType>()
@@ -49,6 +51,15 @@ const StatLoyout: FC<Props> = ({ title, fetchType }) => {
       },
       skipNull: true
     },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Kilocalorías (kcal)'
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -61,16 +72,8 @@ const StatLoyout: FC<Props> = ({ title, fetchType }) => {
       .then(res => {
         const data = res.data
         if (data.lista.length > 0) {
-          if (fetchType === ChartsTypes.ComidaSemana || fetchType === ChartsTypes.ComidasMes) {
-            const dataFormatted = mealChartDataFormatter(data)
-            setChartData(dataFormatted)
-          }
-          if (fetchType === ChartsTypes.RacionesSemana || fetchType === ChartsTypes.RacionesMes) {
-            const dataFormatted = ratioChartDataFormatter(data)
-            setChartData(dataFormatted)
-          }
-          if (fetchType === ChartsTypes.NutricionalSemana || fetchType === ChartsTypes.NutricionalMes) {
-            const dataFormatted = nutritionalChartDataFormatter(data)
+          if (fetchType === ChartsTypes.CaloriasSemana || fetchType === ChartsTypes.CaloriasMes) {
+            const dataFormatted = caloriesLineChartDataFormatter(data)
             setChartData(dataFormatted)
           }
         }
@@ -107,7 +110,7 @@ const StatLoyout: FC<Props> = ({ title, fetchType }) => {
               {
                 chartData
                   ? (
-                    <Bar options={options} data={chartData} />
+                    <Line options={options} data={chartData} />
                   )
                   : (<p>No hay datos disponibles</p>)
               }
@@ -120,4 +123,4 @@ const StatLoyout: FC<Props> = ({ title, fetchType }) => {
   )
 }
 
-export default StatLoyout
+export default StatLineLayout

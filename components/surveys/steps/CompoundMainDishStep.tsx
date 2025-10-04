@@ -22,8 +22,16 @@ const CompoundMainDishStep: FC<Props> = ({
   const { modeTheme, setStepActive, setCompoundMainMailStep, user, setModalLogin, selectedSurvey, compoundMainMealStep } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comidas, setComidas] = useState<Array<any>>([])
+  const [loading, setLoading] = useState(true)
+  const [noComidasFound, setNoComidasFound] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+    setNoComidasFound(false)
+    const timeoutId = setTimeout(() => {
+      console.log('Timeout alcanzado, deteniendo loading')
+      setLoading(false)
+    }, 10000)
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
     const service = selectedSurvey.service
@@ -34,8 +42,23 @@ const CompoundMainDishStep: FC<Props> = ({
       .then(res => {
         if (res.status === 401) {
           setModalLogin(true)
+          clearTimeout(timeoutId)
+          setLoading(false)
         } else {
           const data = res.data.data["plato principal"]
+          console.log('Datos recibidos:', data)
+          console.log('Tipo de datos:', typeof data)
+          console.log('Es array:', Array.isArray(data))
+          console.log('Longitud:', data?.length)
+
+          if (!data || !Array.isArray(data) || data.length === 0) {
+            console.log('No hay platos principales disponibles')
+            clearTimeout(timeoutId)
+            setNoComidasFound(true)
+            setLoading(false)
+            return
+          }
+
           const dataComidas = data.map(async (comida: any) => {
             try {
               const info = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}comida/${comida.id}`,
@@ -51,17 +74,21 @@ const CompoundMainDishStep: FC<Props> = ({
               const promises = await Promise.all(dataComidas)
               const res = promises.map((e) => e.data.data)
               setComidas(res)
+              console.log('Platos principales procesados:', res)
+              clearTimeout(timeoutId)
+              setLoading(false)
             } catch (error) {
               console.log('promesas catch', error)
+              clearTimeout(timeoutId)
+              setLoading(false)
             }
           }
           promisesFormatted()
-
-          // setComidas(dataComidas)
         }
       })
       .catch(err => {
-        // console.log('err', err.response)
+        clearTimeout(timeoutId)
+        setLoading(false)
         if (err.response.status === 401) {
           setModalLogin(true)
         }
@@ -77,50 +104,82 @@ const CompoundMainDishStep: FC<Props> = ({
   return (
     <>
       {
-        comidas.length > 0
-          ? (
-            <Formik
-              initialValues={compoundMainMealStep}
-              onSubmit={(values) => {
-                setCompoundMainMailStep(values)
-                setStepActive(4)
-                handleGoToNextStep()
-              }}
-            >
-              {(props: FormikProps<any>) => {
-                return (
-                  <>
-                    <form onSubmit={props.handleSubmit}>
-                      <IngredientsPanel
-                        formikProps={props}
-                        meals={comidas}
-                      />
-                      <Grid
-                        container xs={12}
-                        justifyContent={"space-between"}
-                        sx={{ pt: 0 }}
-                      >
-                        <Button
-                          onClick={handleBackBtn}
-                          sx={mealStep.button}
-                        >
-                          Volver
-                        </Button>
-                        <Button
-                          sx={mealStep.button}
-                          type='submit'
-                        >
-                          Siguiente
-                        </Button>
-                      </Grid>
-                    </form>
-                  </>
-                )
-              }
-              }
-            </Formik>
-          )
-          : <CircularProgress />
+        loading
+          ? <CircularProgress />
+          : noComidasFound
+            ? (
+              <>
+                <Grid container justifyContent="center" sx={{ py: 4 }}>
+                  <Grid item xs={12} textAlign="center">
+                    <h3>No se encontraron platos principales disponibles</h3>
+                    <p>No hay platos principales disponibles para el servicio seleccionado. Puedes continuar sin seleccionar plato principal.</p>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="space-between" sx={{ py: 2 }}>
+                  <Button
+                    onClick={handleBackBtn}
+                    sx={mealStep.button}
+                  >
+                    Volver
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      // Continuar sin plato principal
+                      setCompoundMainMailStep(mealInitialValues)
+                      setStepActive(4)
+                      handleGoToNextStep()
+                    }}
+                    sx={mealStep.button}
+                  >
+                    Continuar sin plato principal
+                  </Button>
+                </Grid>
+              </>
+            )
+            : comidas.length > 0
+              ? (
+                <Formik
+                  initialValues={compoundMainMealStep}
+                  onSubmit={(values) => {
+                    setCompoundMainMailStep(values)
+                    setStepActive(4)
+                    handleGoToNextStep()
+                  }}
+                >
+                  {(props: FormikProps<any>) => {
+                    return (
+                      <>
+                        <form onSubmit={props.handleSubmit}>
+                          <IngredientsPanel
+                            formikProps={props}
+                            meals={comidas}
+                          />
+                          <Grid
+                            container xs={12}
+                            justifyContent={"space-between"}
+                            sx={{ pt: 0 }}
+                          >
+                            <Button
+                              onClick={handleBackBtn}
+                              sx={mealStep.button}
+                            >
+                              Volver
+                            </Button>
+                            <Button
+                              sx={mealStep.button}
+                              type='submit'
+                            >
+                              Siguiente
+                            </Button>
+                          </Grid>
+                        </form>
+                      </>
+                    )
+                  }
+                  }
+                </Formik>
+              )
+              : <CircularProgress />
       }
     </>
 

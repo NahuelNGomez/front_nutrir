@@ -6,6 +6,8 @@ const rationPerWeekPath = `${baseUrl}reporte/racion_semana/`
 const rationPerMothPath = `${baseUrl}reporte/racion_mes/`
 const mealPerWeekPath = `${baseUrl}reporte/comida_semana/`
 const mealPerMothPath = `${baseUrl}reporte/comida_mes/`
+const nutritionalPerWeekPath = `${baseUrl}reporte/nutricional_semana/`
+const nutritionalPerMothPath = `${baseUrl}reporte/nutricional_mes/`
 
 const baseFetch = (path: string, headers: {}) => {
   return new Promise(async (resolve, reject) => {
@@ -38,6 +40,16 @@ const mealsPerMothDataFetch = (comedorId: number, headers: {}) => {
   return baseFetch(path, headers)
 }
 
+const nutritionalPerWeekDataFetch = (comedorId: number, headers: {}) => {
+  const path = `${nutritionalPerWeekPath}${comedorId}`
+  return baseFetch(path, headers)
+}
+
+const nutritionalPerMothDataFetch = (comedorId: number, headers: {}) => {
+  const path = `${nutritionalPerMothPath}${comedorId}`
+  return baseFetch(path, headers)
+}
+
 
 const statsDataFetch = (statsDataFetch: statsDataFetchType): Promise<any> => {
 
@@ -49,6 +61,10 @@ const statsDataFetch = (statsDataFetch: statsDataFetchType): Promise<any> => {
   if (fetchType === ChartsTypes.RacionesMes) return rationPerMothDataFetch(comedorId, headers)
   if (fetchType === ChartsTypes.ComidaSemana) return mealsPerWeekDataFetch(comedorId, headers)
   if (fetchType === ChartsTypes.ComidasMes) return mealsPerMothDataFetch(comedorId, headers)
+  if (fetchType === ChartsTypes.NutricionalSemana) return nutritionalPerWeekDataFetch(comedorId, headers)
+  if (fetchType === ChartsTypes.NutricionalMes) return nutritionalPerMothDataFetch(comedorId, headers)
+  if (fetchType === ChartsTypes.CaloriasSemana) return nutritionalPerWeekDataFetch(comedorId, headers)
+  if (fetchType === ChartsTypes.CaloriasMes) return nutritionalPerMothDataFetch(comedorId, headers)
   return new Promise((resolve, reject) => { resolve('Error') })
 }
 
