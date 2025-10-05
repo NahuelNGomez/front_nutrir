@@ -74,7 +74,10 @@ const StatLineLayout: FC<Props> = ({ title, fetchType }) => {
         if (data.lista.length > 0) {
           if (fetchType === ChartsTypes.CaloriasSemana || fetchType === ChartsTypes.CaloriasMes) {
             const dataFormatted = caloriesLineChartDataFormatter(data)
-            setChartData(dataFormatted)
+            const safeData: ChartDataType = { ...dataFormatted, 
+              labels: (dataFormatted.labels ?? []).map(l => String(l ?? "")), 
+            }
+            setChartData(safeData)
           }
         }
       })
