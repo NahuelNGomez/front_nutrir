@@ -72,7 +72,7 @@ const DessertDishStep: FC<Props> = ({
           const promisesFormatted = async () => {
             try {
               const promises = await Promise.all(dataComidas)
-              const res = promises.map((e) => e.data.data)
+              const res = promises.map((e) => e?.data?.data).filter(Boolean)
               setComida(res)
               console.log('Postres procesados:', res)
               clearTimeout(timeoutId)

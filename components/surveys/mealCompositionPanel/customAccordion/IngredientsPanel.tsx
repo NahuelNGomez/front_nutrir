@@ -25,14 +25,14 @@ const IngredientsPanel: React.FC<Props> = ({
   const { modeTheme } = useAppCtx();
   const { surveyStyles: { ingredientsPanel } } = pagesStyles(modeTheme);
   const [expanded, setExpanded] = useState<string | false>(false);
-  const [singleMealCheck, setSingleMealCheck] = useState<number>(0)
+  const [singleMealCheck, setSingleMealCheck] = useState<number | number[]>(0)
 
   const { setFieldValue, values } = formikProps
 
   useEffect(() => {
     // Inicializar con las comidas ya seleccionadas
     if(values.comidas && values.comidas.length > 0){
-      const selectedMealIds = values.comidas.map(comida => comida.comida)
+      const selectedMealIds = values.comidas.map((comida: any) => comida.comida)
       setSingleMealCheck(selectedMealIds)
     }
   }, [values])  
@@ -69,7 +69,7 @@ const IngredientsPanel: React.FC<Props> = ({
       setSingleMealCheck([...currentSelected, id])
     } else {
       // Remover la comida deseleccionada
-      const updatedComidas = currentComidas.filter(comida => comida.comida !== id)
+      const updatedComidas = currentComidas.filter((comida: any) => comida.comida !== id)
       setFieldValue('comidas', updatedComidas)
       
       // Actualizar el estado local
