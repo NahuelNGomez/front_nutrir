@@ -72,7 +72,7 @@ const DrinksStep: FC<Props> = ({
           const promisesFormatted = async () => {
             try {
               const promises = await Promise.all(dataComidas)
-              const res = promises.map((e) => e.data.data)
+              const res = promises.map((e) => e?.data?.data).filter(Boolean)
               console.log('Bebidas procesadas:', res)
               clearTimeout(timeoutId)
               setBebidas(res)

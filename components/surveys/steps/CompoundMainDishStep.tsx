@@ -72,7 +72,7 @@ const CompoundMainDishStep: FC<Props> = ({
           const promisesFormatted = async () => {
             try {
               const promises = await Promise.all(dataComidas)
-              const res = promises.map((e) => e.data.data)
+              const res = promises.map((e) => e?.data?.data).filter(Boolean)
               setComidas(res)
               console.log('Platos principales procesados:', res)
               clearTimeout(timeoutId)
