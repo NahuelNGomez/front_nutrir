@@ -71,7 +71,10 @@ const StatLoyout: FC<Props> = ({ title, fetchType }) => {
           }
           if (fetchType === ChartsTypes.NutricionalSemana || fetchType === ChartsTypes.NutricionalMes) {
             const dataFormatted = nutritionalChartDataFormatter(data)
-            setChartData(dataFormatted)
+            const safeData: ChartDataType = { ...dataFormatted, 
+              labels: (dataFormatted.labels ?? []).map(l => String(l ?? "")), 
+            }
+            setChartData(safeData)
           }
         }
       })
