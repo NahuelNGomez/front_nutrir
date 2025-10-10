@@ -25,6 +25,12 @@ const validationSchema = yup.object({
     })
     .min(0, "El numero de comensales no puede ser menor a cero")
     .integer(),
+  elderly: yup.number()
+    .transform((value, originalValue) => {
+      return originalValue === '' || originalValue === null || originalValue === undefined ? 0 : value;
+    })
+    .min(0, "El numero de comensales no puede ser menor a cero")
+    .integer(),
 });
 
 export default validationSchema

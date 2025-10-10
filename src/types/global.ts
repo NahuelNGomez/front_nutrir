@@ -52,6 +52,7 @@ export type guestType = {
   kids: number | null;
   teens: number | null;
   adults: number | null;
+  elderly: number | null;
 }
 
 export type invoiceInfoType = {
@@ -130,6 +131,7 @@ export type guestsStepsType = {
   kids: number | null;
   teens: number | null;
   adults: number | null;
+  elderly: number | null;
 }
 
 // Step 2: drink

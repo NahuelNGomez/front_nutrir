@@ -13,6 +13,26 @@ module.exports = withPWA({
     images: {
         remotePatterns: [
             {
+                protocol: 'https',
+                hostname: 'nutrirargentina.org',
+                pathname: '/media/**',
+            },
+            {
+                protocol: 'http',
+                hostname: 'nutrirargentina.org',
+                pathname: '/media/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.nutrirargentina.org',
+                pathname: '/media/**',
+            },
+            {
+                protocol: 'http',
+                hostname: 'www.nutrirargentina.org',
+                pathname: '/media/**',
+            },
+            {
                 protocol: 'http',
                 hostname: '170.210.60.215',
                 port: '3600',

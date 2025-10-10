@@ -40,7 +40,7 @@ const MealIngredientCard: FC<Props> = ({
     } = pagesStyles(modeTheme);
     const [alimentoCheck, setAlimentoCheck] = useState(false);
     const [enableQuantity, setEnableQuantity] = useState<boolean>(true);
-    const [quantityValue, setQuantityValue] = useState<number>(0);
+    const [quantityValue, setQuantityValue] = useState<string | number>('');
     const [ingredientName, setIngredientname] = useState<string>('');
     const [error, setError] = useState(false);
     const [unit, setUnit] = useState<number>(1);
@@ -64,7 +64,7 @@ const MealIngredientCard: FC<Props> = ({
             setEnableQuantity(false);
             // Solo actualizar si el valor es diferente para evitar sobrescribir lo que está escribiendo el usuario
             if (alimentoChecked[0].quantity !== quantityValue) {
-                setQuantityValue(alimentoChecked[0].quantity);
+                setQuantityValue(alimentoChecked[0].quantity || '');
             }
             // Establecer la unidad del alimento seleccionado usando unitId en lugar de unit
             if (alimentoChecked[0].unitId) {
@@ -74,7 +74,7 @@ const MealIngredientCard: FC<Props> = ({
             // Si no hay alimento seleccionado, resetear el estado
             setAlimentoCheck(false);
             setEnableQuantity(true);
-            setQuantityValue(0);
+            setQuantityValue('');
         }
     }, [ingredientId, currentAlimentos]);
 
@@ -135,24 +135,29 @@ const MealIngredientCard: FC<Props> = ({
             }
             
             // Agregar el ingrediente con la unidad seleccionada
+            const newIngredient = {
+                id: ingredientId,
+                nombre: ingredienteName,
+                quantity: 0,
+                unit: unidadNombre,
+                unitId: unitId,
+            };
+            
+            console.log('Guardando ingrediente:', newIngredient);
+            
             updatedComidas = updatedComidas.map((comida: any) => 
                 comida.comida === meal.id 
                     ? {
                         ...comida,
                         alimento: [
                             ...comida.alimento,
-                            {
-                                id: ingredientId,
-                                nombre: e.target.name,
-                                quantity: 0,
-                                unit: unidadNombre,
-                                unitId: unitId,
-                            }
+                            newIngredient
                         ]
                     }
                     : comida
             );
             
+            console.log('Comidas actualizadas:', updatedComidas);
             setFieldValue('comidas', updatedComidas);
         }
 
@@ -160,7 +165,7 @@ const MealIngredientCard: FC<Props> = ({
             setAlimentoCheck(false);
             setEnableQuantity(true);
             setIngredientname('');
-            setQuantityValue(0);
+            setQuantityValue('');
             // No resetear la unidad aquí para mantener la selección del usuario
 
             const newAlimentosEntry = currentAlimentos.filter(
@@ -184,18 +189,22 @@ const MealIngredientCard: FC<Props> = ({
         // Actualizar siempre el valor mostrado
         setQuantityValue(inputValue);
         
-        // Si está vacío, limpiar errores y no procesar
-        if (inputValue === '') {
+        // Si está vacío, solo limpiar errores pero NO eliminar el ingrediente
+        // El ingrediente se mantiene seleccionado hasta que el usuario lo deseleccione explícitamente
+        if (inputValue === '' || inputValue === null || inputValue === undefined) {
             setError(false);
-            // Limpiar el alimento del formulario si está vacío
-            const newAlimentosEntry = currentAlimentos.filter(
-                (el: foodStepType) => el.id !== ingredientId
-            );
-            
-            // Actualizar la comida específica en el array de comidas
+            // NO eliminar el alimento del formulario cuando está vacío temporalmente
+            // Solo actualizar la cantidad a 0 pero mantener el ingrediente seleccionado
             const updatedComidas = values.comidas?.map((comida: any) => 
                 comida.comida === meal.id 
-                    ? { ...comida, alimento: newAlimentosEntry }
+                    ? { 
+                        ...comida, 
+                        alimento: comida.alimento.map((alimento: any) => 
+                            alimento.id === ingredientId 
+                                ? { ...alimento, quantity: 0 }
+                                : alimento
+                        )
+                    }
                     : comida
             ) || [];
             
@@ -338,6 +347,7 @@ const MealIngredientCard: FC<Props> = ({
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        placeholder="0"
                     />
                 </Grid>
                 <Grid

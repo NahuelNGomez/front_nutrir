@@ -44,10 +44,89 @@ const IngredientsPanel: React.FC<Props> = ({
     return singleMealCheck === id
   }
 
+  // Función para seleccionar automáticamente todos los ingredientes de una comida
+  const selectAllIngredientsForMeal = (meal: mealDataType) => {
+    const currentComidas = values.comidas || [];
+    const existingComidaIndex = currentComidas.findIndex((comida: any) => comida.comida === meal.id);
+    
+    // Si la comida no existe, crearla con todos los ingredientes seleccionados
+    if (existingComidaIndex === -1) {
+      const newComida = {
+        comida: meal.id,
+        nombre: meal.nombre,
+        alimento: meal.alimento.map((alimento: foodDataType) => ({
+          id: alimento.id,
+          nombre: alimento.nombre,
+          quantity: 0, // Inicialmente con cantidad 0
+          unit: alimento.unidades?.[0]?.nombre || '',
+          unitId: alimento.unidades?.[0]?.id || 1,
+        }))
+      };
+      const updatedComidas = [...currentComidas, newComida];
+      setFieldValue('comidas', updatedComidas);
+      
+      // Actualizar el estado local para mostrar la comida como seleccionada
+      const currentSelected = Array.isArray(singleMealCheck) ? singleMealCheck : [singleMealCheck];
+      setSingleMealCheck([...currentSelected, meal.id]);
+    } else {
+      // Si la comida ya existe, agregar solo los ingredientes que no estén ya seleccionados
+      const currentAlimentos = currentComidas[existingComidaIndex].alimento || [];
+      const existingAlimentoIds = currentAlimentos.map((alimento: any) => alimento.id);
+      
+      const newAlimentos = meal.alimento
+        .filter((alimento: foodDataType) => !existingAlimentoIds.includes(alimento.id))
+        .map((alimento: foodDataType) => ({
+          id: alimento.id,
+          nombre: alimento.nombre,
+          quantity: 0, // Inicialmente con cantidad 0
+          unit: alimento.unidades?.[0]?.nombre || '',
+          unitId: alimento.unidades?.[0]?.id || 1,
+        }));
+      
+      if (newAlimentos.length > 0) {
+        const updatedComidas = currentComidas.map((comida: any) => 
+          comida.comida === meal.id 
+            ? { ...comida, alimento: [...comida.alimento, ...newAlimentos] }
+            : comida
+        );
+        setFieldValue('comidas', updatedComidas);
+      }
+    }
+  };
+
+  // Función para verificar si una comida tiene cantidades y deseleccionarla si no las tiene
+  const checkAndDeselectMealIfEmpty = (meal: mealDataType) => {
+    const currentComidas = values.comidas || [];
+    const currentComida = currentComidas.find((comida: any) => comida.comida === meal.id);
+    
+    if (currentComida && currentComida.alimento) {
+      // Verificar si algún alimento tiene cantidad > 0
+      const hasQuantities = currentComida.alimento.some((alimento: any) => alimento.quantity > 0);
+      
+      if (!hasQuantities) {
+        // Si no hay cantidades, remover la comida del array
+        const updatedComidas = currentComidas.filter((comida: any) => comida.comida !== meal.id);
+        setFieldValue('comidas', updatedComidas);
+        
+        // Actualizar el estado local para deseleccionar la comida
+        const currentSelected = Array.isArray(singleMealCheck) ? singleMealCheck : [singleMealCheck];
+        setSingleMealCheck(currentSelected.filter(mealId => mealId !== meal.id));
+      }
+    }
+  };
+
   // MUI Accordion handleChange 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string, meal: mealDataType) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
+      
+      if (isExpanded) {
+        // Al abrir el acordeón: seleccionar automáticamente todos los alimentos
+        selectAllIngredientsForMeal(meal);
+      } else {
+        // Al cerrar el acordeón: verificar si hay cantidades y deseleccionar si no las hay
+        checkAndDeselectMealIfEmpty(meal);
+      }
     };
 
   // SimpleMealCard - Ahora soporta múltiples comidas
@@ -93,7 +172,7 @@ const IngredientsPanel: React.FC<Props> = ({
                   <Accordion
                     sx={ingredientsPanel.container.box}
                     expanded={expanded === `panel${index + 1}`}
-                    onChange={handleChange(`panel${index + 1}`)}
+                    onChange={handleChange(`panel${index + 1}`, meal)}
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}

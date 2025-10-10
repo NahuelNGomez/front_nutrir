@@ -6,6 +6,8 @@ const mealDescriptionFormatter = (mealData: mealStepType) => {
     return ''
   }
   
+  console.log('Comidas encontradas:', mealData.comidas)
+  
   // Filtrar solo las comidas que tienen alimentos con cantidades > 0
   const comidasConAlimentos = mealData.comidas.filter(comida => 
     comida.alimento && comida.alimento.length > 0 && 
@@ -22,9 +24,12 @@ const mealDescriptionFormatter = (mealData: mealStepType) => {
     const ingredients = comida.alimento
       .filter(alimento => alimento.quantity > 0)
       .map(alimento => {
+        console.log('Procesando alimento:', alimento)
         const quantity = alimento.quantity || 0
         const unit = alimento.unit || ''
-        return `- ${alimento.nombre}${quantity > 0 ? `(${quantity}${unit ? unit : ''})` : ''}`
+        const result = `- ${alimento.nombre}${quantity > 0 ? `(${quantity}${unit ? unit : ''})` : ''}`
+        console.log('Resultado formateado:', result)
+        return result
       })
     return `**${comida.nombre}**:\n${ingredients.join('\n')}`
   } else {
@@ -33,9 +38,12 @@ const mealDescriptionFormatter = (mealData: mealStepType) => {
       const ingredients = comida.alimento
         .filter(alimento => alimento.quantity > 0)
         .map(alimento => {
+          console.log('Procesando alimento (múltiples):', alimento)
           const quantity = alimento.quantity || 0
           const unit = alimento.unit || ''
-          return `- ${alimento.nombre}${quantity > 0 ? `(${quantity}${unit ? unit : ''})` : ''}`
+          const result = `- ${alimento.nombre}${quantity > 0 ? `(${quantity}${unit ? unit : ''})` : ''}`
+          console.log('Resultado formateado (múltiples):', result)
+          return result
         })
       return `**${comida.nombre}**:\n${ingredients.join('\n')}`
     }).join('\n\n')

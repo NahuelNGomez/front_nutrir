@@ -8,6 +8,8 @@ import { pagesStyles } from '@styles/index'
 import mockMeals from './mocks/mockMeals'
 import mealInitialValues from './constants/mealInitialValues'
 import axios from 'axios'
+import { useQuantityDivision } from '../hooks/useQuantityDivision'
+import QuantityDivisionInfo from '../quantityDivision/QuantityDivisionInfo'
 
 
 type Props = {
@@ -20,11 +22,18 @@ const SimpleMainMealStep: FC<Props> = ({
   handleGoToPreviousStep,
 }) => {
 
-  const { modeTheme, setStepActive, setSimpleMainMealStep, simpleMainMealStep ,  user, setModalLogin, selectedSurvey } = useAppCtx();
+  const { modeTheme, setStepActive, setSimpleMainMealStep, simpleMainMealStep, guestsAmount, user, setModalLogin, selectedSurvey } = useAppCtx();
   const { surveyStyles: { mealStep } } = pagesStyles(modeTheme);
   const [comida, setComida] = useState<Array<any>>([])
   const [loading, setLoading] = useState(true)
   const [noComidasFound, setNoComidasFound] = useState(false)
+
+  // Hook para división automática de cantidades
+  const { dividedMealStep, isDivided } = useQuantityDivision(
+    simpleMainMealStep, 
+    guestsAmount, 
+    true // Habilitar división automática
+  )
 
   useEffect(() => {
     setLoading(true)
@@ -151,9 +160,21 @@ const SimpleMainMealStep: FC<Props> = ({
                 // validationSchema={validationSchema}
                 >
                   {(props: FormikProps<any>) => {
+                    // Contar comidas con alimentos
+                    const comidasConAlimentos = props.values.comidas?.filter((comida: any) => 
+                      comida.alimento && comida.alimento.length > 0 && 
+                      comida.alimento.some((alimento: any) => alimento.quantity > 0)
+                    ) || []
+
                     return (
                       <>
                         <form onSubmit={props.handleSubmit}>
+                          {/* Información de división automática */}
+                          <QuantityDivisionInfo
+                            guestsAmount={guestsAmount}
+                            comidasCount={comidasConAlimentos.length}
+                            isDivided={isDivided}
+                          />
                           <IngredientsPanel
                             formikProps={props}
                             meals={comida}

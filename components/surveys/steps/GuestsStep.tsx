@@ -31,7 +31,8 @@ const GuestsStep: FC<Props> = ({
         childs: values.childs || 0,
         kids: values.kids || 0,
         teens: values.teens || 0,
-        adults: values.adults || 0
+        adults: values.adults || 0,
+        elderly: values.elderly || 0
       };
       // alert(JSON.stringify(processedValues, null, 2));
       handleGoToNextStep()
@@ -52,17 +53,18 @@ const GuestsStep: FC<Props> = ({
       childs: null,
       kids: null,
       teens: null,
-      adults: null
+      adults: null,
+      elderly: null
     })
     setStepActive(0)
     handleGoToPreviousStep()
   }
 
   useEffect(() => {
-    const guestsAdd = (formik.values.childs || 0) + (formik.values.kids || 0) + (formik.values.teens || 0) + (formik.values.adults || 0)
+    const guestsAdd = (formik.values.childs || 0) + (formik.values.kids || 0) + (formik.values.teens || 0) + (formik.values.adults || 0) + (formik.values.elderly || 0)
     if (guestsAdd > 0) setDisableBtn(false)
     if (guestsAdd <= 0) setDisableBtn(true)
-  }, [formik.values.childs, formik.values.kids, formik.values.teens, formik.values.adults])
+  }, [formik.values.childs, formik.values.kids, formik.values.teens, formik.values.adults, formik.values.elderly])
 
 
 
@@ -88,7 +90,7 @@ const GuestsStep: FC<Props> = ({
                     id="childs"
                     label="Infantes de 0 a 5 años"
                     type="number"
-                    inputProps={{ min: 0, max: 500 }}
+                    inputProps={{ min: 0 }}
                     fullWidth
                     placeholder="Infantes de 0 a 5 años"
                     InputLabelProps={{
@@ -108,7 +110,7 @@ const GuestsStep: FC<Props> = ({
                     id="kids"
                     label="Niñxs de 5 a 10 años"
                     type="number"
-                    inputProps={{ min: 0, max: 500 }}
+                    inputProps={{ min: 0 }}
                     placeholder="Niñxs de 5 a 10 años"
                     fullWidth
                     InputLabelProps={{
@@ -128,7 +130,7 @@ const GuestsStep: FC<Props> = ({
                     id="teens"
                     label="Adolescentes de 10 a 18 años"
                     type="number"
-                    inputProps={{ min: 0, max: 500 }}
+                    inputProps={{ min: 0}}
                     placeholder="Adolescentes de 10 a 18 años"
                     fullWidth
                     InputLabelProps={{
@@ -148,7 +150,7 @@ const GuestsStep: FC<Props> = ({
                     id="adults"
                     label="Adultos más de 18 años"
                     type="number"
-                    inputProps={{ min: 0, max: 500 }}
+                    inputProps={{ min: 0}}
                     placeholder="Adultos más de 18 años"
                     fullWidth
                     InputLabelProps={{
@@ -161,6 +163,24 @@ const GuestsStep: FC<Props> = ({
                     helperText={formik.touched.adults && formik.errors.adults}
                   />
 
+                </Grid>
+                <Grid item xs={11}>
+                  <TextField
+                    name='elderly'
+                    id="elderly"
+                    label="Adultos mayores (+60 años)"
+                    type="number"
+                    inputProps={{ min: 0}}
+                    placeholder="Adultos mayores (+60 años)"
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={formik.values.elderly || ''}
+                    onChange={(e) => handleFieldChange('elderly', e.target.value)}
+                    error={formik.touched.elderly && Boolean(formik.errors.elderly)}
+                    helperText={formik.touched.elderly && formik.errors.elderly}
+                  />
                 </Grid>
               </Grid>
 

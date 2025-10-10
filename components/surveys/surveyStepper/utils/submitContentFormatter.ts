@@ -1,5 +1,6 @@
 import { comedorInfoType, foodStepType, guestsStepsType, mealStepType, selectedSurveyType, userType } from "../../../../src/types/global"
 import { postFormatterDate } from "../../steps/utils/formatterDate";
+import { applyQuantityDivisionToAllSteps } from "./quantityDivider";
 
 const submitContentFormatter = (
   user: userType,
@@ -25,8 +26,21 @@ const submitContentFormatter = (
 
     const dateFormatted = postFormatterDate(selectedSurvey.date)
 
+    // Aplicar división automática de cantidades entre múltiples comidas
+    const stepsWithDividedQuantities = applyQuantityDivisionToAllSteps(
+      guestsAmount,
+      drinkStep || { comidas: [] },
+      simpleMainMealStep || { comidas: [] },
+      entryStep || { comidas: [] },
+      compoundMainMealStep || { comidas: [] },
+      dessertStep || { comidas: [] }
+    )
+
     const alimentosFormattedProvider = (alimentos: Array<foodStepType>) => {
-      const alimentosId = alimentos.map((alimento) => {
+      // Filtrar solo los alimentos que tienen cantidad > 0
+      const alimentosConCantidad = alimentos.filter(alimento => alimento.quantity > 0)
+      
+      const alimentosId = alimentosConCantidad.map((alimento) => {
         const alimentoFormatted = {
           alimento: alimento.id,
           cantidad: alimento.quantity,
@@ -44,6 +58,7 @@ const submitContentFormatter = (
         cantidad_rango_2: guestsAmount.kids || 0,
         cantidad_rango_3: guestsAmount.teens || 0,
         cantidad_rango_4: guestsAmount.adults || 0,
+        cantidad_rango_5: guestsAmount.elderly || 0,
         // Nombre servicio
         funcionamiento: selectedSurvey.service,
         // Id comedor
@@ -54,40 +69,40 @@ const submitContentFormatter = (
         responsable_comedor: user.pk
       },
       comidas: [
-        // Comidas de entrada (solo si tienen datos)
-        ...(entryStep?.comidas?.filter(comida => 
+        // Comidas de entrada (solo si tienen datos) - usando cantidades divididas
+        ...(stepsWithDividedQuantities.entryStep?.comidas?.filter(comida => 
           comida.alimento && comida.alimento.length > 0 && 
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
-        // Comidas de plato principal (solo si tienen datos)
-        ...(compoundMainMealStep?.comidas?.filter(comida => 
+        // Comidas de plato principal (solo si tienen datos) - usando cantidades divididas
+        ...(stepsWithDividedQuantities.compoundMainMealStep?.comidas?.filter(comida => 
           comida.alimento && comida.alimento.length > 0 && 
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
-        // Comidas de postre (solo si tienen datos)
-        ...(dessertStep?.comidas?.filter(comida => 
+        // Comidas de postre (solo si tienen datos) - usando cantidades divididas
+        ...(stepsWithDividedQuantities.dessertStep?.comidas?.filter(comida => 
           comida.alimento && comida.alimento.length > 0 && 
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
-        // Comidas de bebida (solo si tienen datos)
-        ...(drinkStep?.comidas?.filter(comida => 
+        // Comidas de bebida (solo si tienen datos) - usando cantidades divididas
+        ...(stepsWithDividedQuantities.drinkStep?.comidas?.filter(comida => 
           comida.alimento && comida.alimento.length > 0 && 
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
-        // Comidas simples (solo si tienen datos)
-        ...(simpleMainMealStep?.comidas?.filter(comida => 
+        // Comidas simples (solo si tienen datos) - usando cantidades divididas
+        ...(stepsWithDividedQuantities.simpleMainMealStep?.comidas?.filter(comida => 
           comida.alimento && comida.alimento.length > 0 && 
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
