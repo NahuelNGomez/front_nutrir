@@ -60,6 +60,7 @@ const submitContentFormatter = (
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
+          etapa_comida: "entrada",
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
         // Comidas de plato principal (solo si tienen datos)
@@ -68,6 +69,7 @@ const submitContentFormatter = (
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
+          etapa_comida: "plato_principal",
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
         // Comidas de postre (solo si tienen datos)
@@ -76,6 +78,7 @@ const submitContentFormatter = (
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
+          etapa_comida: "postre",
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
         // Comidas de bebida (solo si tienen datos)
@@ -84,6 +87,7 @@ const submitContentFormatter = (
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
+          etapa_comida: "bebida",
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || []),
         // Comidas simples (solo si tienen datos)
@@ -92,6 +96,7 @@ const submitContentFormatter = (
           comida.alimento.some(alimento => alimento.quantity > 0)
         )?.map(comida => ({
           comida: comida.comida,
+          etapa_comida: "plato_principal",
           alimento: alimentosFormattedProvider(comida.alimento)
         })) || [])
       ]
