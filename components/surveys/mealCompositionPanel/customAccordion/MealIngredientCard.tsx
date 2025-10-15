@@ -40,7 +40,7 @@ const MealIngredientCard: FC<Props> = ({
     } = pagesStyles(modeTheme);
     const [alimentoCheck, setAlimentoCheck] = useState(false);
     const [enableQuantity, setEnableQuantity] = useState<boolean>(true);
-    const [quantityValue, setQuantityValue] = useState<number>(0);
+    const [quantityValue, setQuantityValue] = useState<string>('');
     const [ingredientName, setIngredientname] = useState<string>('');
     const [error, setError] = useState(false);
     const [unit, setUnit] = useState<number>(1);
@@ -55,6 +55,7 @@ const MealIngredientCard: FC<Props> = ({
     const currentAlimentos = currentComida?.alimento || [];
 
     useEffect(() => {
+        // Solo ejecutar cuando cambie el ingredientId (componente se monta)
         const alimentoChecked = currentAlimentos.filter(
             (alimento: foodStepType) => alimento.id === ingredientId
         );
@@ -62,21 +63,18 @@ const MealIngredientCard: FC<Props> = ({
         if (alimentoChecked.length) {
             setAlimentoCheck(true);
             setEnableQuantity(false);
-            // Solo actualizar si el valor es diferente para evitar sobrescribir lo que está escribiendo el usuario
-            if (alimentoChecked[0].quantity !== quantityValue) {
-                setQuantityValue(alimentoChecked[0].quantity);
-            }
+            setQuantityValue(alimentoChecked[0].quantity);
             // Establecer la unidad del alimento seleccionado usando unitId en lugar de unit
             if (alimentoChecked[0].unitId) {
                 setUnit(alimentoChecked[0].unitId);
             }
         } else {
-            // Si no hay alimento seleccionado, resetear el estado
+            // Estado inicial: checkbox desactivado, campo deshabilitado, valor vacío
             setAlimentoCheck(false);
             setEnableQuantity(true);
-            setQuantityValue(0);
+            setQuantityValue('');
         }
-    }, [ingredientId, currentAlimentos]);
+    }, [ingredientId]); // Solo depende del ingredientId, no de currentAlimentos
 
     // Establecer la primera unidad por defecto cuando se carga el componente
     useEffect(() => {
@@ -113,54 +111,18 @@ const MealIngredientCard: FC<Props> = ({
             setAlimentoCheck(true);
             setEnableQuantity(false);
             setIngredientname(e.target.name.toLocaleLowerCase());
+            // Mantener el campo vacío para mostrar el placeholder
+            setQuantityValue('');
             
-            // Guardar el ingrediente con la unidad seleccionada actualmente
-            const currentAlimento = meal.alimento.find(
-                (alimento) => alimento.id === ingredientId
-            );
-            const selectedUnidad = currentAlimento?.unidades?.find(u => u.id === unit);
-            const unidadNombre = selectedUnidad?.nombre || currentAlimento?.unidades?.[0]?.nombre || '';
-            const unitId = selectedUnidad?.id || currentAlimento?.unidades?.[0]?.id || 1;
-            
-            // Asegurar que la comida existe en el array de comidas
-            let updatedComidas = values.comidas || [];
-            const existingComidaIndex = updatedComidas.findIndex((comida: any) => comida.comida === meal.id);
-            
-            if (existingComidaIndex === -1) {
-                updatedComidas.push({
-                    comida: meal.id,
-                    nombre: meal.nombre,
-                    alimento: []
-                });
-            }
-            
-            // Agregar el ingrediente con la unidad seleccionada
-            updatedComidas = updatedComidas.map((comida: any) => 
-                comida.comida === meal.id 
-                    ? {
-                        ...comida,
-                        alimento: [
-                            ...comida.alimento,
-                            {
-                                id: ingredientId,
-                                nombre: e.target.name,
-                                quantity: 0,
-                                unit: unidadNombre,
-                                unitId: unitId,
-                            }
-                        ]
-                    }
-                    : comida
-            );
-            
-            setFieldValue('comidas', updatedComidas);
+            // No agregamos el ingrediente aquí, solo habilitamos el campo de cantidad
+            // El ingrediente se agregará cuando se ingrese una cantidad válida
         }
 
         if (e.target.checked === false) {
             setAlimentoCheck(false);
             setEnableQuantity(true);
             setIngredientname('');
-            setQuantityValue(0);
+            setQuantityValue('');
             // No resetear la unidad aquí para mantener la selección del usuario
 
             const newAlimentosEntry = currentAlimentos.filter(
@@ -205,7 +167,7 @@ const MealIngredientCard: FC<Props> = ({
         
         // Con type='number' el navegador ya valida que sea un número válido
         const numericValue = parseFloat(inputValue);
-        if (!isNaN(numericValue) && numericValue >= 0) {
+        if (!isNaN(numericValue) && numericValue > 0) {
             setError(false);
             
             const newAlimentosEntry = currentAlimentos.filter(
@@ -251,6 +213,22 @@ const MealIngredientCard: FC<Props> = ({
                     }
                     : comida
             );
+            
+            setFieldValue('comidas', updatedComidas);
+        } else if (!isNaN(numericValue) && numericValue === 0) {
+            // Si el valor es 0, también lo consideramos como valor vacío
+            setError(false);
+            // Limpiar el alimento del formulario si la cantidad es 0
+            const newAlimentosEntry = currentAlimentos.filter(
+                (el: foodStepType) => el.id !== ingredientId
+            );
+            
+            // Actualizar la comida específica en el array de comidas
+            const updatedComidas = values.comidas?.map((comida: any) => 
+                comida.comida === meal.id 
+                    ? { ...comida, alimento: newAlimentosEntry }
+                    : comida
+            ) || [];
             
             setFieldValue('comidas', updatedComidas);
         } else {
@@ -329,6 +307,7 @@ const MealIngredientCard: FC<Props> = ({
                         onChange={quantityFielHandleChange}
                         id='outlined-number'
                         value={quantityValue}
+                        placeholder='Ingrese cantidad'
                         disabled={enableQuantity}
                         type='number'
                         inputProps={{ 

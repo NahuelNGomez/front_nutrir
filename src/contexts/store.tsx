@@ -218,3 +218,17 @@ export const AppCtx =
   createContext<ReturnType<typeof useStoreController>>(initialStoreState);
 
 export const useAppCtx = () => useContext(AppCtx);
+
+// Utility function to distribute guests among meals
+function distributeGuests(guests: number, meals: string[]): number[] {
+  const baseShare = Math.floor(guests / meals.length);
+  const remainder = guests % meals.length;
+
+  return meals.map((_, index) => baseShare + (index < remainder ? 1 : 0));
+}
+
+// Example usage:
+// const guests = 100;
+// const meals = ['Meal 1', 'Meal 2', 'Meal 3'];
+// const distribution = distributeGuests(guests, meals);
+// console.log(distribution); // Output: [33, 33, 34]
